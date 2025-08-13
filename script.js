@@ -389,7 +389,7 @@ async function callGeminiApi(button, promptText) {
     }
     button.disabled = true;
     try {
-        const response = await fetch('/api/gemini-proxy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: promptText }) });
+        const response = await fetch('/.netlify/functions/gemini-proxy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: promptText }) });
         if (!response.ok) { const err = await response.json().catch(()=>({error:{message:response.statusText}})); throw new Error(err.error.message); }
         const result = await response.json();
         return result.text;
