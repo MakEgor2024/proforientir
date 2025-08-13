@@ -136,7 +136,6 @@ const testQuestions = [
 ];
 
 // --- ИНИЦИАЛИЗАЦИЯ FIREBASE ---
-// !!! ВАЖНО: Вставьте сюда ВАШИ РЕАЛЬНЫЕ КЛЮЧИ из вашего существующего проекта Firebase !!!
 const firebaseConfig = {
     apiKey: "AIzaSyDODgODLHsIk6WMEWyv1LRR-w1Xvv7FXWw",
     authDomain: "proforientir-95204.firebaseapp.com",
