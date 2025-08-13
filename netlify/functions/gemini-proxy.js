@@ -7,7 +7,7 @@ exports.handler = async function(event) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return { statusCode: 500, body: JSON.stringify({ error: { message: 'API Key not configured' } })};
     
-    const GOOGLE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
+    const GOOGLE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
     const response = await fetch(GOOGLE_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -21,4 +21,5 @@ exports.handler = async function(event) {
     return { statusCode: 500, body: JSON.stringify({ error: { message: error.message } }) };
   }
 };
+
 
