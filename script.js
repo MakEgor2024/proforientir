@@ -110,13 +110,13 @@ const testQuestions = [
 // --- ИНИЦИАЛИЗАЦИЯ FIREBASE ---
 // !!! ВАЖНО: Вставьте сюда ВАШИ РЕАЛЬНЫЕ КЛЮЧИ из вашего существующего проекта Firebase !!!
 const firebaseConfig = {
-  apiKey: "AIzaSyCRpQw1yx-7GmM9I7-E52QdP8UCEcm4oGk",
-  authDomain: "unihub-a7eab.firebaseapp.com",
-  projectId: "unihub-a7eab",
-  storageBucket: "unihub-a7eab.firebasestorage.app",
-  messagingSenderId: "790640023636",
-  appId: "1:790640023636:web:47a07193d3d152150675c1",
-  measurementId: "G-3N7R8QWQQP"
+    apiKey: "AIzaSyDODgODLHsIk6WMEWyv1LRR-w1Xvv7FXWw",
+    authDomain: "proforientir-95204.firebaseapp.com",
+    projectId: "proforientir-95204",
+    storageBucket: "proforientir-95204.firebasestorage.app",
+    messagingSenderId: "417110078361",
+    appId: "1:417110078361:web:50ebd187c26447de211908",
+    measurementId: "G-174BSZEDGV"
 };
 
 try {
