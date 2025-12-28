@@ -97,7 +97,7 @@ const universities = [
     { name: "Российский национальный исследовательский медицинский университет имени Н.И. Пирогова (РНИМУ)", type: "medical", imageUrl: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1080", programs: ["Лечебное дело", "Педиатрия", "Медицинская биофизика", "Стоматология", "Фармация", "Психология", "Медицинская кибернетика"], info: "Один из ведущих медицинских исследовательских университетов.", avgScore: 89, budgetPlaces: 1750, employmentRate: 93, reputation: 9.3, programKeywords: ["врач", "педиатр", "биофизик", "стоматолог", "фармацевт", "психолог", "медицинский кибернетик", "генетик", "медицина", "клиническая психология"] },
     { name: "Финансовый университет при Правительстве Российской Федерации", type: "finance", imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080", programs: ["Финансы и кредит", "Экономика", "Менеджмент", "Бизнес-информатика", "Юриспруденция (финансовое право)"], info: "Ведущий вуз в области финансового и экономического образования.", avgScore: 91, budgetPlaces: 1850, employmentRate: 92, reputation: 9.4, programKeywords: ["финансист", "экономист", "финансовый аналитик", "менеджер", "государственный служащий", "бизнес-информатик", "юрист", "аудитор", "банковское дело", "страхование", "hr-менеджер"] },
     { name: "Российская академия народного хозяйства и государственной службы (РАНХиГС)", type: "management", imageUrl: "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080", programs: ["Государственное управление", "Менеджмент", "Экономика", "Юриспруденция", "Психология", "Реклама и связи с общественностью", "Управление персоналом"], info: "Крупнейший университет, готовящий управленческие кадры.", avgScore: 88, budgetPlaces: 2240, employmentRate: 91, reputation: 9.0, programKeywords: ["менеджер проектов", "государственный служащий", "экономист", "юрист", "политолог", "психолог", "маркетолог", "pr-специалист", "hr-менеджер", "социолог", "управление персоналом", "реклама", "логист", "event-менеджер"] },
-    { name: "Российский экономический университет имени Г.В. Плеханова (РЭУ)", type: "economics", programs: ["Экономика", "Менеджмент", "Торговое дело", "Товароведение", "Гостиничное дело", "Экономическая безопасность", "Реклама и связи с общественностью"], info: "Один из старейших и наиболее авторитетных экономических вузов страны.", avgScore: 89, budgetPlaces: 1120, employmentRate: 91, reputation: 9.2, programKeywords: ["экономист", "менеджер", "финансовый аналитик", "маркетолог", "pr-специалист", "логист", "аудитор", "торговое дело", "реклама", "риэлтор"] },
+    { name: "Российский экономический университет имени Г.В. Плеханова (РЭУ)", type: "economics", imageUrl: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1080", programs: ["Экономика", "Менеджмент", "Торговое дело", "Товароведение", "Гостиничное дело", "Экономическая безопасность", "Реклама и связи с общественностью"], info: "Один из старейших и наиболее авторитетных экономических вузов страны.", avgScore: 89, budgetPlaces: 1120, employmentRate: 91, reputation: 9.2, programKeywords: ["экономист", "менеджер", "финансовый аналитик", "маркетолог", "pr-специалист", "логист", "аудитор", "торговое дело", "реклама", "риэлтор"] },
     { name: "Московский государственный лингвистический университет (МГЛУ)", type: "humanities", imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1080", programs: ["Лингвистика", "Перевод", "Международные отношения", "Журналистика", "Реклама и PR"], info: "Ведущий лингвистический вуз России, известный как 'ИнЯз'.", avgScore: 88, budgetPlaces: 710, employmentRate: 89, reputation: 9.1, programKeywords: ["переводчик", "лингвист", "филолог", "журналист", "pr-специалист", "преподаватель иностранных языков", "международные отношения", "регионоведение"] },
     { name: "Национальный исследовательский технологический университет «МИСиС»", type: "tech", imageUrl: "https://images.unsplash.com/photo-1519452575417-5e0444534612?q=80&w=1080", programs: ["Материаловедение", "Металлургия", "Наноматериалы", "Информационные технологии", "Лингвистика"], info: "Ведущий технологический университет, специализирующийся на материаловедении и IT.", avgScore: 86, budgetPlaces: 2030, employmentRate: 90, reputation: 8.9, programKeywords: ["инженер-металлург", "материаловед", "нанотехнолог", "программист", "горный инженер", "информационные системы", "металлургия", "лингвист", "переводчик"] },
     { name: "Российский химико-технологический университет имени Д. И. Менделеева (РХТУ)", type: "chemical", imageUrl: "https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?q=80&w=1080", programs: ["Химическая технология", "Биотехнология", "Техносферная безопасность", "Материаловедение"], info: "Ведущий химико-технологический вуз России.", avgScore: 81, budgetPlaces: 1540, employmentRate: 88, reputation: 8.7, programKeywords: ["химик", "химик-технолог", "биотехнолог", "эколог", "материаловед", "инженер-химик", "фармацевтическая химия", "фармацевт"] },
@@ -109,14 +109,14 @@ const universities = [
     { name: "Всероссийский государственный институт кинематографии имени С.А. Герасимова (ВГИК)", type: "cinema", imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1080", programs: ["Режиссура кино и ТВ", "Кинооператорство", "Драматургия", "Продюсерство", "Анимация и графика"], info: "Старейшая в мире киношкола.", avgScore: 89, budgetPlaces: 210, employmentRate: 80, reputation: 9.4, programKeywords: ["режиссер", "оператор", "сценарист", "продюсер", "аниматор", "звукорежиссер", "киновед", "кино", "телевидение", "искусство", "актёр", "motion-дизайнер"] },
     { name: "Московский государственный университет геодезии и картографии (МИИГАиК)", type: "geodesy", imageUrl: "https://images.unsplash.com/photo-1599652876633-de52545c9735?q=80&w=1080", programs: ["Геодезия и дистанционное зондирование", "Картография и геоинформатика", "Землеустройство и кадастры"], info: "Ведущий вуз России в области геодезии, картографии и землеустройства.", avgScore: 79, budgetPlaces: 520, employmentRate: 86, reputation: 8.5, programKeywords: ["геодезист", "картограф", "землеустроитель", "кадастровый инженер", "геоинформатика", "дистанционное зондирование"] },
     { name: "Московский технический университет связи и информатики (МТУСИ)", type: "communications", imageUrl: "https://images.unsplash.com/photo-1558544956-15f5c5314777?q=80&w=1080", programs: ["Инфокоммуникационные технологии", "Информатика", "Информационная безопасность", "Радиотехника"], info: "Крупнейший учебный и научный центр в области телекоммуникаций, IT и радиотехники.", avgScore: 83, budgetPlaces: 1240, employmentRate: 89, reputation: 8.6, programKeywords: ["it-специалист по связи", "инженер связи", "программист", "специалист по кибербезопасности", "радиотехник", "сетевой инженер", "телекоммуникации", "devops"] },
-    { name: "Российский государственный гуманитарный университет (РГГУ)", type: "humanities", programs: ["История", "Филология", "Лингвистика", "Документоведение и архивоведение", "Музеология", "Искусствоведение", "Журналистика"], info: "Один из ведущих центров гуманитарного образования в России.", avgScore: 87, budgetPlaces: 915, employmentRate: 85, reputation: 8.9, programKeywords: ["историк", "архивист", "филолог", "лингвист", "переводчик", "искусствовед", "музейный работник", "журналист", "редактор", "литературный работник", "культуролог"] },
-    { name: "Российский государственный аграрный университет - МСХА имени К.А. Тимирязева", type: "agriculture", programs: ["Агрономия", "Зоотехния", "Ветеринария", "Садоводство", "Ландшафтная архитектура", "Почвоведение", "Агроинженерия"], info: "Ведущий аграрный вуз России с богатой историей.", avgScore: 73, budgetPlaces: 1830, employmentRate: 83, reputation: 8.4, programKeywords: ["агроном", "зоотехник", "ветеринар", "ландшафтный дизайнер", "почвовед", "агроинженер", "сельское хозяйство", "эколог"] },
-    { name: "Московский авиационный институт (МАИ)", type: "aviation", programs: ["Авиастроение", "Двигатели летательных аппаратов", "Системы управления, информатика и электроэнергетика", "Ракетные комплексы и космонавтика", "IT-системы в авиации"], info: "Ведущий российский университет в области авиационных и космических технологий.", avgScore: 85, budgetPlaces: 2350, employmentRate: 92, reputation: 9.0, programKeywords: ["авиастроение", "инженер-конструктор", "инженер-программист", "системы управления", "ракетостроение", "it", "двигателист", "аэрокосмос", "авиаконструктор"] },
-    { name: "Московский архитектурный институт (МАРХИ)", type: "architecture", programs: ["Архитектура", "Градостроительство", "Дизайн архитектурной среды", "Реставрация и реконструкция"], info: "Ведущая архитектурная школа России.", avgScore: 90, budgetPlaces: 255, employmentRate: 88, reputation: 9.3, programKeywords: ["архитектор", "градостроитель", "дизайнер среды", "реставратор", "проектирование", "дизайн", "ландшафтный дизайнер"] },
-    { name: "Российский университет дружбы народов (РУДН)", type: "international", programs: ["Лечебное дело", "Юриспруденция", "Экономика", "Лингвистика", "Международные отношения", "Аграрные технологии", "Инженерное дело"], info: "Уникальный многопрофильный университет, известный международной средой.", avgScore: 86, budgetPlaces: 1530, employmentRate: 89, reputation: 9.1, programKeywords: ["врач", "юрист", "экономист", "лингвист", "переводчик", "международник", "агроном", "инженер", "эколог", "журналист", "политолог"] },
-    { name: "Московский государственный строительный университет (МГСУ)", type: "civil_engineering", programs: ["Строительство уникальных зданий и сооружений", "Промышленное и гражданское строительство (ПГС)", "Информационные системы в строительстве", "Архитектура"], info: "Ведущий университет России в области строительства и архитектуры.", avgScore: 82, budgetPlaces: 2120, employmentRate: 90, reputation: 8.8, programKeywords: ["инженер-строитель", "пгс", "архитектор", "проектировщик", "строительство", "инженер", "информационные системы", "геодезист"] },
-    { name: "Московский педагогический государственный университет (МПГУ)", type: "pedagogy", programs: ["Педагогическое образование (разные профили)", "Психология", "Дефектология", "Лингвистика", "История"], info: "Один из старейших и крупнейших педагогических вузов страны.", avgScore: 81, budgetPlaces: 2540, employmentRate: 86, reputation: 8.5, programKeywords: ["учитель", "педагог", "психолог", "дефектолог", "логопед", "лингвист", "историк", "преподавание", "тренер"] },
-    { name: "Российский государственный социальный университет (РГСУ)", type: "social", programs: ["Социальная работа", "Психология", "Менеджмент", "Юриспруденция", "IT в социальной сфере"], info: "Первый в России вуз, начавший подготовку профессиональных социальных работников.", avgScore: 79, budgetPlaces: 1100, employmentRate: 88, reputation: 8.3, programKeywords: ["социальный работник", "психолог", "менеджер", "юрист", "hr-менеджер", "социолог"] }
+    { name: "Российский государственный гуманитарный университет (РГГУ)", type: "humanities", imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1080", programs: ["История", "Филология", "Лингвистика", "Документоведение и архивоведение", "Музеология", "Искусствоведение", "Журналистика"], info: "Один из ведущих центров гуманитарного образования в России.", avgScore: 87, budgetPlaces: 915, employmentRate: 85, reputation: 8.9, programKeywords: ["историк", "архивист", "филолог", "лингвист", "переводчик", "искусствовед", "музейный работник", "журналист", "редактор", "литературный работник", "культуролог"] },
+    { name: "Российский государственный аграрный университет - МСХА имени К.А. Тимирязева", type: "agriculture", imageUrl: "https://images.unsplash.com/photo-1599652876633-de52545c9735?q=80&w=1080", programs: ["Агрономия", "Зоотехния", "Ветеринария", "Садоводство", "Ландшафтная архитектура", "Почвоведение", "Агроинженерия"], info: "Ведущий аграрный вуз России с богатой историей.", avgScore: 73, budgetPlaces: 1830, employmentRate: 83, reputation: 8.4, programKeywords: ["агроном", "зоотехник", "ветеринар", "ландшафтный дизайнер", "почвовед", "агроинженер", "сельское хозяйство", "эколог"] },
+    { name: "Московский авиационный институт (МАИ)", type: "aviation", imageUrl: "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080", programs: ["Авиастроение", "Двигатели летательных аппаратов", "Системы управления, информатика и электроэнергетика", "Ракетные комплексы и космонавтика", "IT-системы в авиации"], info: "Ведущий российский университет в области авиационных и космических технологий.", avgScore: 85, budgetPlaces: 2350, employmentRate: 92, reputation: 9.0, programKeywords: ["авиастроение", "инженер-конструктор", "инженер-программист", "системы управления", "ракетостроение", "it", "двигателист", "аэрокосмос", "авиаконструктор"] },
+    { name: "Московский архитектурный институт (МАРХИ)", type: "architecture", imageUrl: "https://images.unsplash.com/photo-1589994965851-a8f4035ab7dc?q=80&w=1080", programs: ["Архитектура", "Градостроительство", "Дизайн архитектурной среды", "Реставрация и реконструкция"], info: "Ведущая архитектурная школа России.", avgScore: 90, budgetPlaces: 255, employmentRate: 88, reputation: 9.3, programKeywords: ["архитектор", "градостроитель", "дизайнер среды", "реставратор", "проектирование", "дизайн", "ландшафтный дизайнер"] },
+    { name: "Российский университет дружбы народов (РУДН)", type: "international", imageUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080", programs: ["Лечебное дело", "Юриспруденция", "Экономика", "Лингвистика", "Международные отношения", "Аграрные технологии", "Инженерное дело"], info: "Уникальный многопрофильный университет, известный международной средой.", avgScore: 86, budgetPlaces: 1530, employmentRate: 89, reputation: 9.1, programKeywords: ["врач", "юрист", "экономист", "лингвист", "переводчик", "международник", "агроном", "инженер", "эколог", "журналист", "политолог"] },
+    { name: "Московский государственный строительный университет (МГСУ)", type: "civil_engineering", imageUrl: "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080", programs: ["Строительство уникальных зданий и сооружений", "Промышленное и гражданское строительство (ПГС)", "Информационные системы в строительстве", "Архитектура"], info: "Ведущий университет России в области строительства и архитектуры.", avgScore: 82, budgetPlaces: 2120, employmentRate: 90, reputation: 8.8, programKeywords: ["инженер-строитель", "пгс", "архитектор", "проектировщик", "строительство", "инженер", "информационные системы", "геодезист"] },
+    { name: "Московский педагогический государственный университет (МПГУ)", type: "pedagogy", imageUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1080", programs: ["Педагогическое образование (разные профили)", "Психология", "Дефектология", "Лингвистика", "История"], info: "Один из старейших и крупнейших педагогических вузов страны.", avgScore: 81, budgetPlaces: 2540, employmentRate: 86, reputation: 8.5, programKeywords: ["учитель", "педагог", "психолог", "дефектолог", "логопед", "лингвист", "историк", "преподавание", "тренер"] },
+    { name: "Российский государственный социальный университет (РГСУ)", type: "social", imageUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1080", programs: ["Социальная работа", "Психология", "Менеджмент", "Юриспруденция", "IT в социальной сфере"], info: "Первый в России вуз, начавший подготовку профессиональных социальных работников.", avgScore: 79, budgetPlaces: 1100, employmentRate: 88, reputation: 8.3, programKeywords: ["социальный работник", "психолог", "менеджер", "юрист", "hr-менеджер", "социолог"] }
 ];
 
 // --- Данные для теста (без изменений) ---
@@ -357,7 +357,11 @@ function highlightText(text, term) { if (!term || !text) return text; const esca
 function createTypeTagHTML(type) { const typeInfo = TYPE_DESCRIPTIONS[type] || { name: type }; return `<span class="type-tag" style="background-color: var(--${type}-color);" title="${typeInfo.description}">${typeInfo.name}</span>`; }
 function calculateCompositeScore(uni) { const weights = { avgScore: 0.35, reputation: 0.30, employmentRate: 0.20, budgetPlaces: 0.15 }; const maxAvgScore = 100, minAvgScore = 60, maxBudgetPlaces = 4000, maxReputation = 10, maxEmploymentRate = 100; const normalizedScore = Math.max(0, ((uni.avgScore || minAvgScore) - minAvgScore)) / (maxAvgScore - minAvgScore); const normalizedReputation = (uni.reputation || 1) / maxReputation; const normalizedEmployment = (uni.employmentRate || 50) / maxEmploymentRate; const normalizedBudget = Math.log1p(uni.budgetPlaces || 0) / Math.log1p(maxBudgetPlaces); const compositeScore = ((normalizedScore * weights.avgScore) + (normalizedReputation * weights.reputation) + (normalizedEmployment * weights.employmentRate) + (normalizedBudget * weights.budgetPlaces)) * 100; return Math.max(0, Math.min(100, Math.round(compositeScore))); }
 function processUniversityData() { processedUniversities = universities.map(uni => ({ ...uni, compositeScore: calculateCompositeScore(uni) })); }
-function createUniCardHTML(uni) { const typeIcon = UNI_TYPE_ICONS[uni.type] || UNI_TYPE_ICONS.default; const isSelected = selectedForComparison.includes(uni.name); return ` <div class="uni-card" data-uni-name="${uni.name}"> <label class="compare-checkbox-label" title="Выбрать для сравнения"> <input type="checkbox" class="compare-checkbox" value="${uni.name}" ${isSelected ? 'checked' : ''}> </label> <div class="uni-type-icon" title="Тип: ${uni.type}"> <i class="icon icon-only icon-sm" data-lucide="${typeIcon}"></i> </div> <div class="uni-image" data-action="open-modal"> <img src="${uni.imageUrl}" alt="Фото ${uni.name}" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/300x160/e2e8f0/94a3b8?text=Error&font=inter';"> </div> <div class="uni-content" data-action="open-modal"> <h4>${uni.name}</h4> <p class="preview-info">${uni.info}</p> <div class="uni-meta"> <span class="uni-composite-score" title="Комплексный балл"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.compositeScore}</strong></span> <span class="uni-avg-score" title="Средний балл ЕГЭ"><i class="icon icon-sm" data-lucide="award"></i> <strong>${uni.avgScore || 'н/д'}</strong></span> </div> </div> </div> `; }
+function createUniCardHTML(uni) { 
+    // #region agent log
+    if (!uni.imageUrl) { fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:360',message:'Missing imageUrl detected',data:{uniName:uni.name,hasImageUrl:!!uni.imageUrl},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{}); }
+    // #endregion
+    const typeIcon = UNI_TYPE_ICONS[uni.type] || UNI_TYPE_ICONS.default; const isSelected = selectedForComparison.includes(uni.name); const defaultImageUrl = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080'; const imageUrl = uni.imageUrl || defaultImageUrl; return ` <div class="uni-card" data-uni-name="${uni.name}"> <label class="compare-checkbox-label" title="Выбрать для сравнения"> <input type="checkbox" class="compare-checkbox" value="${uni.name}" ${isSelected ? 'checked' : ''}> </label> <div class="uni-type-icon" title="Тип: ${uni.type}"> <i class="icon icon-only icon-sm" data-lucide="${typeIcon}"></i> </div> <div class="uni-image" data-action="open-modal"> <img src="${imageUrl}" alt="Главный корпус ${uni.name}" loading="lazy" onload="fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:360',message:'Image loaded successfully',data:{uniName:'${uni.name}',imageUrl:'${imageUrl}'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});" onerror="fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:360',message:'Image load error',data:{uniName:'${uni.name}',imageUrl:'${imageUrl}'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{}); this.onerror=null; this.src='https://placehold.co/300x160/e2e8f0/94a3b8?text=Error&font=inter';"> </div> <div class="uni-content" data-action="open-modal"> <h4>${uni.name}</h4> <p class="preview-info">${uni.info}</p> <div class="uni-meta"> <span class="uni-composite-score" title="Комплексный балл"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.compositeScore}</strong></span> <span class="uni-avg-score" title="Средний балл ЕГЭ"><i class="icon icon-sm" data-lucide="award"></i> <strong>${uni.avgScore || 'н/д'}</strong></span> </div> </div> </div> `; }
 function populateUniFilterOptions() { const uniqueTypes = [...new Set(universities.map(uni => uni.type))].sort((a,b) => a.localeCompare(b, 'ru')); uniFilterSelect.innerHTML = '<option value="all">Все направления</option>'; const typeNames = { tech: 'Технические', science: 'Научные', engineering: 'Инженерные', international: 'Международные', economics: 'Экономика', medical: 'Медицина', management: 'Управление', art: 'Искусство', law: 'Юриспруденция', humanities: 'Гуманитарные', education: 'Образование', social: 'Социальные', agriculture: 'Аграрные', architecture: 'Архитектура', finance: 'Финансы', transport: 'Транспортные', communications: 'Связь и IT', pedagogy: 'Педагогические', psychology: 'Психологические', food: 'Пищевые', chemical: 'Химические', geodesy: 'Геодезия и картография', music: 'Музыкальные', cinema: 'Кино и ТВ', literature: 'Литературные', aviation: 'Авиация и космос', civil_engineering: 'Строительство' }; uniqueTypes.forEach(type => { const option = document.createElement('option'); option.value = type; option.textContent = typeNames[type] || (type.charAt(0).toUpperCase() + type.slice(1)); uniFilterSelect.appendChild(option); }); }
 function renderUniversities(unisToRender = processedUniversities) { const sortBy = uniSortSelect.value; let sortedUnis = [...unisToRender].sort((a, b) => { switch (sortBy) { case 'avgScore': return (b.avgScore || 0) - (a.avgScore || 0); case 'budgetPlaces': return (b.budgetPlaces || 0) - (a.budgetPlaces || 0); case 'reputation': return (b.reputation || 0) - (a.reputation || 0); case 'name': return a.name.localeCompare(b.name, 'ru'); default: return b.compositeScore - a.compositeScore; } }); allUnisListDiv.innerHTML = sortedUnis.length > 0 ? sortedUnis.map(createUniCardHTML).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">ВУЗы не найдены по вашему запросу.</p>'; updateCompareButtonState(); initLucideIcons(); }
 function applyUniversityFiltersAndSort() { const filterValue = uniFilterSelect.value; let filteredUnis = (filterValue === 'all') ? [...processedUniversities] : processedUniversities.filter(uni => uni.type === filterValue); renderUniversities(filteredUnis); resetUniFilterBtn.classList.toggle('hidden', filterValue === 'all'); }
@@ -365,7 +369,41 @@ function resetUniversityFilters() { uniFilterSelect.value = 'all'; uniSortSelect
 function updateCompareButtonState() { const count = selectedForComparison.length; compareCountSpan.textContent = count; compareUnisBtn.disabled = !(count >= 2 && count <= 3); compareUnisBtn.classList.toggle('hidden', count === 0); }
 function handleCompareSelection(event) { const checkbox = event.target; const uniName = checkbox.value; if (checkbox.checked) { if (selectedForComparison.length < 3) { selectedForComparison.push(uniName); } else { checkbox.checked = false; showToast("Можно выбрать не более 3 вузов для сравнения."); } } else { selectedForComparison = selectedForComparison.filter(name => name !== uniName); } updateCompareButtonState(); }
 function showCompareModal() { if (selectedForComparison.length < 2 || selectedForComparison.length > 3) { showToast("Выберите 2 или 3 вуза для сравнения."); return; } const unisToCompare = processedUniversities.filter(uni => selectedForComparison.includes(uni.name)); let tableHTML = '<table><thead><tr><th>Параметр</th>'; unisToCompare.forEach(uni => { tableHTML += `<th>${uni.name}</th>`; }); tableHTML += '</tr></thead><tbody>'; const params = [ { key: 'compositeScore', name: 'Компл. балл' }, { key: 'avgScore', name: 'Ср. балл ЕГЭ' }, { key: 'budgetPlaces', name: 'Бюдж. места' }, { key: 'employmentRate', name: 'Трудоустр. (%)' }, { key: 'reputation', name: 'Репутация (/10)' }, { key: 'programs', name: 'Направления' } ]; params.forEach(param => { tableHTML += `<tr><td><strong>${param.name}</strong></td>`; unisToCompare.forEach(uni => { let value = uni[param.key] || 'н/д'; if (param.key === 'programs') value = `<ul>${(uni.programs || []).map(p => `<li>${p}</li>`).join('')}</ul>`; tableHTML += `<td>${value}</td>`; }); tableHTML += '</tr>'; }); tableHTML += '</tbody></table>'; compareTableContainer.innerHTML = tableHTML; openModal('compare-modal'); }
-async function openUniModal(uniName) { currentUniForModal = processedUniversities.find(u => u.name === uniName); if (currentUniForModal) { uniModalTitle.textContent = currentUniForModal.name; uniModalImage.src = currentUniForModal.imageUrl; uniModalImage.onerror = () => { uniModalImage.src = `https://placehold.co/600x300/e2e8f0/94a3b8?text=${uniName.substring(0, 10)}&font=inter`; }; uniModalPrograms.textContent = currentUniForModal.programs.join(', '); uniModalInfo.textContent = currentUniForModal.info; uniModalBudget.textContent = currentUniForModal.budgetPlaces || 'н/д'; uniModalAvgScore.textContent = currentUniForModal.avgScore || 'н/д'; uniModalEmployment.textContent = `${currentUniForModal.employmentRate || 'н/д'}%`; uniModalReputation.textContent = `${currentUniForModal.reputation || 'н/д'}/10`; uniModalCompositeScore.textContent = currentUniForModal.compositeScore; await updateFavoriteButtonText(); displayMatchingProfessionsInModal(currentUniForModal); openModal('uni-modal'); } }
+async function openUniModal(uniName) { 
+    // #region agent log
+    const foundUni = processedUniversities.find(u => u.name === uniName);
+    fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:372',message:'openUniModal called',data:{uniName,hasImageUrl:!!foundUni?.imageUrl,imageUrl:foundUni?.imageUrl||'missing'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
+    // #endregion
+    currentUniForModal = foundUni; 
+    if (currentUniForModal) { 
+        uniModalTitle.textContent = currentUniForModal.name; 
+        const defaultImageUrl = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080'; 
+        const modalImageUrl = currentUniForModal.imageUrl || defaultImageUrl;
+        uniModalImage.src = modalImageUrl; 
+        uniModalImage.alt = `Главный корпус ${currentUniForModal.name}`;
+        uniModalImage.onload = () => {
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:372',message:'Modal image loaded',data:{uniName,imageUrl:modalImageUrl},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
+            // #endregion
+        };
+        uniModalImage.onerror = () => { 
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:372',message:'Modal image error',data:{uniName,imageUrl:modalImageUrl},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
+            // #endregion
+            uniModalImage.src = `https://placehold.co/600x300/e2e8f0/94a3b8?text=${uniName.substring(0, 10)}&font=inter`; 
+        }; 
+        uniModalPrograms.textContent = currentUniForModal.programs.join(', '); 
+        uniModalInfo.textContent = currentUniForModal.info; 
+        uniModalBudget.textContent = currentUniForModal.budgetPlaces || 'н/д'; 
+        uniModalAvgScore.textContent = currentUniForModal.avgScore || 'н/д'; 
+        uniModalEmployment.textContent = `${currentUniForModal.employmentRate || 'н/д'}%`; 
+        uniModalReputation.textContent = `${currentUniForModal.reputation || 'н/д'}/10`; 
+        uniModalCompositeScore.textContent = currentUniForModal.compositeScore; 
+        await updateFavoriteButtonText(); 
+        displayMatchingProfessionsInModal(currentUniForModal); 
+        openModal('uni-modal'); 
+    } 
+}
 function displayMatchingProfessionsInModal(uni) { const keywords = uni.programKeywords || []; modalProfessionsList.innerHTML = '<li class="no-professions">Загрузка...</li>'; setTimeout(() => { const matchingProfessions = professions.filter(prof => (prof.keywords || []).some(pk => keywords.some(uk => uk.toLowerCase().includes(pk.toLowerCase()) || pk.toLowerCase().includes(uk.toLowerCase())))); modalProfessionsList.innerHTML = matchingProfessions.length > 0 ? matchingProfessions.map(prof => `<li class="${lastTestResultTypes.some(t => prof.types.includes(t)) ? 'highlighted' : ''}">${prof.name}</li>`).join('') : '<li class="no-professions">Подходящих профессий не найдено.</li>'; }, 10); }
 function openModal(id) { const modal = document.getElementById(id); if (modal) { modal.style.display = 'block'; document.body.style.overflow = 'hidden'; initLucideIcons(); } }
 function closeModals() { document.querySelectorAll('.modal').forEach(modal => { modal.style.display = 'none'; }); document.body.style.overflow = 'auto'; }
@@ -381,6 +419,9 @@ function filterUniversitiesByProfession(professionName) { const profession = pro
 function sanitizeHTML(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 function simpleMarkdownToHtml(text) { if (!text) return ''; let html = sanitizeHTML(text); html = html.replace(/^## (.*?)$/gm, '<h5>$1</h5>').replace(/^# (.*?)$/gm, '<h4>$1</h4>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/^[\*\-\+] +(.*?)$/gm, '<li>$1</li>').replace(/^\d+\. +(.*?)$/gm, '<li>$1</li>').replace(/((<li>.*<\/li>\s*)+)/gm, '<ul>$1</ul>').replace(/\n/g, '<br>'); return html; }
 async function callGeminiApi(button, promptText) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:391',message:'callGeminiApi called',data:{promptLength:promptText?.length||0,hasButton:!!button},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+    // #endregion
     const btnText = button.querySelector('.btn-text');
     const loader = button.querySelector('.loader');
     if (btnText && loader) {
@@ -389,12 +430,30 @@ async function callGeminiApi(button, promptText) {
     }
     button.disabled = true;
     try {
-        const response = await fetch('/.netlify/functions/gemini-proxy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: promptText }) });
-        if (!response.ok) { const err = await response.json().catch(()=>({error:{message:response.statusText}})); throw new Error(err.error.message); }
+        const response = await fetch('/api/gemini-proxy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: promptText }) });
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:400',message:'API response received',data:{status:response.status,ok:response.ok},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+        // #endregion
+        if (!response.ok) { 
+            const err = await response.json().catch(()=>({error:{message:response.statusText}})); 
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:401',message:'API error',data:{status:response.status,error:err.error?.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+            // #endregion
+            throw new Error(err.error?.message || response.statusText); 
+        }
         const result = await response.json();
+        if (!result || !result.text) {
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:402',message:'Invalid API response',data:{hasResult:!!result,hasText:!!result?.text},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+            // #endregion
+            throw new Error('Пустой ответ от API');
+        }
         return result.text;
     } catch (error) {
         console.error("Error calling Gemini Proxy:", error);
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:404',message:'callGeminiApi catch',data:{errorMessage:error.message,errorName:error.name},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+        // #endregion
         showToast(`Ошибка ИИ: ${error.message.substring(0, 100)}...`, 5000);
         throw error;
     } finally {
@@ -405,9 +464,52 @@ async function callGeminiApi(button, promptText) {
         button.disabled = false;
     }
 }
-async function showAIProfessionDetails(professionName) { currentProfessionForAI = professions.find(p => p.name === professionName); aiProfessionModalTitle.innerHTML = `<i class="icon" data-lucide="brain"></i> Подробности о профессии "${sanitizeHTML(professionName)}"`; Object.values(aiContainers).forEach(c => { if (c.container) c.container.classList.add('hidden'); if(c.result) c.result.innerHTML=''; }); aiProfessionDetailsContent.innerHTML = ''; openModal('ai-profession-details-modal'); const prompt = `Расскажи подробно о профессии "${professionName}". Опиши: ## Краткое описание, ## Основные обязанности, ## Перспективы роста, ## Необходимые навыки (Hard и Soft Skills списком), ## Плюсы и минусы (кратко). Используй Markdown.`; try { const aiResponse = await callGeminiApi(document.createElement('button'), prompt); aiProfessionDetailsContent.innerHTML = simpleMarkdownToHtml(aiResponse); const skillsMatch = aiResponse.match(/## Необходимые навыки([\s\S]*?)##/); aiGeneratedRequiredSkills = skillsMatch ? skillsMatch[1] : "Навыки не найдены"; Object.values(aiContainers).forEach(c => c.container?.classList.remove('hidden')); } catch (e) { aiProfessionDetailsContent.innerHTML = `<p style="color: var(--realistic-color);">Не удалось загрузить данные от ИИ.</p>`; } }
-async function handleAIFeatureClick(button, resultContainer, prompt) { resultContainer.innerHTML = ''; try { const aiResponse = await callGeminiApi(button, prompt); resultContainer.innerHTML = simpleMarkdownToHtml(aiResponse); } catch(e) { resultContainer.innerHTML = `<p style="color: var(--realistic-color);">Ошибка при генерации ответа.</p>`; } }
-aiCareerAdviceBtn.addEventListener('click', () => { if (!lastTestResultTypes.length) { showToast("Сначала пройдите тест."); return; } const typesStr = lastTestResultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.name).join(', '); aiCareerAdviceModalTitle.innerHTML = `<i class="icon" data-lucide="user-check"></i> Совет от ИИ для типов: ${typesStr}`; openModal('ai-career-advice-modal'); handleAIFeatureClick(aiCareerAdviceBtn, aiCareerAdviceContent, `Дай развернутый карьерный совет для человека с типами личности по Холланду: ${typesStr}. Включи секции: ## Общая характеристика, ## Рекомендуемые направления, ## Советы по образованию, ## Ключевые навыки, ## Дальнейшие шаги. Используй Markdown.`); });
+async function showAIProfessionDetails(professionName) { 
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:408',message:'showAIProfessionDetails called',data:{professionName,found:!!professions.find(p => p.name === professionName)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+    // #endregion
+    currentProfessionForAI = professions.find(p => p.name === professionName); 
+    if (!currentProfessionForAI) { 
+        showToast("Профессия не найдена."); 
+        return; 
+    }
+    aiProfessionModalTitle.innerHTML = `<i class="icon" data-lucide="brain"></i> Подробности о профессии "${sanitizeHTML(professionName)}"`; 
+    Object.values(aiContainers).forEach(c => { if (c.container) c.container.classList.add('hidden'); if(c.result) c.result.innerHTML=''; }); 
+    aiProfessionDetailsContent.innerHTML = '<p>Загрузка...</p>'; 
+    openModal('ai-profession-details-modal'); 
+    const prompt = `Расскажи подробно о профессии "${professionName}". Опиши: ## Краткое описание, ## Основные обязанности, ## Перспективы роста, ## Необходимые навыки (Hard и Soft Skills списком), ## Плюсы и минусы (кратко). Используй Markdown.`; 
+    try { 
+        const aiResponse = await callGeminiApi(document.createElement('button'), prompt); 
+        aiProfessionDetailsContent.innerHTML = simpleMarkdownToHtml(aiResponse); 
+        const skillsMatch = aiResponse.match(/## Необходимые навыки([\s\S]*?)##/); 
+        aiGeneratedRequiredSkills = skillsMatch ? skillsMatch[1] : "Навыки не найдены"; 
+        Object.values(aiContainers).forEach(c => c.container?.classList.remove('hidden')); 
+    } catch (e) { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:408',message:'showAIProfessionDetails error',data:{errorMessage:e.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+        // #endregion
+        aiProfessionDetailsContent.innerHTML = `<p style="color: var(--realistic-color);">Не удалось загрузить данные от ИИ: ${e.message}</p>`; 
+    } 
+}
+async function handleAIFeatureClick(button, resultContainer, prompt) { 
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:464',message:'handleAIFeatureClick called',data:{promptLength:prompt?.length||0,hasButton:!!button,hasContainer:!!resultContainer},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+    // #endregion
+    if (!button || !resultContainer) { 
+        console.error('handleAIFeatureClick: missing button or container'); 
+        return; 
+    }
+    resultContainer.innerHTML = '<p>Загрузка...</p>'; 
+    try { 
+        const aiResponse = await callGeminiApi(button, prompt); 
+        resultContainer.innerHTML = simpleMarkdownToHtml(aiResponse); 
+    } catch(e) { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:464',message:'handleAIFeatureClick error',data:{errorMessage:e.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+        // #endregion
+        resultContainer.innerHTML = `<p style="color: var(--realistic-color);">Ошибка при генерации ответа: ${e.message}</p>`; 
+    } 
+}
 function setupEventListeners() {
     // АУТЕНТИФИКАЦИЯ
     loginBtn.addEventListener('click', () => { isRegisterMode = false; authModalTitle.textContent = 'Вход'; authSubmitBtn.textContent = 'Войти'; authSwitchLink.textContent = 'Нет аккаунта? Зарегистрироваться'; authErrorP.classList.add('hidden'); openModal('auth-modal'); });
@@ -430,7 +532,14 @@ function setupEventListeners() {
     showMatchingProfessionsBtn.addEventListener('click', () => { if (lastTestResultTypes.length) { professionsVisibleCount = PROFESSIONS_PAGE_SIZE; renderProfessions(professions, lastTestResultTypes); document.getElementById('professions').scrollIntoView({ behavior: 'smooth' }); } else showToast("Сначала пройдите тест."); });
 
     // ПРОФЕССИИ
-    professionSearchInput.addEventListener('input', filterProfessions);
+    // #region agent log
+    let searchDebounceTimer = null;
+    professionSearchInput.addEventListener('input', (e) => {
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:433',message:'Search input event',data:{value:e.target.value,hasDebounce:!!searchDebounceTimer},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+        clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(() => filterProfessions(), 300);
+    });
+    // #endregion
     resetProfessionFilterBtn.addEventListener('click', resetProfessionFilter);
     showMoreProfessionsBtn.addEventListener('click', showMoreProfessions);
 
@@ -460,14 +569,56 @@ function setupEventListeners() {
 
     // ВСЕ КНОПКИ ИИ
     aiCareerAdviceBtn.addEventListener('click', () => { if (!lastTestResultTypes.length) { showToast("Сначала пройдите тест."); return; } const typesStr = lastTestResultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.name).join(', '); aiCareerAdviceModalTitle.innerHTML = `<i class="icon" data-lucide="user-check"></i> Совет от ИИ для типов: ${typesStr}`; openModal('ai-career-advice-modal'); handleAIFeatureClick(aiCareerAdviceBtn, aiCareerAdviceContent, `Дай развернутый карьерный совет для человека с типами личности по Холланду: ${typesStr}. Включи секции: ## Общая характеристика, ## Рекомендуемые направления, ## Советы по образованию, ## Ключевые навыки, ## Дальнейшие шаги. Используй Markdown.`); });
-    aiContainers.prosCons.btn.addEventListener('click', () => handleAIFeatureClick(aiContainers.prosCons.btn, aiContainers.prosCons.result, `Дай углубленный анализ плюсов и минусов профессии "${currentProfessionForAI.name}".`));
-    aiContainers.interview.btn.addEventListener('click', () => handleAIFeatureClick(aiContainers.interview.btn, aiContainers.interview.result, `Подготовь список вопросов для собеседования на позицию "${currentProfessionForAI.name}".`));
-    aiContainers.dayInLife.btn.addEventListener('click', () => handleAIFeatureClick(aiContainers.dayInLife.btn, aiContainers.dayInLife.result, `Опиши типичный рабочий день для профессии "${currentProfessionForAI.name}".`));
-    aiContainers.uniPrograms.btn.addEventListener('click', () => handleAIFeatureClick(aiContainers.uniPrograms.btn, aiContainers.uniPrograms.result, `Какие образовательные программы в ВУЗах Москвы подходят для профессии "${currentProfessionForAI.name}"?`));
+    aiContainers.prosCons.btn.addEventListener('click', () => { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:463',message:'AI prosCons button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+        // #endregion
+        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
+        handleAIFeatureClick(aiContainers.prosCons.btn, aiContainers.prosCons.result, `Дай углубленный анализ плюсов и минусов профессии "${currentProfessionForAI.name}".`);
+    });
+    aiContainers.interview.btn.addEventListener('click', () => { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:464',message:'AI interview button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+        // #endregion
+        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
+        handleAIFeatureClick(aiContainers.interview.btn, aiContainers.interview.result, `Подготовь список вопросов для собеседования на позицию "${currentProfessionForAI.name}".`);
+    });
+    aiContainers.dayInLife.btn.addEventListener('click', () => { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:465',message:'AI dayInLife button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+        // #endregion
+        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
+        handleAIFeatureClick(aiContainers.dayInLife.btn, aiContainers.dayInLife.result, `Опиши типичный рабочий день для профессии "${currentProfessionForAI.name}".`);
+    });
+    aiContainers.uniPrograms.btn.addEventListener('click', () => { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:466',message:'AI uniPrograms button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+        // #endregion
+        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
+        handleAIFeatureClick(aiContainers.uniPrograms.btn, aiContainers.uniPrograms.result, `Какие образовательные программы в ВУЗах Москвы подходят для профессии "${currentProfessionForAI.name}"?`);
+    });
     aiContainers.skillGap.initBtn.addEventListener('click', () => aiContainers.skillGap.inputArea.classList.remove('hidden'));
-    aiContainers.skillGap.submitBtn.addEventListener('click', () => handleAIFeatureClick(aiContainers.skillGap.submitBtn, aiContainers.skillGap.result, `Сравни требуемые навыки для профессии "${currentProfessionForAI.name}" (${aiGeneratedRequiredSkills}) с навыками пользователя: ${document.getElementById('user-skills-input').value}. Каких навыков не хватает?`));
-    aiContainers.studyPlan.btn.addEventListener('click', () => handleAIFeatureClick(aiContainers.studyPlan.btn, aiContainers.studyPlan.result, `Создай план по изучению недостающих навыков для профессии "${currentProfessionForAI.name}".`));
-    aiContainers.coverLetter.btn.addEventListener('click', () => handleAIFeatureClick(aiContainers.coverLetter.btn, aiContainers.coverLetter.result, `Напиши 2-3 абзаца для сопроводительного письма на позицию "${currentProfessionForAI.name}".`));
+    aiContainers.skillGap.submitBtn.addEventListener('click', () => { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:468',message:'AI skillGap submit clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+        // #endregion
+        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
+        handleAIFeatureClick(aiContainers.skillGap.submitBtn, aiContainers.skillGap.result, `Сравни требуемые навыки для профессии "${currentProfessionForAI.name}" (${aiGeneratedRequiredSkills}) с навыками пользователя: ${document.getElementById('user-skills-input').value}. Каких навыков не хватает?`);
+    });
+    aiContainers.studyPlan.btn.addEventListener('click', () => { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:469',message:'AI studyPlan button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+        // #endregion
+        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
+        handleAIFeatureClick(aiContainers.studyPlan.btn, aiContainers.studyPlan.result, `Создай план по изучению недостающих навыков для профессии "${currentProfessionForAI.name}".`);
+    });
+    aiContainers.coverLetter.btn.addEventListener('click', () => { 
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:470',message:'AI coverLetter button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+        // #endregion
+        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
+        handleAIFeatureClick(aiContainers.coverLetter.btn, aiContainers.coverLetter.result, `Напиши 2-3 абзаца для сопроводительного письма на позицию "${currentProfessionForAI.name}".`);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => { 
