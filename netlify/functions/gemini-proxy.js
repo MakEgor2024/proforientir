@@ -1,4 +1,3 @@
-// Файл: netlify/functions/gemini-proxy.js
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
   try {
@@ -7,7 +6,7 @@ exports.handler = async function(event) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return { statusCode: 500, body: JSON.stringify({ error: { message: 'API Key not configured' } })};
     
-    const GOOGLE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    const GOOGLE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
     const response = await fetch(GOOGLE_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -21,6 +20,7 @@ exports.handler = async function(event) {
     return { statusCode: 500, body: JSON.stringify({ error: { message: error.message } }) };
   }
 };
+
 
 
 
