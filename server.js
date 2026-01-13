@@ -32,10 +32,21 @@ app.post('/.netlify/functions/gemini-proxy', async (req, res) => {
     
     const data = await response.json();
     if (!response.ok || data.error) {
-      return res.status(response.status).json({ error: { message: data.error?.message || 'API Error' } });
+      console.error('Gemini API Error details:', JSON.stringify(data, null, 2));
+      const statusCode = response.status || 500;
+      return res.status(statusCode).json({ 
+        error: { 
+          message: data.error?.message || 'API Error',
+          details: data.error
+        } 
+      });
     }
     
-    res.json({ text: data.candidates[0]?.content?.parts[0]?.text || '' });
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    if (!text) {
+        console.error('Empty response from Gemini:', JSON.stringify(data, null, 2));
+    }
+    res.json({ text });
   } catch (error) {
     res.status(500).json({ error: { message: error.message } });
   }

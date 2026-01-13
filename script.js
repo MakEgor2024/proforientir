@@ -437,25 +437,22 @@ async function callGeminiApi(button, promptText) {
     }
     button.disabled = true;
     try {
-        const response = await fetch('/.netlify/functions/gemini-proxy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: promptText }) });
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:400',message:'API response received',data:{status:response.status,ok:response.ok},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-        // #endregion
-        if (!response.ok) { 
-            const err = await response.json().catch(()=>({error:{message:response.statusText}})); 
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:401',message:'API error',data:{status:response.status,error:err.error?.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-            // #endregion
-            throw new Error(err.error?.message || response.statusText); 
+        const response = await fetch('/.netlify/functions/gemini-proxy', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ prompt: promptText }) 
+        });
+        
+        const data = await response.json();
+        if (!response.ok) {
+            console.error("Gemini Proxy Error:", data.error);
+            const errorMsg = data.error?.message || `Ошибка сервера: ${response.status}`;
+            throw new Error(errorMsg);
         }
-        const result = await response.json();
-        if (!result || !result.text) {
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:402',message:'Invalid API response',data:{hasResult:!!result,hasText:!!result?.text},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-            // #endregion
-            throw new Error('Пустой ответ от API');
-        }
-        return result.text;
+        
+        const resultText = data.text;
+        if (!resultText) throw new Error("ИИ вернул пустой ответ.");
+        return resultText;
     } catch (error) {
         console.error("Error calling Gemini Proxy:", error);
         // #region agent log
