@@ -356,6 +356,18 @@ function clearProfileData() {
 }
 
 // --- Utility Functions ---
+// Footer scroll logic
+window.addEventListener('scroll', () => {
+    const footer = document.querySelector('footer');
+    if (footer) {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 20) {
+            footer.classList.add('visible');
+        } else {
+            footer.classList.remove('visible');
+        }
+    }
+});
+
 function initLucideIcons() { try { if (window.lucide) { lucide.createIcons(); } } catch (error) { console.error("Error initializing Lucide icons:", error); } }
 function initTheme() { const savedTheme = localStorage.getItem('proforientirTheme') || 'light'; document.body.className = savedTheme; themeSwitchBtn.innerHTML = `<i class="icon icon-only" data-lucide="${savedTheme === 'dark' ? 'sun' : 'moon'}"></i>`; themeSwitchBtn.title = savedTheme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на темную тему'; initLucideIcons(); }
 function toggleTheme() { const newTheme = document.body.classList.toggle('dark') ? 'dark' : 'light'; localStorage.setItem('proforientirTheme', newTheme); themeSwitchBtn.innerHTML = `<i class="icon icon-only" data-lucide="${newTheme === 'dark' ? 'sun' : 'moon'}"></i>`; themeSwitchBtn.title = newTheme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на темную тему'; initLucideIcons(); }

@@ -24,7 +24,7 @@ body.dark {
     --card-bg: var(--card-bg-dark); --border-color: var(--border-color-dark);
 }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', sans-serif; margin: 0; padding: 70px 0 90px; background: var(--bg-color); color: var(--text-color); transition: background-color var(--transition), color var(--transition); line-height: 1.6; font-size: 16px; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Inter', sans-serif; margin: 0; padding: 60px 0 0; background: var(--bg-color); color: var(--text-color); transition: background-color var(--transition), color var(--transition); line-height: 1.6; font-size: 16px; -webkit-tap-highlight-color: transparent; }
 ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-track { background: var(--bg-color); } ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: var(--text-muted-color); }
 .hidden { display: none !important; }
 .icon { display: inline-block; vertical-align: middle; width: 1.1em; height: 1.1em; stroke-width: 2; margin-right: 0.3em; margin-bottom: 0; }
@@ -200,7 +200,42 @@ button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow
 button .icon { margin-bottom: 0; }
 .toast { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%) translateY(150%); background: #2c3e50; color: white; padding: 0.6rem 1.2rem; border-radius: var(--border-radius-md); box-shadow: var(--shadow-lg); transition: transform 0.4s ease-out, opacity 0.4s ease-out; z-index: 3000; opacity: 0; pointer-events: none; font-size: 0.85rem; }
 body.dark .toast { background: var(--accent-color); color: #333; } .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-footer { background: var(--card-bg); color: var(--text-muted-color); text-align: center; padding: 0.8rem; position: fixed; bottom: 0; width: 100%; font-size: 0.8rem; z-index: 900; transition: var(--transition); border-top: 1px solid var(--border-color); }
+footer { 
+    background: var(--card-bg); 
+    color: var(--text-muted-color); 
+    text-align: center; 
+    padding: 0.8rem; 
+    position: fixed; 
+    bottom: -60px; /* Скрыт по умолчанию */
+    left: 0;
+    width: 100%; 
+    font-size: 0.8rem; 
+    z-index: 2100; 
+    transition: transform 0.5s ease; 
+    border-top: 1px solid var(--border-color); 
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+}
+
+footer.visible {
+    transform: translateY(-60px); /* Выплывает вверх */
+}
+
+/* Мобильная адаптация (iPhone и другие устройства) */
+@media (max-width: 768px) {
+    body { padding-top: 50px; }
+    header { padding: 0.25rem 0.5rem; }
+    .header-content { gap: 0.25rem; }
+    .logo-text-main { font-size: 20px; }
+    .nav-text { display: none; } /* Только иконки в меню */
+    nav a, #profile-btn, #login-btn, #logout-btn { padding: 0.5rem; font-size: 1.1rem; }
+    .icon { width: 1.3em; height: 1.3em; margin-right: 0; }
+    section { padding: 1rem 0.75rem; }
+    h2 { font-size: 1.3rem; }
+    .uni-grid, .professions-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+    .modal-content { max-width: 95vw; margin: 1rem auto; padding: 1rem; }
+    .filter-sort-container { flex-direction: column; align-items: stretch; }
+    .filter-sort-container select { width: 100%; }
+}
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes slideIn { from { transform: translateY(-15px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 @media (max-width: 768px) {
