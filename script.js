@@ -416,7 +416,35 @@ function openModal(id) { const modal = document.getElementById(id); if (modal) {
 function closeModals() { document.querySelectorAll('.modal').forEach(modal => { modal.style.display = 'none'; }); document.body.style.overflow = 'auto'; }
 function renderTestQuestions() { questionsContainer.innerHTML = testQuestions.map((q, i) => `<div class="question"><p>${q.question}</p><div class="options"><fieldset><legend>Ответы ${i+1}</legend>${q.options.map((opt, oi) => `<label><input type="radio" name="q${i+1}" value="${oi}" required> ${opt.text}</label>`).join('')}</fieldset></div></div>`).join(''); }
 function handleTestSubmit(e) { e.preventDefault(); const formData = new FormData(e.target); const scores = Object.fromEntries(Object.values(HOLLAND_TYPES).map(type => [type, 0])); let answeredCount = 0; for (let i = 0; i < testQuestions.length; i++) { const answer = formData.get(`q${i+1}`); if (answer !== null) { answeredCount++; testQuestions[i].options[parseInt(answer)].types.forEach(type => scores[type]++); } } if (answeredCount < testQuestions.length) { showToast("Пожалуйста, ответьте на все вопросы теста."); return; } const sortedScores = Object.entries(scores).sort(([,a],[,b])=>b-a); lastTestResultTypes = sortedScores.slice(0, 3).map(s => s[0]); showResults(lastTestResultTypes); resultsSection.scrollIntoView({ behavior: 'smooth' }); }
-function showResults(resultTypes) { careerTestForm.classList.add('hidden'); testStartDiv.classList.add('hidden'); resultsSection.classList.remove('hidden'); resultTextDiv.innerHTML = `<h3>Ваши ведущие типы: ${resultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.name||t).join(' / ')}</h3> <p>${resultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.description||'').join(' ')}</p>`; resultExplanationDiv.innerHTML = `<p>${resultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.explanation||'').join(' ')}</p>`; resultTypesDiv.innerHTML = resultTypes.map(createTypeTagHTML).join(''); const matchingProfessions = professions.filter(p => resultTypes.every(rt => p.types.includes(rt))).slice(0, 5); const resultsGrid = topMatchingProfessionsDiv.querySelector('.professions-grid'); if (matchingProfessions.length > 0) { topMatchingProfessionsDiv.classList.remove('hidden'); topMatchingProfessionsDiv.querySelector('h4').textContent = 'Наиболее подходящие профессии:'; resultsGrid.innerHTML = matchingProfessions.map(p => createProfessionCardHTML(p)).join(''); } else { topMatchingProfessionsDiv.classList.remove('hidden'); topMatchingProfessionsDiv.querySelector('h4').textContent = 'Подходящие профессии не найдены'; resultsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">Точных совпадений по всем типам не найдено. Нажмите "Показать все подходящие профессии", чтобы увидеть более широкий список.</p>'; } initLucideIcons(); }
+function showResults(resultTypes) { 
+    careerTestForm.classList.add('hidden'); 
+    testStartDiv.classList.add('hidden'); 
+    resultsSection.classList.remove('hidden'); 
+    resultTextDiv.innerHTML = `<h3>Ваши ведущие типы: ${resultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.name||t).join(' / ')}</h3> <p>${resultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.description||'').join(' ')}</p>`; 
+    resultExplanationDiv.innerHTML = `<p>${resultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.explanation||'').join(' ')}</p>`; 
+    resultTypesDiv.innerHTML = resultTypes.map(createTypeTagHTML).join(''); 
+    
+    // Improved matching: filter professions that match ANY of the result types and sort by degree of match
+    const matchingProfessions = professions.filter(p => resultTypes.some(rt => p.types.includes(rt)))
+        .sort((a, b) => {
+            const aMatches = a.types.filter(t => resultTypes.includes(t)).length;
+            const bMatches = b.types.filter(t => resultTypes.includes(t)).length;
+            return bMatches - aMatches;
+        })
+        .slice(0, 8);
+
+    const resultsGrid = topMatchingProfessionsDiv.querySelector('.professions-grid'); 
+    if (matchingProfessions.length > 0) { 
+        topMatchingProfessionsDiv.classList.remove('hidden'); 
+        topMatchingProfessionsDiv.querySelector('h4').textContent = 'Наиболее подходящие профессии:'; 
+        resultsGrid.innerHTML = matchingProfessions.map(p => createProfessionCardHTML(p)).join(''); 
+    } else { 
+        topMatchingProfessionsDiv.classList.remove('hidden'); 
+        topMatchingProfessionsDiv.querySelector('h4').textContent = 'Подходящие профессии не найдены'; 
+        resultsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">Точных совпадений не найдено. Попробуйте поискать в каталоге.</p>'; 
+    } 
+    initLucideIcons(); 
+}
 function createProfessionCardHTML(prof, searchTerm = '') { return ` <div class="profession-card" data-profession-name-raw="${prof.name}" data-profession-desc-raw="${prof.description}"> <h4>${highlightText(prof.name, searchTerm)}</h4> <p>${highlightText(prof.description, searchTerm)}</p> <div class="profession-types">${prof.types.map(createTypeTagHTML).join('')}</div> <div class="profession-card-actions"> <button type="button" class="show-unis-for-profession-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="graduation-cap"></i>Показать ВУЗы</button> <button type="button" class="ai-profession-details-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="sparkles"></i>✨ Узнать больше с ИИ</button> </div> </div> `; }
 function renderProfessions(profsToRender = professions, filterTypes = []) { currentProfessionFilterTypes = filterTypes; let filtered = profsToRender; if (filterTypes.length > 0) filtered = profsToRender.filter(p => filterTypes.some(ft => p.types.includes(ft))); const searchTerm = professionSearchInput.value.toLowerCase().trim(); if (searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm) || (p.keywords||[]).some(k=>k.toLowerCase().includes(searchTerm))); currentFilteredProfessions = filtered; const toDisplay = currentFilteredProfessions.slice(0, professionsVisibleCount); professionsListDiv.innerHTML = toDisplay.length ? toDisplay.map(p => createProfessionCardHTML(p, searchTerm)).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">Профессии не найдены.</p>'; showMoreProfessionsContainer.classList.toggle('hidden', currentFilteredProfessions.length <= professionsVisibleCount); resetProfessionFilterBtn.classList.toggle('hidden', !searchTerm && filterTypes.length === 0); initLucideIcons(); }
 function showMoreProfessions() { professionsVisibleCount += PROFESSIONS_PAGE_SIZE; renderProfessions(professions, currentProfessionFilterTypes); }
