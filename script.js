@@ -412,7 +412,12 @@ async function openUniModal(uniName) {
             uniModalImage.src = `https://placehold.co/600x300/e2e8f0/94a3b8?text=${uniName.substring(0, 10)}&font=inter`; 
         }; 
         uniModalPrograms.textContent = currentUniForModal.programs.join(', '); 
-        uniModalInfo.textContent = currentUniForModal.info; 
+        // Show extended info if available, otherwise fallback to basic info
+        if (currentUniForModal.extendedInfo) {
+            uniModalInfo.innerHTML = `<p class="extended-info">${currentUniForModal.extendedInfo}</p>`;
+        } else {
+            uniModalInfo.textContent = currentUniForModal.info;
+        }
         uniModalBudget.textContent = currentUniForModal.budgetPlaces || 'н/д'; 
         uniModalAvgScore.textContent = currentUniForModal.avgScore || 'н/д'; 
         uniModalEmployment.textContent = `${currentUniForModal.employmentRate || 'н/д'}%`; 
