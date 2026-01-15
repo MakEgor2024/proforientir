@@ -1,8 +1,7 @@
 [
   {
-    "name": "МГУ им. М.В. Ломоносова",
+    "name": "Московский государственный университет им. М.В. Ломоносова (МГУ)",
     "type": "science",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1541339907198-e08756eaa539?q=80&w=1080",
     "programs": ["Естественные науки", "Математика", "Физика", "Химия", "Биология", "Геология", "Экономика", "IT", "Юриспруденция", "Филология", "История", "Психология", "Журналистика", "Экология"],
     "info": "Старейший и крупнейший классический университет России.",
@@ -15,7 +14,6 @@
   {
     "name": "МГТУ им. Н.Э. Баумана",
     "type": "tech",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
     "programs": ["Инженерия", "Машиностроение", "Робототехника", "IT", "Аэрокосмос"],
     "info": "Ведущий технический университет России.",
@@ -23,25 +21,23 @@
     "budgetPlaces": 2550,
     "employmentRate": 93,
     "reputation": 9.5,
-    "programKeywords": ["инженер", "программист", "робототехник", "конструктор", "машиностроитель"]
+    "programKeywords": ["инженер", "программист", "робототехник", "конструктор"]
   },
   {
-    "name": "НИУ ВШЭ",
+    "name": "НИУ Высшая школа экономики (ВШЭ)",
     "type": "economics",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
-    "programs": ["Экономика", "Дизайн", "Право", "Психология", "IT", "Менеджмент"],
+    "programs": ["Экономика", "Дизайн", "Право", "Психология", "IT"],
     "info": "Лидер в области социально-экономических наук.",
     "avgScore": 94,
     "budgetPlaces": 3520,
     "employmentRate": 94,
     "reputation": 9.6,
-    "programKeywords": ["экономист", "дизайнер", "юрист", "аналитик", "менеджер", "социолог"]
+    "programKeywords": ["экономист", "дизайнер", "юрист", "аналитик"]
   },
   {
     "name": "МФТИ (Физтех)",
     "type": "tech",
-    "city": "Долгопрудный",
     "imageUrl": "https://images.unsplash.com/photo-1554475901-45389a415a57?q=80&w=1080",
     "programs": ["Физика", "Математика", "IT", "Биофизика"],
     "info": "Элитный технический вуз России.",
@@ -49,350 +45,323 @@
     "budgetPlaces": 910,
     "employmentRate": 96,
     "reputation": 9.9,
-    "programKeywords": ["физик", "математик", "программист", "исследователь", "ученый"]
+    "programKeywords": ["физик", "математик", "программист", "исследователь"]
   },
   {
     "name": "МГИМО",
     "type": "international",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080",
-    "programs": ["Международные отношения", "Право", "Журналистика", "Мировая экономика"],
+    "programs": ["Международные отношения", "Право", "Журналистика"],
     "info": "Главный вуз по подготовке дипломатов.",
     "avgScore": 96,
     "budgetPlaces": 1210,
     "employmentRate": 95,
     "reputation": 9.8,
-    "programKeywords": ["дипломат", "юрист", "журналист", "политолог"]
+    "programKeywords": ["дипломат", "юрист", "журналист"]
   },
   {
-    "name": "ПМГМУ им. И.М. Сеченова",
+    "name": "Первый МГМУ им. И.М. Сеченова",
     "type": "medical",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1080",
-    "programs": ["Лечебное дело", "Стоматология", "Фармация", "Педиатрия"],
+    "programs": ["Медицина", "Стоматология", "Фармация"],
     "info": "Старейший медицинский вуз страны.",
     "avgScore": 90,
     "budgetPlaces": 1820,
     "employmentRate": 94,
     "reputation": 9.4,
-    "programKeywords": ["врач", "стоматолог", "фармацевт", "педиатр", "хирург"]
+    "programKeywords": ["врач", "стоматолог", "фармацевт"]
   },
   {
     "name": "НИЯУ МИФИ",
     "type": "tech",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1554475901-45389a415a57?q=80&w=1080",
-    "programs": ["Ядерная физика", "IT", "Информационная безопасность", "Электроника"],
+    "programs": ["Ядерная физика", "IT", "Безопасность"],
     "info": "Центр ядерных исследований и IT.",
     "avgScore": 91,
     "budgetPlaces": 1250,
     "employmentRate": 95,
     "reputation": 9.3,
-    "programKeywords": ["физик-ядерщик", "программист", "специалист по кибербезопасности", "инженер"]
+    "programKeywords": ["физик", "программист"]
   },
   {
     "name": "РТУ МИРЭА",
     "type": "tech",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
-    "programs": ["IT", "Кибербезопасность", "Электроника", "Химическая технология", "Робототехника"],
+    "programs": ["IT", "Кибербезопасность", "Электроника"],
     "info": "Ведущий вуз в области электроники и IT.",
     "avgScore": 84,
     "budgetPlaces": 3100,
     "employmentRate": 90,
     "reputation": 8.9,
-    "programKeywords": ["программист", "инженер", "химик", "робототехник"]
+    "programKeywords": ["программист", "инженер"]
   },
   {
     "name": "РНИМУ им. Н.И. Пирогова",
     "type": "medical",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1080",
-    "programs": ["Педиатрия", "Лечебное дело", "Биомедицина", "Стоматология"],
+    "programs": ["Педиатрия", "Лечебное дело", "Биомедицина"],
     "info": "Второй мед, лидер медицинского образования.",
     "avgScore": 89,
     "budgetPlaces": 1750,
     "employmentRate": 93,
     "reputation": 9.3,
-    "programKeywords": ["врач", "педиатр", "ученый", "генетик"]
+    "programKeywords": ["врач", "педиатр", "ученый"]
   },
   {
     "name": "Финансовый университет",
     "type": "finance",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
-    "programs": ["Финансы", "Аудит", "Бизнес", "Право", "Экономика"],
+    "programs": ["Финансы", "Аудит", "Бизнес", "Право"],
     "info": "Кузница финансовых кадров.",
     "avgScore": 91,
     "budgetPlaces": 1850,
     "employmentRate": 92,
     "reputation": 9.4,
-    "programKeywords": ["финансист", "аудитор", "менеджер", "экономист", "банкир"]
+    "programKeywords": ["финансист", "аудитор", "менеджер"]
   },
   {
     "name": "РАНХиГС",
     "type": "management",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080",
-    "programs": ["Госуправление", "Менеджмент", "Политология", "Юриспруденция"],
+    "programs": ["Госуправление", "Менеджмент", "Политология"],
     "info": "Президентская академия.",
     "avgScore": 88,
     "budgetPlaces": 2240,
     "employmentRate": 91,
     "reputation": 9.0,
-    "programKeywords": ["управленец", "чиновник", "менеджер", "политолог", "юрист"]
+    "programKeywords": ["управленец", "чиновник", "менеджер"]
   },
   {
     "name": "РУДН",
     "type": "international",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080",
-    "programs": ["Лингвистика", "Юриспруденция", "Медицина", "Международные отношения"],
+    "programs": ["Лингвистика", "Юриспруденция", "Медицина"],
     "info": "Самый интернациональный вуз.",
     "avgScore": 86,
     "budgetPlaces": 1530,
     "employmentRate": 89,
     "reputation": 9.1,
-    "programKeywords": ["дипломат", "переводчик", "врач", "юрист", "лингвист"]
+    "programKeywords": ["дипломат", "переводчик", "врач"]
   },
   {
     "name": "НИУ МГСУ",
     "type": "civil_engineering",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080",
-    "programs": ["Строительство", "Архитектура", "Проектирование", "Урбанистика"],
+    "programs": ["Строительство", "Архитектура", "Проектирование"],
     "info": "Главный строительный вуз страны.",
     "avgScore": 82,
     "budgetPlaces": 1850,
     "employmentRate": 88,
     "reputation": 8.7,
-    "programKeywords": ["строитель", "архитектор", "проектировщик", "инженер-строитель"]
+    "programKeywords": ["строитель", "архитектор"]
   },
   {
     "name": "МАИ",
     "type": "aviation",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1080",
-    "programs": ["Авиастроение", "Космонавтика", "IT", "Управление"],
+    "programs": ["Авиастроение", "Космонавтика", "IT"],
     "info": "Лидер аэрокосмического образования.",
     "avgScore": 83,
     "budgetPlaces": 2950,
     "employmentRate": 91,
     "reputation": 9.0,
-    "programKeywords": ["конструктор", "пилот", "инженер", "авиаконструктор"]
+    "programKeywords": ["конструктор", "пилот", "инженер"]
   },
   {
     "name": "РЭУ им. Г.В. Плеханова",
     "type": "economics",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1080",
-    "programs": ["Маркетинг", "Экономика", "Торговля", "Менеджмент"],
+    "programs": ["Маркетинг", "Экономика", "Торговля"],
     "info": "Старейший экономический вуз.",
     "avgScore": 89,
     "budgetPlaces": 1120,
     "employmentRate": 91,
     "reputation": 9.2,
-    "programKeywords": ["маркетолог", "экономист", "товаровед", "менеджер"]
+    "programKeywords": ["маркетолог", "экономист"]
   },
   {
     "name": "МГЛУ (ИнЯз)",
     "type": "humanities",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1080",
-    "programs": ["Лингвистика", "Перевод", "PR", "Журналистика"],
+    "programs": ["Лингвистика", "Перевод", "PR"],
     "info": "Главный языковой вуз.",
     "avgScore": 88,
     "budgetPlaces": 710,
     "employmentRate": 89,
     "reputation": 9.1,
-    "programKeywords": ["переводчик", "лингвист", "филолог", "pr-специалист"]
+    "programKeywords": ["переводчик", "лингвист"]
   },
   {
     "name": "РГГУ",
     "type": "humanities",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1541339907198-e08756eaa539?q=80&w=1080",
-    "programs": ["История", "Культурология", "Психология", "Искусствоведение"],
+    "programs": ["История", "Культурология", "Психология"],
     "info": "Ведущий гуманитарный центр.",
     "avgScore": 85,
     "budgetPlaces": 1050,
     "employmentRate": 86,
     "reputation": 8.8,
-    "programKeywords": ["историк", "психолог", "искусствовед", "культуролог"]
+    "programKeywords": ["историк", "психолог"]
   },
   {
     "name": "МПГУ",
     "type": "pedagogy",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=1080",
-    "programs": ["Педагогика", "Психология", "Дефектология", "Логопедия"],
+    "programs": ["Педагогика", "Психология", "Дефектология"],
     "info": "Первый педагогический вуз.",
     "avgScore": 81,
     "budgetPlaces": 2150,
     "employmentRate": 90,
     "reputation": 8.9,
-    "programKeywords": ["учитель", "педагог", "логопед", "воспитатель"]
+    "programKeywords": ["учитель", "педагог"]
   },
   {
     "name": "ВГИК",
     "type": "cinema",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1080",
-    "programs": ["Режиссура", "Актерское мастерство", "Операторство", "Киноведение"],
+    "programs": ["Режиссура", "Актерское мастерство", "Операторство"],
     "info": "Главная киношкола страны.",
     "avgScore": 84,
     "budgetPlaces": 280,
     "employmentRate": 85,
     "reputation": 9.5,
-    "programKeywords": ["режиссер", "актер", "оператор", "киновед", "продюсер"]
+    "programKeywords": ["режиссер", "актер"]
   },
   {
-    "name": "СПбГУ",
+    "name": "Санкт-Петербургский государственный университет (СПбГУ)",
     "type": "science",
-    "city": "Санкт-Петербург",
     "imageUrl": "https://images.unsplash.com/photo-1541339907198-e08756eaa539?q=80&w=1080",
-    "programs": ["Наука", "Искусство", "Менеджмент", "Право", "Медицина"],
+    "programs": ["Наука", "Искусство", "Менеджмент"],
     "info": "Один из старейших вузов России.",
     "avgScore": 92,
     "budgetPlaces": 3200,
     "employmentRate": 90,
     "reputation": 9.9,
-    "programKeywords": ["ученый", "менеджер", "юрист", "врач", "искусствовед"]
+    "programKeywords": ["ученый", "менеджер"]
   },
   {
     "name": "ИТМО",
     "type": "tech",
-    "city": "Санкт-Петербург",
     "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
-    "programs": ["IT", "Фотоника", "Робототехника", "Программная инженерия"],
+    "programs": ["IT", "Фотоника", "Робототехника"],
     "info": "Первый неклассический университет.",
     "avgScore": 93,
     "budgetPlaces": 1300,
     "employmentRate": 94,
     "reputation": 9.5,
-    "programKeywords": ["программист", "инженер", "веб-разработчик", "робототехник"]
+    "programKeywords": ["программист", "инженер"]
   },
   {
     "name": "СПбПУ (Политех)",
     "type": "tech",
-    "city": "Санкт-Петербург",
     "imageUrl": "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1080",
-    "programs": ["Инженерия", "IT", "Энергетика", "Машиностроение"],
+    "programs": ["Инженерия", "IT", "Энергетика"],
     "info": "Ведущий технический вуз Петербурга.",
     "avgScore": 87,
     "budgetPlaces": 2800,
     "employmentRate": 91,
     "reputation": 9.2,
-    "programKeywords": ["инженер", "энергетик", "машиностроитель", "программист"]
+    "programKeywords": ["инженер", "энергетик"]
   },
   {
-    "name": "ТГУ",
+    "name": "Томский государственный университет (ТГУ)",
     "type": "science",
-    "city": "Томск",
     "imageUrl": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080",
-    "programs": ["Наука", "Гуманитарные науки", "IT", "Биология"],
+    "programs": ["Наука", "Гуманитарные науки", "IT"],
     "info": "Старейший вуз Сибири.",
     "avgScore": 85,
     "budgetPlaces": 2100,
     "employmentRate": 88,
     "reputation": 9.0,
-    "programKeywords": ["исследователь", "филолог", "биолог", "программист"]
+    "programKeywords": ["исследователь", "филолог"]
   },
   {
-    "name": "ТПУ",
+    "name": "Томский политехнический университет (ТПУ)",
     "type": "tech",
-    "city": "Томск",
     "imageUrl": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1080",
-    "programs": ["Геология", "Энергетика", "IT", "Нефтегазовое дело"],
+    "programs": ["Геология", "Энергетика", "IT"],
     "info": "Лидер инженерного образования в Сибири.",
     "avgScore": 83,
     "budgetPlaces": 1900,
     "employmentRate": 89,
     "reputation": 8.9,
-    "programKeywords": ["геолог", "инженер", "нефтяник", "энергетик"]
+    "programKeywords": ["геолог", "инженер"]
   },
   {
-    "name": "НГУ",
+    "name": "Новосибирский государственный университет (НГУ)",
     "type": "science",
-    "city": "Новосибирск",
     "imageUrl": "https://images.unsplash.com/photo-1554475901-45389a415a57?q=80&w=1080",
-    "programs": ["Физика", "Математика", "Биология", "Геология"],
+    "programs": ["Физика", "Математика", "Биология"],
     "info": "Расположен в сердце Академгородка.",
     "avgScore": 90,
     "budgetPlaces": 1100,
     "employmentRate": 92,
     "reputation": 9.6,
-    "programKeywords": ["ученый", "физик", "математик", "биолог"]
+    "programKeywords": ["ученый", "физик"]
   },
   {
-    "name": "УрФУ",
+    "name": "Уральский федеральный университет (УрФУ)",
     "type": "tech",
-    "city": "Екатеринбург",
     "imageUrl": "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080",
-    "programs": ["Инженерия", "Экономика", "IT", "Гуманитарные науки"],
+    "programs": ["Инженерия", "Экономика", "IT"],
     "info": "Крупнейший вуз Урала.",
     "avgScore": 82,
     "budgetPlaces": 6000,
     "employmentRate": 88,
     "reputation": 8.8,
-    "programKeywords": ["инженер", "менеджер", "программист", "экономист"]
+    "programKeywords": ["инженер", "менеджер"]
   },
   {
-    "name": "КФУ",
+    "name": "Казанский федеральный университет (КФУ)",
     "type": "science",
-    "city": "Казань",
     "imageUrl": "https://images.unsplash.com/photo-1541339907198-e08756eaa539?q=80&w=1080",
-    "programs": ["Медицина", "Юриспруденция", "IT", "Филология"],
+    "programs": ["Медицина", "Юриспруденция", "IT"],
     "info": "Один из старейших вузов в Казани.",
     "avgScore": 84,
     "budgetPlaces": 4500,
     "employmentRate": 87,
     "reputation": 9.1,
-    "programKeywords": ["юрист", "врач", "филолог", "программист"]
+    "programKeywords": ["юрист", "врач"]
   },
   {
     "name": "ДВФУ",
     "type": "science",
-    "city": "Владивосток",
     "imageUrl": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080",
-    "programs": ["Востоковедение", "Морская биология", "IT", "Юриспруденция"],
+    "programs": ["Востоковедение", "Морская биология", "IT"],
     "info": "Главный вуз Дальнего Востока.",
     "avgScore": 80,
     "budgetPlaces": 4000,
     "employmentRate": 85,
     "reputation": 8.7,
-    "programKeywords": ["востоковед", "биолог", "юрист", "программист"]
+    "programKeywords": ["востоковед", "биолог"]
   },
   {
-    "name": "ЮФУ",
+    "name": "Южный федеральный университет (ЮФУ)",
     "type": "science",
-    "city": "Ростов-на-Дону",
     "imageUrl": "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080",
-    "programs": ["Педагогика", "Наука", "IT", "Архитектура"],
+    "programs": ["Педагогика", "Наука", "IT"],
     "info": "Ведущий вуз Юга России.",
     "avgScore": 81,
     "budgetPlaces": 3800,
     "employmentRate": 86,
     "reputation": 8.6,
-    "programKeywords": ["учитель", "ученый", "архитектор", "программист"]
+    "programKeywords": ["учитель", "ученый"]
   },
   {
-    "name": "СФУ",
+    "name": "Сибирский федеральный университет (СФУ)",
     "type": "tech",
-    "city": "Красноярск",
     "imageUrl": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1080",
-    "programs": ["Строительство", "Горное дело", "IT", "Менеджмент"],
+    "programs": ["Строительство", "Горное дело", "IT"],
     "info": "Расположен в Красноярске.",
     "avgScore": 79,
     "budgetPlaces": 5500,
     "employmentRate": 84,
     "reputation": 8.5,
-    "programKeywords": ["инженер", "программист", "шахтер", "менеджер"]
+    "programKeywords": ["инженер", "программист"]
   },
   {
-    "name": "МГЮА им. О.Е. Кутафина",
+    "name": "Московский государственный юридический университет (МГЮА)",
     "type": "legal",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
     "programs": ["Юриспруденция", "Право", "Судебная экспертиза"],
     "info": "Ведущий юридический вуз.",
@@ -400,253 +369,234 @@
     "budgetPlaces": 600,
     "employmentRate": 95,
     "reputation": 9.7,
-    "programKeywords": ["юрист", "адвокат", "судья", "прокурор"]
+    "programKeywords": ["юрист", "адвокат", "судья"]
   },
   {
     "name": "РХТУ им. Д.И. Менделеева",
     "type": "science",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1554475901-45389a415a57?q=80&w=1080",
-    "programs": ["Химия", "Биотехнология", "Экология", "Химическая технология"],
+    "programs": ["Химия", "Биотехнология", "Экология"],
     "info": "Главный химический вуз.",
     "avgScore": 83,
     "budgetPlaces": 1200,
     "employmentRate": 89,
     "reputation": 9.0,
-    "programKeywords": ["химик", "эколог", "биотехнолог"]
+    "programKeywords": ["химик", "эколог"]
   },
   {
     "name": "МАДИ",
     "type": "tech",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
-    "programs": ["Автомобилестроение", "Дорожное строительство", "Логистика"],
+    "programs": ["Автомобилестроение", "Дорожное строительство"],
     "info": "Транспортно-дорожный университет.",
     "avgScore": 78,
     "budgetPlaces": 1400,
     "employmentRate": 88,
     "reputation": 8.4,
-    "programKeywords": ["инженер", "механик", "логист", "дорожник"]
+    "programKeywords": ["инженер", "механик"]
   },
   {
     "name": "НИУ МИЭТ",
     "type": "tech",
-    "city": "Зеленоград",
     "imageUrl": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1080",
-    "programs": ["Электроника", "IT", "Дизайн", "Микроэлектроника"],
+    "programs": ["Электроника", "IT", "Дизайн"],
     "info": "Центр российской микроэлектроники.",
     "avgScore": 85,
     "budgetPlaces": 800,
     "employmentRate": 93,
     "reputation": 9.1,
-    "programKeywords": ["программист", "инженер", "электронщик"]
+    "programKeywords": ["программист", "инженер"]
   },
   {
     "name": "МГУПП",
     "type": "science",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1080",
-    "programs": ["Пищевые технологии", "Ветеринария", "Биотехнология"],
+    "programs": ["Пищевые технологии", "Ветеринария"],
     "info": "Университет пищевых производств.",
     "avgScore": 77,
     "budgetPlaces": 1100,
     "employmentRate": 87,
     "reputation": 8.2,
-    "programKeywords": ["технолог", "врач-ветеринар", "пищевик"]
+    "programKeywords": ["технолог", "врач"]
   },
   {
     "name": "РГАУ-МСХА им. К.А. Тимирязева",
     "type": "science",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080",
-    "programs": ["Агрономия", "Зоотехния", "Экономика", "Экология"],
+    "programs": ["Агрономия", "Зоотехния", "Экономика"],
     "info": "Главный аграрный вуз страны.",
     "avgScore": 75,
     "budgetPlaces": 2500,
     "employmentRate": 85,
     "reputation": 8.8,
-    "programKeywords": ["агроном", "экономист", "зоотехник", "эколог"]
+    "programKeywords": ["агроном", "экономист"]
   },
   {
     "name": "МГМСУ им. А.И. Евдокимова",
     "type": "medical",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1080",
-    "programs": ["Стоматология", "Лечебное дело", "Психология"],
+    "programs": ["Стоматология", "Лечебное дело"],
     "info": "Главный стоматологический вуз.",
     "avgScore": 88,
     "budgetPlaces": 900,
     "employmentRate": 94,
     "reputation": 9.3,
-    "programKeywords": ["стоматолог", "врач", "психолог"]
+    "programKeywords": ["стоматолог", "врач"]
   },
   {
     "name": "МТУСИ",
     "type": "tech",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
-    "programs": ["Связь", "IT", "Информационная безопасность", "Телекоммуникации"],
+    "programs": ["Связь", "IT", "Информационная безопасность"],
     "info": "Вуз связи и информатики.",
     "avgScore": 82,
     "budgetPlaces": 1300,
     "employmentRate": 91,
     "reputation": 8.6,
-    "programKeywords": ["программист", "инженер", "связист"]
+    "programKeywords": ["программист", "инженер"]
   },
   {
     "name": "ГУУ",
     "type": "management",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
-    "programs": ["Управление", "HR", "Маркетинг", "Бизнес-информатика"],
+    "programs": ["Управление", "HR", "Маркетинг"],
     "info": "Государственный университет управления.",
     "avgScore": 84,
     "budgetPlaces": 1100,
     "employmentRate": 89,
     "reputation": 8.8,
-    "programKeywords": ["менеджер", "маркетолог", "hr-менеджер"]
+    "programKeywords": ["менеджер", "маркетолог"]
   },
   {
     "name": "РГСУ",
     "type": "humanities",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080",
-    "programs": ["Социальная работа", "Психология", "Право", "Социология"],
+    "programs": ["Социальная работа", "Психология", "Право"],
     "info": "Российский государственный социальный университет.",
     "avgScore": 79,
     "budgetPlaces": 1600,
     "employmentRate": 84,
     "reputation": 8.3,
-    "programKeywords": ["социолог", "психолог", "соцработник"]
+    "programKeywords": ["социолог", "психолог"]
   },
   {
     "name": "МГППУ",
     "type": "pedagogy",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=1080",
-    "programs": ["Психология", "Педагогика", "Психотерапия"],
+    "programs": ["Психология", "Педагогика"],
     "info": "Психолого-педагогический университет.",
     "avgScore": 82,
     "budgetPlaces": 1000,
     "employmentRate": 88,
     "reputation": 8.7,
-    "programKeywords": ["психолог", "педагог", "психотерапевт"]
+    "programKeywords": ["психолог", "педагог"]
   },
   {
     "name": "МГТУ СТАНКИН",
     "type": "tech",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1080",
-    "programs": ["Машиностроение", "Робототехника", "IT", "Автоматизация"],
+    "programs": ["Машиностроение", "Робототехника", "IT"],
     "info": "Технологический университет в области машиностроения.",
     "avgScore": 80,
     "budgetPlaces": 900,
     "employmentRate": 89,
     "reputation": 8.5,
-    "programKeywords": ["инженер", "программист", "машиностроитель"]
+    "programKeywords": ["инженер", "программист"]
   },
   {
     "name": "МИИГАиК",
     "type": "science",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080",
-    "programs": ["Геодезия", "Картография", "Землеустройство", "Фотоника"],
+    "programs": ["Геодезия", "Картография", "Землеустройство"],
     "info": "Университет геодезии и картографии.",
     "avgScore": 79,
     "budgetPlaces": 700,
     "employmentRate": 87,
     "reputation": 8.4,
-    "programKeywords": ["картограф", "инженер", "геодезист"]
+    "programKeywords": ["картограф", "инженер"]
   },
   {
     "name": "МГХПА им. С.Г. Строганова",
     "type": "art",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1541339907198-e08756eaa539?q=80&w=1080",
-    "programs": ["Дизайн", "Живопись", "Реставрация", "Монументальное искусство"],
+    "programs": ["Дизайн", "Живопись", "Реставрация"],
     "info": "Академия промышленного и прикладного искусства.",
     "avgScore": 86,
     "budgetPlaces": 250,
     "employmentRate": 82,
     "reputation": 9.4,
-    "programKeywords": ["дизайнер", "художник", "реставратор"]
+    "programKeywords": ["дизайнер", "художник"]
   },
   {
     "name": "МАРХИ",
     "type": "art",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080",
-    "programs": ["Архитектура", "Градостроительство", "Дизайн среды"],
+    "programs": ["Архитектура", "Градостроительство"],
     "info": "Главный архитектурный институт страны.",
     "avgScore": 90,
     "budgetPlaces": 180,
     "employmentRate": 92,
     "reputation": 9.8,
-    "programKeywords": ["архитектор", "урбанист", "проектировщик"]
+    "programKeywords": ["архитектор", "урбанист"]
   },
   {
     "name": "ГИТИС",
     "type": "cinema",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1080",
-    "programs": ["Актерское искусство", "Режиссура", "Театроведение", "Сценография"],
+    "programs": ["Актерское искусство", "Режиссура", "Театроведение"],
     "info": "Крупнейший театральный вуз Европы.",
     "avgScore": 87,
     "budgetPlaces": 200,
     "employmentRate": 88,
     "reputation": 9.7,
-    "programKeywords": ["актер", "режиссер", "театровед"]
+    "programKeywords": ["актер", "режиссер"]
   },
   {
     "name": "МГК им. П.И. Чайковского",
     "type": "art",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1080",
-    "programs": ["Музыкальное искусство", "Композиция", "Дирижирование"],
+    "programs": ["Музыкальное искусство", "Композиция"],
     "info": "Главная музыкальная академия России.",
     "avgScore": 91,
     "budgetPlaces": 300,
     "employmentRate": 89,
     "reputation": 10,
-    "programKeywords": ["музыкант", "композитор", "дирижер"]
+    "programKeywords": ["музыкант", "композитор"]
   },
   {
     "name": "Академия им. Гнесиных",
     "type": "art",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1080",
-    "programs": ["Вокальное искусство", "Инструменты", "Музыковедение"],
+    "programs": ["Вокальное искусство", "Инструменты"],
     "info": "Ведущий музыкально-педагогический вуз.",
     "avgScore": 88,
     "budgetPlaces": 350,
     "employmentRate": 87,
     "reputation": 9.6,
-    "programKeywords": ["певец", "музыкант", "музыковед"]
+    "programKeywords": ["певец", "музыкант"]
   },
   {
     "name": "МГУТУ им. К.Г. Разумовского",
     "type": "tech",
-    "city": "Москва",
     "imageUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1080",
-    "programs": ["Пищевые технологии", "Управление", "Биотехнология"],
+    "programs": ["Технологии", "Управление"],
     "info": "Технологический университет.",
     "avgScore": 76,
     "budgetPlaces": 1200,
     "employmentRate": 83,
     "reputation": 8.0,
-    "programKeywords": ["технолог", "менеджер", "биотехнолог"]
+    "programKeywords": ["технолог", "менеджер"]
   },
   {
     "name": "МГИК",
     "type": "art",
-    "city": "Химки",
     "imageUrl": "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1080",
-    "programs": ["Культура", "Искусство", "Библиотечное дело", "Хореография"],
+    "programs": ["Культура", "Искусство", "Библиотечное дело"],
     "info": "Институт культуры.",
     "avgScore": 78,
     "budgetPlaces": 1500,
     "employmentRate": 81,
     "reputation": 8.4,
-    "programKeywords": ["культуролог", "библиотекарь", "хореограф"]
+    "programKeywords": ["культуролог", "библиотекарь"]
   }
 ]
