@@ -89,7 +89,7 @@ let universities = [];
 
 async function loadUniversities() {
     try {
-        const response = await fetch('/universities.json');
+        const response = await fetch('universities.json');
         if (!response.ok) throw new Error('Failed to load universities.json');
         universities = await response.json();
         processUniversityData();
