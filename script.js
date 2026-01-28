@@ -163,8 +163,7 @@ const db = firebase.firestore();
 let currentUniForModal = null; let lastTestResultTypes = []; let currentProfessionFilterTypes = [];
 let processedUniversities = []; const PROFESSIONS_PAGE_SIZE = 12; let professionsVisibleCount = PROFESSIONS_PAGE_SIZE;
 let currentFilteredProfessions = []; let selectedForComparison = [];
-let currentProfessionForAI = null; let aiGeneratedRequiredSkills = ""; let identifiedSkillGaps = "";
-
+let currentProfessionForAI = null; 
 const themeSwitchBtn = document.querySelector('.theme-switch'); const profileBtn = document.getElementById('profile-btn');
 const startTestBtn = document.getElementById('start-test-btn'); const testStartDiv = document.getElementById('test-start');
 const careerTestForm = document.getElementById('career-test'); const questionsContainer = document.getElementById('questions-container');
@@ -173,7 +172,6 @@ const resultTypesDiv = document.getElementById('result-types'); const resultExpl
 const topMatchingProfessionsDiv = document.getElementById('top-matching-professions');
 const showMatchingProfessionsBtn = document.getElementById('show-matching-professions-btn');
 const saveResultBtn = document.getElementById('save-result-btn');
-const aiCareerAdviceBtn = document.getElementById('ai-career-advice-btn');
 const professionSearchInput = document.getElementById('profession-search'); const professionsListDiv = document.getElementById('professions-list');
 const resetProfessionFilterBtn = document.getElementById('reset-profession-filter-btn');
 const showMoreProfessionsContainer = document.getElementById('show-more-professions-container');
@@ -185,12 +183,6 @@ const resetUniFilterBtn = document.getElementById('reset-uni-filter-btn'); const
 const compareCountSpan = document.getElementById('compare-count'); const allUnisListDiv = document.getElementById('all-unis-list');
 const uniModal = document.getElementById('uni-modal'); const profileModal = document.getElementById('profile-modal');
 const compareModal = document.getElementById('compare-modal');
-const aiProfessionDetailsModal = document.getElementById('ai-profession-details-modal');
-const aiProfessionModalTitle = document.getElementById('ai-profession-modal-title');
-const aiProfessionDetailsContent = document.getElementById('ai-profession-details-content');
-const aiCareerAdviceModal = document.getElementById('ai-career-advice-modal');
-const aiCareerAdviceModalTitle = document.getElementById('ai-career-advice-modal-title');
-const aiCareerAdviceContent = document.getElementById('ai-career-advice-content');
 const compareTableContainer = document.getElementById('compare-table-container'); const closeModalBtns = document.querySelectorAll('.modal .close');
 const uniModalTitle = document.getElementById('uni-modal-title');
 const uniModalPrograms = document.getElementById('uni-programs'); const uniModalInfo = document.getElementById('uni-info');
@@ -209,21 +201,7 @@ const authErrorP = document.getElementById('auth-error'); const authModalTitle =
 let isRegisterMode = false;
 
 // AI specific elements
-const aiContainers = {
-    prosCons: { btn: document.getElementById('generate-pros-cons-btn'), result: document.getElementById('ai-pros-cons-result'), container: document.getElementById('ai-pros-cons-container') },
-    interview: { btn: document.getElementById('generate-interview-questions-btn'), result: document.getElementById('ai-interview-questions-result'), container: document.getElementById('ai-interview-questions-container') },
-    dayInLife: { btn: document.getElementById('generate-day-in-life-btn'), result: document.getElementById('ai-day-in-life-result'), container: document.getElementById('ai-day-in-life-container') },
-    uniPrograms: { btn: document.getElementById('generate-uni-programs-btn'), result: document.getElementById('ai-uni-programs-result'), container: document.getElementById('ai-uni-program-recommender-container') },
-    skillGap: {
-        initBtn: document.getElementById('initiate-skill-analysis-btn'),
-        submitBtn: document.getElementById('submit-skills-for-analysis-btn'),
-        result: document.getElementById('ai-skill-gap-result'),
-        container: document.getElementById('ai-skill-gap-analyzer-container'),
-        inputArea: document.getElementById('skill-input-area')
-    },
-    studyPlan: { btn: document.getElementById('generate-study-plan-btn'), result: document.getElementById('ai-study-plan-result'), container: document.getElementById('ai-study-plan-container') },
-    coverLetter: { btn: document.getElementById('generate-cover-letter-btn'), result: document.getElementById('ai-cover-letter-result'), container: document.getElementById('ai-cover-letter-snippet-container') }
-};
+const aiContainers = {};
 
 // --- FIREBASE AUTHENTICATION LOGIC ---
 auth.onAuthStateChanged(user => {
@@ -461,7 +439,21 @@ function showResults(resultTypes) {
     } 
     initLucideIcons(); 
 }
-function createProfessionCardHTML(prof, searchTerm = '') { return ` <div class="profession-card" data-profession-name-raw="${prof.name}" data-profession-desc-raw="${prof.description}"> <h4>${highlightText(prof.name, searchTerm)}</h4> <p>${highlightText(prof.description, searchTerm)}</p> <div class="profession-types">${prof.types.map(createTypeTagHTML).join('')}</div> <div class="profession-card-actions"> <button type="button" class="show-unis-for-profession-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="graduation-cap"></i>Показать ВУЗы</button> <button type="button" class="ai-profession-details-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="sparkles"></i>✨ Узнать больше с ИИ</button> <button type="button" class="recommendations-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="lightbulb"></i>Рекомендации</button> </div> </div> `; }
+function createProfessionCardHTML(prof, searchTerm = '') {
+    const salaryInfo = prof.salary ? `<div class="salary-info"><i class="icon icon-sm" data-lucide="dollar-sign"></i> ${prof.salary}</div>` : '';
+    return `
+        <div class="profession-card" data-profession-name-raw="${prof.name}" data-profession-desc-raw="${prof.description}">
+            <h4>${highlightText(prof.name, searchTerm)}</h4>
+            <p>${highlightText(prof.description, searchTerm)}</p>
+            ${salaryInfo}
+            <div class="profession-types">${prof.types.map(createTypeTagHTML).join('')}</div>
+            <div class="profession-card-actions">
+                <button type="button" class="show-unis-for-profession-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="graduation-cap"></i>Показать ВУЗы</button>
+                <button type="button" class="recommendations-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="lightbulb"></i>Рекомендации</button>
+            </div>
+        </div>
+    `;
+}
 function renderProfessions(profsToRender = professions, filterTypes = []) { currentProfessionFilterTypes = filterTypes; let filtered = profsToRender; if (filterTypes.length > 0) filtered = profsToRender.filter(p => filterTypes.some(ft => p.types.includes(ft))); const searchTerm = professionSearchInput.value.toLowerCase().trim(); if (searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm) || (p.keywords||[]).some(k=>k.toLowerCase().includes(searchTerm))); currentFilteredProfessions = filtered; const toDisplay = currentFilteredProfessions.slice(0, professionsVisibleCount); professionsListDiv.innerHTML = toDisplay.length ? toDisplay.map(p => createProfessionCardHTML(p, searchTerm)).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">Профессии не найдены.</p>'; showMoreProfessionsContainer.classList.toggle('hidden', currentFilteredProfessions.length <= professionsVisibleCount); document.getElementById('professions-counter').textContent = `Показано ${Math.min(professionsVisibleCount, currentFilteredProfessions.length)} из ${currentFilteredProfessions.length}`; resetProfessionFilterBtn.classList.toggle('hidden', !searchTerm && filterTypes.length === 0); initLucideIcons(); }
 function showMoreProfessions() { professionsVisibleCount += PROFESSIONS_PAGE_SIZE; renderProfessions(professions, currentProfessionFilterTypes); }
 function showAllProfessions() { professionsVisibleCount = currentFilteredProfessions.length; renderProfessions(professions, currentProfessionFilterTypes); }
@@ -560,95 +552,6 @@ function showRecommendations(profession) {
 function filterUniversitiesByProfession(professionName) { const profession = professions.find(p => p.name === professionName); if (!profession) { renderUniversities(processedUniversities); return; } showToast(`Поиск ВУЗов для: ${professionName}`); const profKeywords = new Set((profession.keywords || [profession.name]).map(k => k.toLowerCase())); const matchingUnis = processedUniversities.filter(uni => (uni.programKeywords || []).some(uk => profKeywords.has(uk.toLowerCase()) || [...profKeywords].some(pk => uk.toLowerCase().includes(pk) || pk.includes(uk.toLowerCase())))); uniFilterSelect.value = 'all'; uniSortSelect.value = 'compositeScore'; renderUniversities(matchingUnis); resetUniFilterBtn.classList.remove('hidden'); document.getElementById('universities').scrollIntoView({ behavior: 'smooth' }); }
 function sanitizeHTML(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 function simpleMarkdownToHtml(text) { if (!text) return ''; let html = sanitizeHTML(text); html = html.replace(/^## (.*?)$/gm, '<h5>$1</h5>').replace(/^# (.*?)$/gm, '<h4>$1</h4>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/^[\*\-\+] +(.*?)$/gm, '<li>$1</li>').replace(/^\d+\. +(.*?)$/gm, '<li>$1</li>').replace(/((<li>.*<\/li>\s*)+)/gm, '<ul>$1</ul>').replace(/\n/g, '<br>'); return html; }
-async function callGeminiApi(button, promptText) {
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:391',message:'callGeminiApi called',data:{promptLength:promptText?.length||0,hasButton:!!button},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-    // #endregion
-    const btnText = button.querySelector('.btn-text');
-    const loader = button.querySelector('.loader');
-    if (btnText && loader) {
-        btnText.classList.add('hidden');
-        loader.classList.remove('hidden');
-    }
-    button.disabled = true;
-    try {
-        const response = await fetch('/.netlify/functions/gemini-proxy', { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({ prompt: promptText }) 
-        });
-        
-        const data = await response.json();
-        if (!response.ok) {
-            console.error("Gemini Proxy Error:", data.error);
-            const errorMsg = data.error?.message || `Ошибка сервера: ${response.status}`;
-            throw new Error(errorMsg);
-        }
-        
-        const resultText = data.text;
-        if (!resultText) throw new Error("ИИ вернул пустой ответ.");
-        return resultText;
-    } catch (error) {
-        console.error("Error calling Gemini Proxy:", error);
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:404',message:'callGeminiApi catch',data:{errorMessage:error.message,errorName:error.name},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-        // #endregion
-        showToast(`Ошибка ИИ: ${error.message.substring(0, 100)}...`, 5000);
-        throw error;
-    } finally {
-        if (btnText && loader) {
-            btnText.classList.remove('hidden');
-            loader.classList.add('hidden');
-        }
-        button.disabled = false;
-    }
-}
-async function showAIProfessionDetails(professionName) { 
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:408',message:'showAIProfessionDetails called',data:{professionName,found:!!professions.find(p => p.name === professionName)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
-    currentProfessionForAI = professions.find(p => p.name === professionName); 
-    if (!currentProfessionForAI) { 
-        showToast("Профессия не найдена."); 
-        return; 
-    }
-    aiProfessionModalTitle.innerHTML = `<i class="icon" data-lucide="brain"></i> Подробности о профессии "${sanitizeHTML(professionName)}"`; 
-    Object.values(aiContainers).forEach(c => { if (c.container) c.container.classList.add('hidden'); if(c.result) c.result.innerHTML=''; }); 
-    aiProfessionDetailsContent.innerHTML = '<p>Загрузка...</p>'; 
-    openModal('ai-profession-details-modal'); 
-    const prompt = `Расскажи подробно о профессии "${professionName}". Опиши: ## Краткое описание, ## Основные обязанности, ## Перспективы роста, ## Необходимые навыки (Hard и Soft Skills списком), ## Плюсы и минусы (кратко). Используй Markdown.`; 
-    try { 
-        const aiResponse = await callGeminiApi(document.createElement('button'), prompt); 
-        aiProfessionDetailsContent.innerHTML = simpleMarkdownToHtml(aiResponse); 
-        const skillsMatch = aiResponse.match(/## Необходимые навыки([\s\S]*?)##/); 
-        aiGeneratedRequiredSkills = skillsMatch ? skillsMatch[1] : "Навыки не найдены"; 
-        Object.values(aiContainers).forEach(c => c.container?.classList.remove('hidden')); 
-    } catch (e) { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:408',message:'showAIProfessionDetails error',data:{errorMessage:e.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-        // #endregion
-        aiProfessionDetailsContent.innerHTML = `<p style="color: var(--realistic-color);">Не удалось загрузить данные от ИИ: ${e.message}</p>`; 
-    } 
-}
-async function handleAIFeatureClick(button, resultContainer, prompt) { 
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:464',message:'handleAIFeatureClick called',data:{promptLength:prompt?.length||0,hasButton:!!button,hasContainer:!!resultContainer},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
-    if (!button || !resultContainer) { 
-        console.error('handleAIFeatureClick: missing button or container'); 
-        return; 
-    }
-    resultContainer.innerHTML = '<p>Загрузка...</p>'; 
-    try { 
-        const aiResponse = await callGeminiApi(button, prompt); 
-        resultContainer.innerHTML = simpleMarkdownToHtml(aiResponse); 
-    } catch(e) { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:464',message:'handleAIFeatureClick error',data:{errorMessage:e.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-        // #endregion
-        resultContainer.innerHTML = `<p style="color: var(--realistic-color);">Ошибка при генерации ответа: ${e.message}</p>`; 
-    } 
-}
 function setupEventListeners() {
     // АУТЕНТИФИКАЦИЯ
     loginBtn.addEventListener('click', () => { isRegisterMode = false; authModalTitle.textContent = 'Вход'; authSubmitBtn.textContent = 'Войти'; authSwitchLink.textContent = 'Нет аккаунта? Зарегистрироваться'; authErrorP.classList.add('hidden'); openModal('auth-modal'); });
@@ -672,13 +575,18 @@ function setupEventListeners() {
 
     // ПРОФЕССИИ
     // #region agent log
+    const professionTypeFilter = document.getElementById('profession-type-filter');
     let searchDebounceTimer = null;
-    professionSearchInput.addEventListener('input', (e) => {
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:433',message:'Search input event',data:{value:e.target.value,hasDebounce:!!searchDebounceTimer},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+    professionSearchInput.addEventListener('input', () => {
         clearTimeout(searchDebounceTimer);
         searchDebounceTimer = setTimeout(() => filterProfessions(), 300);
     });
-    // #endregion
+    professionTypeFilter.addEventListener('change', () => {
+        const selectedType = professionTypeFilter.value;
+        currentProfessionFilterTypes = selectedType === 'all' ? [] : [selectedType];
+        professionsVisibleCount = PROFESSIONS_PAGE_SIZE;
+        renderProfessions(professions, currentProfessionFilterTypes);
+    });
     resetProfessionFilterBtn.addEventListener('click', resetProfessionFilter);
     showMoreProfessionsBtn.addEventListener('click', showMoreProfessions);
     showAllProfessionsBtn.addEventListener('click', showAllProfessions);
@@ -699,66 +607,23 @@ function setupEventListeners() {
     allUnisListDiv.addEventListener('change', e => { if (e.target.classList.contains('compare-checkbox')) handleCompareSelection(e); });
 
     // ОБРАБОТЧИК КЛИКОВ НА КАРТОЧКАХ ПРОФЕССИЙ (включая блок результатов)
-    const cardClickHandler = e => { const card = e.target.closest('.profession-card'); if (!card) return; const profName = card.dataset.professionNameRaw; if (e.target.closest('.show-unis-for-profession-btn')) filterUniversitiesByProfession(profName); else if (e.target.closest('.ai-profession-details-btn')) showAIProfessionDetails(profName); else if (e.target.closest('.recommendations-btn')) { const prof = professions.find(p => p.name === profName); if (prof) showRecommendations(prof); } };
+    const cardClickHandler = e => {
+        const card = e.target.closest('.profession-card');
+        if (!card) return;
+        const profName = card.dataset.professionNameRaw;
+        if (e.target.closest('.show-unis-for-profession-btn')) {
+            filterUniversitiesByProfession(profName);
+        } else if (e.target.closest('.recommendations-btn')) {
+            const prof = professions.find(p => p.name === profName);
+            if (prof) showRecommendations(prof);
+        }
+    };
     professionsListDiv.addEventListener('click', cardClickHandler);
     topMatchingProfessionsDiv.addEventListener('click', cardClickHandler);
     
     // КНОПКИ В МОДАЛЬНЫХ ОКНАХ
     addToFavoritesBtn.addEventListener('click', toggleFavorite);
     clearProfileBtn.addEventListener('click', clearProfileData);
-
-    // ВСЕ КНОПКИ ИИ
-    aiCareerAdviceBtn.addEventListener('click', () => { if (!lastTestResultTypes.length) { showToast("Сначала пройдите тест."); return; } const typesStr = lastTestResultTypes.map(t=>TYPE_DESCRIPTIONS[t]?.name).join(', '); aiCareerAdviceModalTitle.innerHTML = `<i class="icon" data-lucide="user-check"></i> Совет от ИИ для типов: ${typesStr}`; openModal('ai-career-advice-modal'); handleAIFeatureClick(aiCareerAdviceBtn, aiCareerAdviceContent, `Дай развернутый карьерный совет для человека с типами личности по Холланду: ${typesStr}. Включи секции: ## Общая характеристика, ## Рекомендуемые направления, ## Советы по образованию, ## Ключевые навыки, ## Дальнейшие шаги. Используй Markdown.`); });
-    aiContainers.prosCons.btn.addEventListener('click', () => { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:463',message:'AI prosCons button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
-        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
-        handleAIFeatureClick(aiContainers.prosCons.btn, aiContainers.prosCons.result, `Дай углубленный анализ плюсов и минусов профессии "${currentProfessionForAI.name}".`);
-    });
-    aiContainers.interview.btn.addEventListener('click', () => { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:464',message:'AI interview button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
-        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
-        handleAIFeatureClick(aiContainers.interview.btn, aiContainers.interview.result, `Подготовь список вопросов для собеседования на позицию "${currentProfessionForAI.name}".`);
-    });
-    aiContainers.dayInLife.btn.addEventListener('click', () => { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:465',message:'AI dayInLife button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
-        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
-        handleAIFeatureClick(aiContainers.dayInLife.btn, aiContainers.dayInLife.result, `Опиши типичный рабочий день для профессии "${currentProfessionForAI.name}".`);
-    });
-    aiContainers.uniPrograms.btn.addEventListener('click', () => { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:466',message:'AI uniPrograms button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
-        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
-        handleAIFeatureClick(aiContainers.uniPrograms.btn, aiContainers.uniPrograms.result, `Какие образовательные программы в ВУЗах Москвы подходят для профессии "${currentProfessionForAI.name}"?`);
-    });
-    aiContainers.skillGap.initBtn.addEventListener('click', () => aiContainers.skillGap.inputArea.classList.remove('hidden'));
-    aiContainers.skillGap.submitBtn.addEventListener('click', () => { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:468',message:'AI skillGap submit clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
-        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
-        handleAIFeatureClick(aiContainers.skillGap.submitBtn, aiContainers.skillGap.result, `Сравни требуемые навыки для профессии "${currentProfessionForAI.name}" (${aiGeneratedRequiredSkills}) с навыками пользователя: ${document.getElementById('user-skills-input').value}. Каких навыков не хватает?`);
-    });
-    aiContainers.studyPlan.btn.addEventListener('click', () => { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:469',message:'AI studyPlan button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
-        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
-        handleAIFeatureClick(aiContainers.studyPlan.btn, aiContainers.studyPlan.result, `Создай план по изучению недостающих навыков для профессии "${currentProfessionForAI.name}".`);
-    });
-    aiContainers.coverLetter.btn.addEventListener('click', () => { 
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:470',message:'AI coverLetter button clicked',data:{currentProfessionForAI:currentProfessionForAI?.name||null,isNull:!currentProfessionForAI},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
-        if (!currentProfessionForAI) { showToast("Сначала выберите профессию."); return; }
-        handleAIFeatureClick(aiContainers.coverLetter.btn, aiContainers.coverLetter.result, `Напиши 2-3 абзаца для сопроводительного письма на позицию "${currentProfessionForAI.name}".`);
-    });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

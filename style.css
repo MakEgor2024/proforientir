@@ -77,6 +77,9 @@ body.dark .uni-type-icon { background-color: rgba(30, 41, 59, 0.8); color: var(-
 .profession-card { padding: 0.8rem; }
 .profession-card h4 { margin: 0 0 0.3rem 0; font-size: 0.95rem; font-weight: 600; color: var(--text-color); line-height: 1.3; flex-grow: 0; }
 .profession-card p { margin: 0 0 0.5rem 0; color: var(--text-muted-color); font-size: 0.8rem; flex-grow: 1; line-height: 1.4; }
+.salary-info { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.6rem; background: rgba(34, 197, 94, 0.1); color: var(--success-color, #22c55e); border-radius: var(--border-radius-sm); font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem; }
+body.dark .salary-info { background: rgba(34, 197, 94, 0.15); }
+.salary-info .icon { margin: 0; }
 .profession-card-actions { margin-top: auto; padding-top: 0.4rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.4rem;}
 .profession-card-actions button { width: 100%; margin-top: 0; font-size: 0.8rem; padding: 0.4rem 0.6rem; }
 #show-more-professions-container { text-align: center; margin-top: 1.2rem; }
@@ -86,6 +89,9 @@ body.dark #show-more-professions-btn { color: var(--primary-color); border-color
 body.dark #show-more-professions-btn:hover { background-color: var(--primary-color); }
 .search-filter-container { display: flex; gap: 0.8rem; align-items: center; margin: 1.2rem 0; flex-wrap: wrap; justify-content: center; }
 #profession-search { padding: 0.5rem 0.8rem; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 0.85rem; flex-grow: 1; max-width: 500px; transition: var(--transition); box-shadow: var(--shadow-sm); }
+#profession-type-filter { padding: 0.5rem 0.8rem; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 0.85rem; transition: var(--transition); box-shadow: var(--shadow-sm); }
+#profession-type-filter:focus { outline: none; border-color: var(--primary-color-light); box-shadow: 0 0 0 2px rgba(10, 74, 142, 0.2); }
+body.dark #profession-type-filter:focus { border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3); }
 #reset-profession-filter-btn { padding: 0.5rem 0.8rem; font-size: 0.85rem; margin-top: 0; background-color: var(--conventional-color); color: white; }
 #reset-profession-filter-btn.hidden { display: none; }
 #profession-search:focus { outline: none; border-color: var(--primary-color-light); box-shadow: 0 0 0 2px rgba(10, 74, 142, 0.2); }

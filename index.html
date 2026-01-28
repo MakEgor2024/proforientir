@@ -55,7 +55,7 @@
         <section id="test">
             <h2><i class="icon icon-lg" data-lucide="compass"></i>Найдите свой профессиональный путь</h2>
             <div id="test-start" style="text-align: center;">
-                <p style="margin-bottom: 1.5rem; max-width: 700px; margin-left: auto; margin-right: auto; color: var(--text-muted-color);">Наш мир полон возможностей, и выбор профессии — один из самых важных шагов в жизни. Пройдите короткий тест, чтобы определить ваши сильные стороны и интересы. На основе результатов мы подберем для вас подходящие профессии и ВУЗы Москвы, а наш ИИ-консультант даст персональные советы по развитию карьеры.</p>
+                <p style="margin-bottom: 1.5rem; max-width: 700px; margin-left: auto; margin-right: auto; color: var(--text-muted-color);">Наш мир полон возможностей, и выбор профессии — один из самых важных шагов в жизни. Пройдите короткий тест, чтобы определить ваши сильные стороны и интересы. На основе результатов мы подберем для вас подходящие профессии и ВУЗы Москвы с информацией о зарплатах выпускников.</p>
                 <button type="button" id="start-test-btn"><i class="icon" data-lucide="play"></i>Начать тест</button>
             </div>
             <form id="career-test" class="hidden">
@@ -75,7 +75,6 @@
             </div>
             <div class="results-buttons-container">
                 <button type="button" id="show-matching-professions-btn"><i class="icon" data-lucide="list-filter"></i>Показать все подходящие профессии</button>
-                <button type="button" id="ai-career-advice-btn"><i class="icon" data-lucide="sparkles"></i>✨ Получить совет от ИИ-Консультанта</button>
                 <button type="button" id="save-result-btn"><i class="icon" data-lucide="save"></i>Сохранить результат</button>
             </div>
         </section>
@@ -83,7 +82,16 @@
         <section id="professions">
             <h2><i class="icon icon-lg" data-lucide="briefcase"></i>Каталог профессий</h2>
             <div class="search-filter-container">
-                <input type="text" id="profession-search" placeholder="Поиск по названию, описанию или типу...">
+                <input type="text" id="profession-search" placeholder="Поиск по названию или описанию...">
+                <select id="profession-type-filter">
+                    <option value="all">Все типы</option>
+                    <option value="investigative">Исследовательский</option>
+                    <option value="realistic">Реалистичный</option>
+                    <option value="artistic">Художественный</option>
+                    <option value="social">Социальный</option>
+                    <option value="enterprising">Предпринимательский</option>
+                    <option value="conventional">Традиционный</option>
+                </select>
                 <button type="button" id="reset-profession-filter-btn" class="hidden" title="Сбросить фильтр и поиск">
                     <i class="icon icon-only" data-lucide="rotate-ccw"></i>
                 </button>
@@ -176,81 +184,6 @@
         </div>
     </div>
     
-    <div class="modal" id="ai-profession-details-modal">
-        <div class="modal-content">
-            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
-            <h3 id="ai-profession-modal-title"><i class="icon" data-lucide="brain"></i> Подробности о профессии с ИИ</h3>
-            <div id="ai-profession-details-content" class="ai-content-display"></div>
-            <div id="ai-pros-cons-container" class="ai-feature-section hidden">
-                <h4><i class="icon" data-lucide="scale"></i> Плюсы и минусы профессии</h4>
-                <button type="button" id="generate-pros-cons-btn">
-                    <span class="btn-text"><i class="icon" data-lucide="sparkles"></i> ✨ Углубленный анализ с ИИ</span>
-                    <span class="loader hidden"></span>
-                </button>
-                <div id="ai-pros-cons-result" class="ai-content-display"></div>
-            </div>
-            <div id="ai-interview-questions-container" class="ai-feature-section hidden">
-                <h4><i class="icon" data-lucide="message-circle-question"></i> Подготовка к собеседованию</h4>
-                <button type="button" id="generate-interview-questions-btn">
-                    <span class="btn-text"><i class="icon" data-lucide="sparkles"></i> ✨ Сгенерировать вопросы с ИИ</span>
-                    <span class="loader hidden"></span>
-                </button>
-                <div id="ai-interview-questions-result" class="ai-content-display"></div>
-            </div>
-            <div id="ai-day-in-life-container" class="ai-feature-section hidden">
-                <h4><i class="icon" data-lucide="sun"></i> Типичный день специалиста</h4>
-                <button type="button" id="generate-day-in-life-btn">
-                    <span class="btn-text"><i class="icon" data-lucide="sparkles"></i> ✨ Узнать о типичном дне с ИИ</span>
-                    <span class="loader hidden"></span>
-                </button>
-                <div id="ai-day-in-life-result" class="ai-content-display"></div>
-            </div>
-            <div id="ai-uni-program-recommender-container" class="ai-feature-section hidden">
-                <h4><i class="icon" data-lucide="graduation-cap"></i> Рекомендации программ ВУЗов</h4>
-                <button type="button" id="generate-uni-programs-btn">
-                    <span class="btn-text"><i class="icon" data-lucide="sparkles"></i> ✨ Подобрать программы с ИИ</span>
-                    <span class="loader hidden"></span>
-                </button>
-                <div id="ai-uni-programs-result" class="ai-content-display"></div>
-            </div>
-            <div id="ai-skill-gap-analyzer-container" class="ai-feature-section hidden">
-                <h4><i class="icon" data-lucide="list-checks"></i> Анализ навыков и рекомендации</h4>
-                <button type="button" id="initiate-skill-analysis-btn">
-                    <span class="btn-text"><i class="icon" data-lucide="sparkles"></i> ✨ Проанализировать мои навыки</span>
-                    <span class="loader hidden"></span>
-                </button>
-                <div id="skill-input-area" class="hidden" style="margin-top: 0.5rem;">
-                    <textarea id="user-skills-input" placeholder="Перечислите ваши текущие навыки через запятую (например, Python, SQL, публичные выступления)..."></textarea>
-                    <button type="button" id="submit-skills-for-analysis-btn" style="margin-top: 0.3rem;">
-                        <span class="btn-text"><i class="icon" data-lucide="send"></i> Отправить на анализ</span>
-                        <span class="loader hidden"></span>
-                    </button>
-                </div>
-                <div id="ai-skill-gap-result" class="ai-content-display" style="margin-top: 0.5rem;"></div>
-                <div id="ai-study-plan-container" class="ai-feature-section hidden" style="margin-top: 1rem; padding-top: 0.5rem; border-top: 1px dashed var(--border-color);">
-                     <button type="button" id="generate-study-plan-btn" disabled>
-                        <span class="btn-text"><i class="icon" data-lucide="sparkles"></i> ✨ Получить советы по изучению</span>
-                        <span class="loader hidden"></span>
-                    </button>
-                    <div id="ai-study-plan-result" class="ai-content-display"></div>
-                </div>
-            </div>
-            <div id="ai-cover-letter-snippet-container" class="ai-feature-section hidden">
-                <h4><i class="icon" data-lucide="file-text"></i> Фрагменты сопроводительного письма</h4>
-                <button type="button" id="generate-cover-letter-btn">
-                    <span class="btn-text"><i class="icon" data-lucide="sparkles"></i> ✨ Сгенерировать фрагменты письма</span>
-                    <span class="loader hidden"></span>
-                </button>
-                <div id="ai-cover-letter-result" class="ai-content-display"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="ai-career-advice-modal">
-        <div class="modal-content">
-            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
-            <h3 id="ai-career-advice-modal-title"><i class="icon" data-lucide="user-check"></i> Совет от ИИ-Консультанта</h3>
-            <div id="ai-career-advice-content" class="ai-content-display"></div>
         </div>
     </div>
     
