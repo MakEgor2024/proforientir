@@ -90,7 +90,13 @@
             </div>
             <div class="professions-grid" id="professions-list"></div>
             <div id="show-more-professions-container" class="hidden">
-                 <button type="button" id="show-more-professions-btn"><i class="icon" data-lucide="chevron-down"></i>Показать еще</button>
+                <div class="pagination-info">
+                    <span id="professions-counter">Показано 12 из 68</span>
+                </div>
+                <div class="pagination-buttons">
+                    <button type="button" id="show-more-professions-btn" class="btn-secondary"><i class="icon" data-lucide="chevron-down"></i>Показать еще (12)</button>
+                    <button type="button" id="show-all-professions-btn" class="btn-secondary"><i class="icon" data-lucide="list"></i>Показать все</button>
+                </div>
             </div>
         </section>
 
@@ -271,6 +277,35 @@
             <p class="auth-switch">
                 <a href="#" id="auth-switch-link">Нет аккаунта? Зарегистрироваться</a>
             </p>
+        </div>
+    </div>
+
+    <div class="modal" id="recommendations-modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
+            <h3 id="recommendations-title"><i class="icon" data-lucide="sparkles"></i> Рекомендации и развитие</h3>
+
+            <div id="recommendations-content">
+                <div class="recommendations-section">
+                    <h4><i class="icon" data-lucide="brain"></i> Ключевые навыки</h4>
+                    <div id="skills-list" class="skills-tags"></div>
+                </div>
+
+                <div class="recommendations-section">
+                    <h4><i class="icon" data-lucide="link-2"></i> Похожие профессии</h4>
+                    <div id="related-professions" class="related-professions-list"></div>
+                </div>
+
+                <div class="recommendations-section">
+                    <h4><i class="icon" data-lucide="book-open"></i> Рекомендуемые курсы</h4>
+                    <div id="recommended-courses" class="courses-list"></div>
+                </div>
+
+                <div class="recommendations-section">
+                    <h4><i class="icon" data-lucide="trending-up"></i> Путь развития</h4>
+                    <div id="career-path" class="career-path-list"></div>
+                </div>
+            </div>
         </div>
     </div>
 

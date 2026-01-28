@@ -178,6 +178,8 @@ const professionSearchInput = document.getElementById('profession-search'); cons
 const resetProfessionFilterBtn = document.getElementById('reset-profession-filter-btn');
 const showMoreProfessionsContainer = document.getElementById('show-more-professions-container');
 const showMoreProfessionsBtn = document.getElementById('show-more-professions-btn');
+const showAllProfessionsBtn = document.getElementById('show-all-professions-btn');
+const recommendationsModal = document.getElementById('recommendations-modal');
 const uniFilterSelect = document.getElementById('uni-filter'); const uniSortSelect = document.getElementById('uni-sort');
 const resetUniFilterBtn = document.getElementById('reset-uni-filter-btn'); const compareUnisBtn = document.getElementById('compare-unis-btn');
 const compareCountSpan = document.getElementById('compare-count'); const allUnisListDiv = document.getElementById('all-unis-list');
@@ -457,11 +459,102 @@ function showResults(resultTypes) {
     } 
     initLucideIcons(); 
 }
-function createProfessionCardHTML(prof, searchTerm = '') { return ` <div class="profession-card" data-profession-name-raw="${prof.name}" data-profession-desc-raw="${prof.description}"> <h4>${highlightText(prof.name, searchTerm)}</h4> <p>${highlightText(prof.description, searchTerm)}</p> <div class="profession-types">${prof.types.map(createTypeTagHTML).join('')}</div> <div class="profession-card-actions"> <button type="button" class="show-unis-for-profession-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="graduation-cap"></i>Показать ВУЗы</button> <button type="button" class="ai-profession-details-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="sparkles"></i>✨ Узнать больше с ИИ</button> </div> </div> `; }
-function renderProfessions(profsToRender = professions, filterTypes = []) { currentProfessionFilterTypes = filterTypes; let filtered = profsToRender; if (filterTypes.length > 0) filtered = profsToRender.filter(p => filterTypes.some(ft => p.types.includes(ft))); const searchTerm = professionSearchInput.value.toLowerCase().trim(); if (searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm) || (p.keywords||[]).some(k=>k.toLowerCase().includes(searchTerm))); currentFilteredProfessions = filtered; const toDisplay = currentFilteredProfessions.slice(0, professionsVisibleCount); professionsListDiv.innerHTML = toDisplay.length ? toDisplay.map(p => createProfessionCardHTML(p, searchTerm)).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">Профессии не найдены.</p>'; showMoreProfessionsContainer.classList.toggle('hidden', currentFilteredProfessions.length <= professionsVisibleCount); resetProfessionFilterBtn.classList.toggle('hidden', !searchTerm && filterTypes.length === 0); initLucideIcons(); }
+function createProfessionCardHTML(prof, searchTerm = '') { return ` <div class="profession-card" data-profession-name-raw="${prof.name}" data-profession-desc-raw="${prof.description}"> <h4>${highlightText(prof.name, searchTerm)}</h4> <p>${highlightText(prof.description, searchTerm)}</p> <div class="profession-types">${prof.types.map(createTypeTagHTML).join('')}</div> <div class="profession-card-actions"> <button type="button" class="show-unis-for-profession-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="graduation-cap"></i>Показать ВУЗы</button> <button type="button" class="ai-profession-details-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="sparkles"></i>✨ Узнать больше с ИИ</button> <button type="button" class="recommendations-btn" data-profession-name="${prof.name}"><i class="icon" data-lucide="lightbulb"></i>Рекомендации</button> </div> </div> `; }
+function renderProfessions(profsToRender = professions, filterTypes = []) { currentProfessionFilterTypes = filterTypes; let filtered = profsToRender; if (filterTypes.length > 0) filtered = profsToRender.filter(p => filterTypes.some(ft => p.types.includes(ft))); const searchTerm = professionSearchInput.value.toLowerCase().trim(); if (searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm) || (p.keywords||[]).some(k=>k.toLowerCase().includes(searchTerm))); currentFilteredProfessions = filtered; const toDisplay = currentFilteredProfessions.slice(0, professionsVisibleCount); professionsListDiv.innerHTML = toDisplay.length ? toDisplay.map(p => createProfessionCardHTML(p, searchTerm)).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">Профессии не найдены.</p>'; showMoreProfessionsContainer.classList.toggle('hidden', currentFilteredProfessions.length <= professionsVisibleCount); document.getElementById('professions-counter').textContent = `Показано ${Math.min(professionsVisibleCount, currentFilteredProfessions.length)} из ${currentFilteredProfessions.length}`; resetProfessionFilterBtn.classList.toggle('hidden', !searchTerm && filterTypes.length === 0); initLucideIcons(); }
 function showMoreProfessions() { professionsVisibleCount += PROFESSIONS_PAGE_SIZE; renderProfessions(professions, currentProfessionFilterTypes); }
+function showAllProfessions() { professionsVisibleCount = currentFilteredProfessions.length; renderProfessions(professions, currentProfessionFilterTypes); }
 function filterProfessions() { professionsVisibleCount = PROFESSIONS_PAGE_SIZE; renderProfessions(professions, currentProfessionFilterTypes); }
 function resetProfessionFilter() { currentProfessionFilterTypes = []; professionSearchInput.value = ''; professionsVisibleCount = PROFESSIONS_PAGE_SIZE; renderProfessions(); }
+
+function getRelatedProfessions(profession, limit = 5) {
+    const relatedProfs = professions.filter(p => {
+        if (p.name === profession.name) return false;
+        const commonTypes = profession.types.filter(t => p.types.includes(t));
+        return commonTypes.length > 0;
+    }).sort((a, b) => {
+        const aCommon = profession.types.filter(t => a.types.includes(t)).length;
+        const bCommon = profession.types.filter(t => b.types.includes(t)).length;
+        return bCommon - aCommon;
+    }).slice(0, limit);
+    return relatedProfs;
+}
+
+function getSkillsForProfession(profession) {
+    const skillMap = {
+        investigative: ['Анализ данных', 'Исследования', 'Программирование', 'Критическое мышление'],
+        realistic: ['Проектирование', 'Техническое обслуживание', 'Ремонт', 'Практические навыки'],
+        artistic: ['Дизайн', 'Креативность', 'Коммуникация', 'Визуальное мышление'],
+        social: ['Лидерство', 'Коммуникация', 'Эмпатия', 'Работа в команде'],
+        enterprising: ['Переговоры', 'Управление', 'Стратегия', 'Предпринимательство'],
+        conventional: ['Организованность', 'Внимание к деталям', 'Управление базами данных', 'Администрирование']
+    };
+
+    const skills = new Set();
+    profession.types.forEach(type => {
+        (skillMap[type] || []).forEach(skill => skills.add(skill));
+    });
+    return Array.from(skills);
+}
+
+function getCareerPath(profession) {
+    const paths = {
+        junior: 'Junior специалист',
+        middle: 'Middle специалист',
+        senior: 'Senior специалист',
+        lead: 'Lead/Manager',
+        expert: 'Expert/Консультант'
+    };
+
+    return [
+        { level: 'Начало', description: paths.junior + ' (0-2 года)' },
+        { level: 'Развитие', description: paths.middle + ' (2-5 лет)' },
+        { level: 'Мастерство', description: paths.senior + ' (5-10 лет)' },
+        { level: 'Лидерство', description: paths.lead + ' (10+ лет)' }
+    ];
+}
+
+function showRecommendations(profession) {
+    const relatedProfs = getRelatedProfessions(profession);
+    const skills = getSkillsForProfession(profession);
+    const careerPath = getCareerPath(profession);
+
+    document.getElementById('recommendations-title').textContent = `Рекомендации для: ${profession.name}`;
+
+    document.getElementById('skills-list').innerHTML = skills.map((skill, idx) => {
+        const type = skill.includes('данных') || skill.includes('Программирование') ? 'technical' : 'soft';
+        return `<span class="skill-tag ${type}">${skill}</span>`;
+    }).join('');
+
+    document.getElementById('related-professions').innerHTML = relatedProfs.map(p => `
+        <div class="related-profession-item" onclick="showRecommendations(professions.find(x => x.name === '${p.name}'))">
+            <strong>${p.name}</strong>
+            <small>${p.description}</small>
+        </div>
+    `).join('');
+
+    const courses = [
+        { title: 'Основной курс', description: 'Базовые знания и навыки' },
+        { title: 'Продвинутый уровень', description: 'Специализированные знания' },
+        { title: 'Проектная практика', description: 'Реальные проекты и портфолио' }
+    ];
+
+    document.getElementById('recommended-courses').innerHTML = courses.map(c => `
+        <div class="course-item">
+            <strong>${c.title}</strong>
+            <small>${c.description}</small>
+        </div>
+    `).join('');
+
+    document.getElementById('career-path').innerHTML = careerPath.map(step => `
+        <div class="career-step">
+            <strong>${step.level}</strong>
+            <small>${step.description}</small>
+        </div>
+    `).join('');
+
+    recommendationsModal.style.display = 'flex';
+}
+
 function filterUniversitiesByProfession(professionName) { const profession = professions.find(p => p.name === professionName); if (!profession) { renderUniversities(processedUniversities); return; } showToast(`Поиск ВУЗов для: ${professionName}`); const profKeywords = new Set((profession.keywords || [profession.name]).map(k => k.toLowerCase())); const matchingUnis = processedUniversities.filter(uni => (uni.programKeywords || []).some(uk => profKeywords.has(uk.toLowerCase()) || [...profKeywords].some(pk => uk.toLowerCase().includes(pk) || pk.includes(uk.toLowerCase())))); uniFilterSelect.value = 'all'; uniSortSelect.value = 'compositeScore'; renderUniversities(matchingUnis); resetUniFilterBtn.classList.remove('hidden'); document.getElementById('universities').scrollIntoView({ behavior: 'smooth' }); }
 function sanitizeHTML(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 function simpleMarkdownToHtml(text) { if (!text) return ''; let html = sanitizeHTML(text); html = html.replace(/^## (.*?)$/gm, '<h5>$1</h5>').replace(/^# (.*?)$/gm, '<h4>$1</h4>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/^[\*\-\+] +(.*?)$/gm, '<li>$1</li>').replace(/^\d+\. +(.*?)$/gm, '<li>$1</li>').replace(/((<li>.*<\/li>\s*)+)/gm, '<ul>$1</ul>').replace(/\n/g, '<br>'); return html; }
@@ -586,6 +679,7 @@ function setupEventListeners() {
     // #endregion
     resetProfessionFilterBtn.addEventListener('click', resetProfessionFilter);
     showMoreProfessionsBtn.addEventListener('click', showMoreProfessions);
+    showAllProfessionsBtn.addEventListener('click', showAllProfessions);
 
     // ВУЗЫ
     uniFilterSelect.addEventListener('change', applyUniversityFiltersAndSort);
@@ -603,7 +697,7 @@ function setupEventListeners() {
     allUnisListDiv.addEventListener('change', e => { if (e.target.classList.contains('compare-checkbox')) handleCompareSelection(e); });
 
     // ОБРАБОТЧИК КЛИКОВ НА КАРТОЧКАХ ПРОФЕССИЙ (включая блок результатов)
-    const cardClickHandler = e => { const card = e.target.closest('.profession-card'); if (!card) return; const profName = card.dataset.professionNameRaw; if (e.target.closest('.show-unis-for-profession-btn')) filterUniversitiesByProfession(profName); else if (e.target.closest('.ai-profession-details-btn')) showAIProfessionDetails(profName); };
+    const cardClickHandler = e => { const card = e.target.closest('.profession-card'); if (!card) return; const profName = card.dataset.professionNameRaw; if (e.target.closest('.show-unis-for-profession-btn')) filterUniversitiesByProfession(profName); else if (e.target.closest('.ai-profession-details-btn')) showAIProfessionDetails(profName); else if (e.target.closest('.recommendations-btn')) { const prof = professions.find(p => p.name === profName); if (prof) showRecommendations(prof); } };
     professionsListDiv.addEventListener('click', cardClickHandler);
     topMatchingProfessionsDiv.addEventListener('click', cardClickHandler);
     
