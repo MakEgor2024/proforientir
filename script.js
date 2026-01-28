@@ -12,8 +12,27 @@ const TYPE_DESCRIPTIONS = {
 };
 const UNI_TYPE_ICONS = { science: 'flask-conical', tech: 'cpu', engineering: 'wrench', international: 'globe-2', economics: 'trending-up', medical: 'stethoscope', management: 'users', art: 'palette', law: 'scale', humanities: 'book-open', education: 'graduation-cap', social: 'heart-handshake', agriculture: 'tractor', architecture: 'landmark', finance: 'banknote', default: 'building-2', transport: 'truck', communications: 'wifi', pedagogy: 'book-user', psychology: 'brain', food: 'chef-hat', chemical: 'flask-conical', geodesy: 'map-pin', music: 'music', cinema: 'film', literature: 'book-text', aviation: 'plane', civil_engineering: 'building' };
 
-// --- РАСШИРЕННАЯ БАЗА ДАННЫХ ПРОФЕССИЙ ---
-const professions = [
+// --- РАСШИРЕННАЯ БАЗА ДАННЫХ ПРОФЕССИЙ (загружается из professions.json) ---
+let professions = [];
+
+async function loadProfessions() {
+    try {
+        const response = await fetch('professions.json');
+        if (!response.ok) throw new Error('Failed to load professions.json');
+        const professionsData = await response.json();
+        professions = professionsData.map(prof => ({
+            ...prof,
+            types: prof.types.map(t => HOLLAND_TYPES[t.toUpperCase()] || t)
+        }));
+        renderProfessions();
+    } catch (error) {
+        console.error("Error loading professions:", error);
+        showToast("Ошибка при загрузке данных профессий.");
+    }
+}
+
+// Старые данные профессий (удалены из-за миграции в JSON)
+/*const professions = [
     { name: "Адвокат", description: "Защищает права и интересы граждан и организаций в суде.", types: [HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["юриспруденция", "право", "суд", "защита", "адвокатура"] },
     { name: "Авиаконструктор", description: "Разрабатывает и проектирует самолеты, вертолеты и другие летательные аппараты.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC], keywords: ["авиация", "самолеты", "инженер", "конструирование", "аэрокосмос"] },
     { name: "Агроном", description: "Разрабатывает технологии выращивания с/х культур. Контролирует качество урожая.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["сельское хозяйство", "растениеводство", "биология", "агрономия", "почвоведение"] },
@@ -83,6 +102,7 @@ const professions = [
     { name: "Motion-дизайнер", description: "Создает анимированную графику для видео, рекламы, сайтов и приложений.", types: [HOLLAND_TYPES.ARTISTIC], keywords: ["motion design", "анимация", "after effects", "видео", "дизайн"] },
     { name: "QA инженер (Тестировщик ПО)", description: "Ищет ошибки и уязвимости в программном обеспечении перед его выпуском.", types: [HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["qa", "тестирование", "it", "качество", "автотесты"] }
 ];
+*/
 
 // --- РАСШИРЕННАЯ И АКТУАЛИЗИРОВАННАЯ БАЗА ВУЗОВ МОСКВЫ ---
 let universities = [];
@@ -93,7 +113,6 @@ async function loadUniversities() {
         if (!response.ok) throw new Error('Failed to load universities.json');
         universities = await response.json();
         processUniversityData();
-        renderProfessions();
         renderUniversities();
         populateUniFilterOptions();
     } catch (error) {
@@ -101,30 +120,6 @@ async function loadUniversities() {
         showToast("Ошибка при загрузке данных университетов.");
     }
 }
-
-const universitiesData = [
-    { name: "Российская академия народного хозяйства и государственной службы (РАНХиГС)", type: "management", imageUrl: "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080", programs: ["Государственное управление", "Менеджмент", "Экономика", "Юриспруденция", "Психология", "Реклама и связи с общественностью", "Управление персоналом"], info: "Крупнейший университет, готовящий управленческие кадры.", avgScore: 88, budgetPlaces: 2240, employmentRate: 91, reputation: 9.0, programKeywords: ["менеджер проектов", "государственный служащий", "экономист", "юрист", "политолог", "психолог", "маркетолог", "pr-специалист", "hr-менеджер", "социолог", "управление персоналом", "реклама", "логист", "event-менеджер"] },
-    { name: "Российский экономический университет имени Г.В. Плеханова (РЭУ)", type: "economics", imageUrl: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1080", programs: ["Экономика", "Менеджмент", "Торговое дело", "Товароведение", "Гостиничное дело", "Экономическая безопасность", "Реклама и связи с общественностью"], info: "Один из старейших и наиболее авторитетных экономических вузов страны.", avgScore: 89, budgetPlaces: 1120, employmentRate: 91, reputation: 9.2, programKeywords: ["экономист", "менеджер", "финансовый аналитик", "маркетолог", "pr-специалист", "логист", "аудитор", "торговое дело", "реклама", "риэлтор"] },
-    { name: "Московский государственный лингвистический университет (МГЛУ)", type: "humanities", imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1080", programs: ["Лингвистика", "Перевод", "Международные отношения", "Журналистика", "Реклама и PR"], info: "Ведущий лингвистический вуз России, известный как 'ИнЯз'.", avgScore: 88, budgetPlaces: 710, employmentRate: 89, reputation: 9.1, programKeywords: ["переводчик", "лингвист", "филолог", "журналист", "pr-специалист", "преподаватель иностранных языков", "международные отношения", "регионоведение"] },
-    { name: "Национальный исследовательский технологический университет «МИСиС»", type: "tech", imageUrl: "https://images.unsplash.com/photo-1519452575417-5e0444534612?q=80&w=1080", programs: ["Материаловедение", "Металлургия", "Наноматериалы", "Информационные технологии", "Лингвистика"], info: "Ведущий технологический университет, специализирующийся на материаловедении и IT.", avgScore: 86, budgetPlaces: 2030, employmentRate: 90, reputation: 8.9, programKeywords: ["инженер-металлург", "материаловед", "нанотехнолог", "программист", "горный инженер", "информационные системы", "металлургия", "лингвист", "переводчик"] },
-    { name: "Российский химико-технологический университет имени Д. И. Менделеева (РХТУ)", type: "chemical", imageUrl: "https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?q=80&w=1080", programs: ["Химическая технология", "Биотехнология", "Техносферная безопасность", "Материаловедение"], info: "Ведущий химико-технологический вуз России.", avgScore: 81, budgetPlaces: 1540, employmentRate: 88, reputation: 8.7, programKeywords: ["химик", "химик-технолог", "биотехнолог", "эколог", "материаловед", "инженер-химик", "фармацевтическая химия", "фармацевт"] },
-    { name: "Российский университет транспорта (МИИТ)", type: "transport", imageUrl: "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080", programs: ["Транспортные системы", "Строительство железных дорог", "Логистика", "Информационные системы на транспорте"], info: "Крупнейший транспортный вуз России, готовящий специалистов для всех видов транспорта.", avgScore: 78, budgetPlaces: 2800, employmentRate: 91, reputation: 8.6, programKeywords: ["логист", "инженер-строитель", "программист", "транспорт", "железные дороги", "менеджмент"] },
-    { name: "Московский государственный юридический университет имени О.Е. Кутафина (МГЮА)", type: "law", imageUrl: "https://images.unsplash.com/photo-1589994965851-a8f4035ab7dc?q=80&w=1080", programs: ["Юриспруденция", "Судебная экспертиза", "Правовое обеспечение национальной безопасности"], info: "Один из ведущих юридических вузов России с широким спектром правовых специализаций.", avgScore: 90, budgetPlaces: 800, employmentRate: 92, reputation: 9.1, programKeywords: ["юрист", "адвокат", "прокурор", "следователь", "судебный эксперт", "право"] },
-    { name: "Московский государственный психолого-педагогический университет (МГППУ)", type: "pedagogy", imageUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1080", programs: ["Психология", "Клиническая психология", "Специальное (дефектологическое) образование", "Социальная работа"], info: "Ведущий вуз в области психолого-педагогического образования.", avgScore: 83, budgetPlaces: 960, employmentRate: 87, reputation: 8.8, programKeywords: ["психолог", "клинический психолог", "педагог-психолог", "дефектолог", "логопед", "социальный работник", "специальная психология"] },
-    { name: "Литературный институт имени А.М. Горького", type: "literature", imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1080", programs: ["Литературное творчество", "Литературный перевод", "Литературная критика"], info: "Уникальный вуз, готовящий писателей, поэтов, переводчиков и критиков.", avgScore: 86, budgetPlaces: 105, employmentRate: 75, reputation: 9.0, programKeywords: ["писатель", "поэт", "драматург", "переводчик", "литературный критик", "редактор", "филология", "литературный работник"] },
-    { name: "Российская академия музыки имени Гнесиных", type: "music", imageUrl: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1080", programs: ["Инструментальное исполнительство", "Вокальное искусство", "Дирижирование", "Композиция", "Музыковедение"], info: "Одно из ведущих музыкальных высших учебных заведений мира.", avgScore: 91, budgetPlaces: 155, employmentRate: 85, reputation: 9.5, programKeywords: ["музыкант", "исполнитель", "вокалист", "дирижер", "композитор", "музыковед", "звукорежиссер", "искусство"] },
-    { name: "Всероссийский государственный институт кинематографии имени С.А. Герасимова (ВГИК)", type: "cinema", imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1080", programs: ["Режиссура кино и ТВ", "Кинооператорство", "Драматургия", "Продюсерство", "Анимация и графика"], info: "Старейшая в мире киношкола.", avgScore: 89, budgetPlaces: 210, employmentRate: 80, reputation: 9.4, programKeywords: ["режиссер", "оператор", "сценарист", "продюсер", "аниматор", "звукорежиссер", "киновед", "кино", "телевидение", "искусство", "актёр", "motion-дизайнер"] },
-    { name: "Московский государственный университет геодезии и картографии (МИИГАиК)", type: "geodesy", imageUrl: "https://images.unsplash.com/photo-1599652876633-de52545c9735?q=80&w=1080", programs: ["Геодезия и дистанционное зондирование", "Картография и геоинформатика", "Землеустройство и кадастры"], info: "Ведущий вуз России в области геодезии, картографии и землеустройства.", avgScore: 79, budgetPlaces: 520, employmentRate: 86, reputation: 8.5, programKeywords: ["геодезист", "картограф", "землеустроитель", "кадастровый инженер", "геоинформатика", "дистанционное зондирование"] },
-    { name: "Московский технический университет связи и информатики (МТУСИ)", type: "communications", imageUrl: "https://images.unsplash.com/photo-1558544956-15f5c5314777?q=80&w=1080", programs: ["Инфокоммуникационные технологии", "Информатика", "Информационная безопасность", "Радиотехника"], info: "Крупнейший учебный и научный центр в области телекоммуникаций, IT и радиотехники.", avgScore: 83, budgetPlaces: 1240, employmentRate: 89, reputation: 8.6, programKeywords: ["it-специалист по связи", "инженер связи", "программист", "специалист по кибербезопасности", "радиотехник", "сетевой инженер", "телекоммуникации", "devops"] },
-    { name: "Российский государственный гуманитарный университет (РГГУ)", type: "humanities", imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1080", programs: ["История", "Филология", "Лингвистика", "Документоведение и архивоведение", "Музеология", "Искусствоведение", "Журналистика"], info: "Один из ведущих центров гуманитарного образования в России.", avgScore: 87, budgetPlaces: 915, employmentRate: 85, reputation: 8.9, programKeywords: ["историк", "архивист", "филолог", "лингвист", "переводчик", "искусствовед", "музейный работник", "журналист", "редактор", "литературный работник", "культуролог"] },
-    { name: "Российский государственный аграрный университет - МСХА имени К.А. Тимирязева", type: "agriculture", imageUrl: "https://images.unsplash.com/photo-1599652876633-de52545c9735?q=80&w=1080", programs: ["Агрономия", "Зоотехния", "Ветеринария", "Садоводство", "Ландшафтная архитектура", "Почвоведение", "Агроинженерия"], info: "Ведущий аграрный вуз России с богатой историей.", avgScore: 73, budgetPlaces: 1830, employmentRate: 83, reputation: 8.4, programKeywords: ["агроном", "зоотехник", "ветеринар", "ландшафтный дизайнер", "почвовед", "агроинженер", "сельское хозяйство", "эколог"] },
-    { name: "Московский авиационный институт (МАИ)", type: "aviation", imageUrl: "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080", programs: ["Авиастроение", "Двигатели летательных аппаратов", "Системы управления, информатика и электроэнергетика", "Ракетные комплексы и космонавтика", "IT-системы в авиации"], info: "Ведущий российский университет в области авиационных и космических технологий.", avgScore: 85, budgetPlaces: 2350, employmentRate: 92, reputation: 9.0, programKeywords: ["авиастроение", "инженер-конструктор", "инженер-программист", "системы управления", "ракетостроение", "it", "двигателист", "аэрокосмос", "авиаконструктор"] },
-    { name: "Московский архитектурный институт (МАРХИ)", type: "architecture", imageUrl: "https://images.unsplash.com/photo-1589994965851-a8f4035ab7dc?q=80&w=1080", programs: ["Архитектура", "Градостроительство", "Дизайн архитектурной среды", "Реставрация и реконструкция"], info: "Ведущая архитектурная школа России.", avgScore: 90, budgetPlaces: 255, employmentRate: 88, reputation: 9.3, programKeywords: ["архитектор", "градостроитель", "дизайнер среды", "реставратор", "проектирование", "дизайн", "ландшафтный дизайнер"] },
-    { name: "Российский университет дружбы народов (РУДН)", type: "international", imageUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080", programs: ["Лечебное дело", "Юриспруденция", "Экономика", "Лингвистика", "Международные отношения", "Аграрные технологии", "Инженерное дело"], info: "Уникальный многопрофильный университет, известный международной средой.", avgScore: 86, budgetPlaces: 1530, employmentRate: 89, reputation: 9.1, programKeywords: ["врач", "юрист", "экономист", "лингвист", "переводчик", "международник", "агроном", "инженер", "эколог", "журналист", "политолог"] },
-    { name: "Московский государственный строительный университет (МГСУ)", type: "civil_engineering", imageUrl: "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080", programs: ["Строительство уникальных зданий и сооружений", "Промышленное и гражданское строительство (ПГС)", "Информационные системы в строительстве", "Архитектура"], info: "Ведущий университет России в области строительства и архитектуры.", avgScore: 82, budgetPlaces: 2120, employmentRate: 90, reputation: 8.8, programKeywords: ["инженер-строитель", "пгс", "архитектор", "проектировщик", "строительство", "инженер", "информационные системы", "геодезист"] },
-    { name: "Московский педагогический государственный университет (МПГУ)", type: "pedagogy", imageUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1080", programs: ["Педагогическое образование (разные профили)", "Психология", "Дефектология", "Лингвистика", "История"], info: "Один из старейших и крупнейших педагогических вузов страны.", avgScore: 81, budgetPlaces: 2540, employmentRate: 86, reputation: 8.5, programKeywords: ["учитель", "педагог", "психолог", "дефектолог", "логопед", "лингвист", "историк", "преподавание", "тренер"] },
-    { name: "Российский государственный социальный университет (РГСУ)", type: "social", imageUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1080", programs: ["Социальная работа", "Психология", "Менеджмент", "Юриспруденция", "IT в социальной сфере"], info: "Первый в России вуз, начавший подготовку профессиональных социальных работников.", avgScore: 79, budgetPlaces: 1100, employmentRate: 88, reputation: 8.3, programKeywords: ["социальный работник", "психолог", "менеджер", "юрист", "hr-менеджер", "социолог"] }
-];
 
 // --- Данные для теста (без изменений) ---
 const testQuestions = [
@@ -670,9 +665,10 @@ function setupEventListeners() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', async () => { 
-    initTheme(); 
-    await loadUniversities(); 
-    setupEventListeners(); 
-    if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear(); 
+document.addEventListener('DOMContentLoaded', async () => {
+    initTheme();
+    await Promise.all([loadUniversities(), loadProfessions()]);
+    renderTestQuestions();
+    setupEventListeners();
+    if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
 });
