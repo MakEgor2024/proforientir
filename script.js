@@ -163,7 +163,6 @@ const db = firebase.firestore();
 let currentUniForModal = null; let lastTestResultTypes = []; let currentProfessionFilterTypes = [];
 let processedUniversities = []; const PROFESSIONS_PAGE_SIZE = 12; let professionsVisibleCount = PROFESSIONS_PAGE_SIZE;
 let currentFilteredProfessions = []; let selectedForComparison = [];
-let currentProfessionForAI = null; 
 const themeSwitchBtn = document.querySelector('.theme-switch'); const profileBtn = document.getElementById('profile-btn');
 const startTestBtn = document.getElementById('start-test-btn'); const testStartDiv = document.getElementById('test-start');
 const careerTestForm = document.getElementById('career-test'); const questionsContainer = document.getElementById('questions-container');
@@ -199,9 +198,6 @@ const authForm = document.getElementById('auth-form'); const authSubmitBtn = doc
 const googleSigninBtn = document.getElementById('google-signin-btn'); const authSwitchLink = document.getElementById('auth-switch-link');
 const authErrorP = document.getElementById('auth-error'); const authModalTitle = document.getElementById('auth-modal-title');
 let isRegisterMode = false;
-
-// AI specific elements
-const aiContainers = {};
 
 // --- FIREBASE AUTHENTICATION LOGIC ---
 auth.onAuthStateChanged(user => {
@@ -380,11 +376,8 @@ function resetUniversityFilters() { uniFilterSelect.value = 'all'; uniSortSelect
 function updateCompareButtonState() { const count = selectedForComparison.length; compareCountSpan.textContent = count; compareUnisBtn.disabled = !(count >= 2 && count <= 3); compareUnisBtn.classList.toggle('hidden', count === 0); }
 function handleCompareSelection(event) { const checkbox = event.target; const uniName = checkbox.value; if (checkbox.checked) { if (selectedForComparison.length < 3) { selectedForComparison.push(uniName); } else { checkbox.checked = false; showToast("Можно выбрать не более 3 вузов для сравнения."); } } else { selectedForComparison = selectedForComparison.filter(name => name !== uniName); } updateCompareButtonState(); }
 function showCompareModal() { if (selectedForComparison.length < 2 || selectedForComparison.length > 3) { showToast("Выберите 2 или 3 вуза для сравнения."); return; } const unisToCompare = processedUniversities.filter(uni => selectedForComparison.includes(uni.name)); let tableHTML = '<table><thead><tr><th>Параметр</th>'; unisToCompare.forEach(uni => { tableHTML += `<th>${uni.name}</th>`; }); tableHTML += '</tr></thead><tbody>'; const params = [ { key: 'compositeScore', name: 'Компл. балл' }, { key: 'avgScore', name: 'Ср. балл ЕГЭ' }, { key: 'budgetPlaces', name: 'Бюдж. места' }, { key: 'employmentRate', name: 'Трудоустр. (%)' }, { key: 'reputation', name: 'Репутация (/10)' }, { key: 'programs', name: 'Направления' } ]; params.forEach(param => { tableHTML += `<tr><td><strong>${param.name}</strong></td>`; unisToCompare.forEach(uni => { let value = uni[param.key] || 'н/д'; if (param.key === 'programs') value = `<ul>${(uni.programs || []).map(p => `<li>${p}</li>`).join('')}</ul>`; tableHTML += `<td>${value}</td>`; }); tableHTML += '</tr>'; }); tableHTML += '</tbody></table>'; compareTableContainer.innerHTML = tableHTML; openModal('compare-modal'); }
-async function openUniModal(uniName) { 
-    // #region agent log
+async function openUniModal(uniName) {
     const foundUni = processedUniversities.find(u => u.name === uniName);
-    fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:372',message:'openUniModal called',data:{uniName,hasImageUrl:!!foundUni?.imageUrl,imageUrl:foundUni?.imageUrl||'missing'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
-    // #endregion
     currentUniForModal = foundUni; 
     if (currentUniForModal) {
         uniModalTitle.textContent = currentUniForModal.name;
@@ -546,7 +539,7 @@ function showRecommendations(profession) {
         </div>
     `).join('');
 
-    recommendationsModal.style.display = 'flex';
+    recommendationsModal.style.display = 'block';
 }
 
 function filterUniversitiesByProfession(professionName) { const profession = professions.find(p => p.name === professionName); if (!profession) { renderUniversities(processedUniversities); return; } showToast(`Поиск ВУЗов для: ${professionName}`); const profKeywords = new Set((profession.keywords || [profession.name]).map(k => k.toLowerCase())); const matchingUnis = processedUniversities.filter(uni => (uni.programKeywords || []).some(uk => profKeywords.has(uk.toLowerCase()) || [...profKeywords].some(pk => uk.toLowerCase().includes(pk) || pk.includes(uk.toLowerCase())))); uniFilterSelect.value = 'all'; uniSortSelect.value = 'compositeScore'; renderUniversities(matchingUnis); resetUniFilterBtn.classList.remove('hidden'); document.getElementById('universities').scrollIntoView({ behavior: 'smooth' }); }
