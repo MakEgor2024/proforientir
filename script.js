@@ -192,7 +192,7 @@ const aiCareerAdviceModal = document.getElementById('ai-career-advice-modal');
 const aiCareerAdviceModalTitle = document.getElementById('ai-career-advice-modal-title');
 const aiCareerAdviceContent = document.getElementById('ai-career-advice-content');
 const compareTableContainer = document.getElementById('compare-table-container'); const closeModalBtns = document.querySelectorAll('.modal .close');
-const uniModalTitle = document.getElementById('uni-modal-title'); const uniModalImage = document.getElementById('uni-modal-image');
+const uniModalTitle = document.getElementById('uni-modal-title');
 const uniModalPrograms = document.getElementById('uni-programs'); const uniModalInfo = document.getElementById('uni-info');
 const uniModalBudget = document.getElementById('uni-budget'); const uniModalAvgScore = document.getElementById('uni-avg-score');
 const uniModalEmployment = document.getElementById('uni-employment'); const uniModalReputation = document.getElementById('uni-reputation');
@@ -373,11 +373,28 @@ function highlightText(text, term) { if (!term || !text) return text; const esca
 function createTypeTagHTML(type) { const typeInfo = TYPE_DESCRIPTIONS[type] || { name: type }; return `<span class="type-tag" style="background-color: var(--${type}-color);" title="${typeInfo.description}">${typeInfo.name}</span>`; }
 function calculateCompositeScore(uni) { const weights = { avgScore: 0.35, reputation: 0.30, employmentRate: 0.20, budgetPlaces: 0.15 }; const maxAvgScore = 100, minAvgScore = 60, maxBudgetPlaces = 4000, maxReputation = 10, maxEmploymentRate = 100; const normalizedScore = Math.max(0, ((uni.avgScore || minAvgScore) - minAvgScore)) / (maxAvgScore - minAvgScore); const normalizedReputation = (uni.reputation || 1) / maxReputation; const normalizedEmployment = (uni.employmentRate || 50) / maxEmploymentRate; const normalizedBudget = Math.log1p(uni.budgetPlaces || 0) / Math.log1p(maxBudgetPlaces); const compositeScore = ((normalizedScore * weights.avgScore) + (normalizedReputation * weights.reputation) + (normalizedEmployment * weights.employmentRate) + (normalizedBudget * weights.budgetPlaces)) * 100; return Math.max(0, Math.min(100, Math.round(compositeScore))); }
 function processUniversityData() { processedUniversities = universities.map(uni => ({ ...uni, compositeScore: calculateCompositeScore(uni) })); }
-function createUniCardHTML(uni) { 
-    // #region agent log
-    if (!uni.imageUrl) { fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:360',message:'Missing imageUrl detected',data:{uniName:uni.name,hasImageUrl:!!uni.imageUrl},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{}); }
-    // #endregion
-    const typeIcon = UNI_TYPE_ICONS[uni.type] || UNI_TYPE_ICONS.default; const isSelected = selectedForComparison.includes(uni.name); const defaultImageUrl = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080'; const imageUrl = uni.imageUrl || defaultImageUrl; return ` <div class="uni-card" data-uni-name="${uni.name}"> <label class="compare-checkbox-label" title="Выбрать для сравнения"> <input type="checkbox" class="compare-checkbox" value="${uni.name}" ${isSelected ? 'checked' : ''}> </label> <div class="uni-type-icon" title="Тип: ${uni.type}"> <i class="icon icon-only icon-sm" data-lucide="${typeIcon}"></i> </div> <div class="uni-image" data-action="open-modal"> <img src="${imageUrl}" alt="Главный корпус ${uni.name}" loading="lazy" onload="fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:360',message:'Image loaded successfully',data:{uniName:'${uni.name}',imageUrl:'${imageUrl}'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});" onerror="fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:360',message:'Image load error',data:{uniName:'${uni.name}',imageUrl:'${imageUrl}'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{}); this.onerror=null; this.src='https://placehold.co/300x160/e2e8f0/94a3b8?text=Error&font=inter';"> </div> <div class="uni-content" data-action="open-modal"> <h4>${uni.name}</h4> <p class="preview-info">${uni.info}</p> <div class="uni-meta"> <span class="uni-composite-score" title="Комплексный балл"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.compositeScore}</strong></span> <span class="uni-avg-score" title="Средний балл ЕГЭ"><i class="icon icon-sm" data-lucide="award"></i> <strong>${uni.avgScore || 'н/д'}</strong></span> </div> </div> </div> `; }
+function createUniCardHTML(uni) {
+    const typeIcon = UNI_TYPE_ICONS[uni.type] || UNI_TYPE_ICONS.default;
+    const isSelected = selectedForComparison.includes(uni.name);
+    return `
+        <div class="uni-card" data-uni-name="${uni.name}">
+            <label class="compare-checkbox-label" title="Выбрать для сравнения">
+                <input type="checkbox" class="compare-checkbox" value="${uni.name}" ${isSelected ? 'checked' : ''}>
+            </label>
+            <div class="uni-type-icon" title="Тип: ${uni.type}">
+                <i class="icon icon-only icon-sm" data-lucide="${typeIcon}"></i>
+            </div>
+            <div class="uni-content" data-action="open-modal">
+                <h4>${uni.name}</h4>
+                <p class="preview-info">${uni.info}</p>
+                <div class="uni-meta">
+                    <span class="uni-composite-score" title="Комплексный балл"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.compositeScore}</strong></span>
+                    <span class="uni-avg-score" title="Средний балл ЕГЭ"><i class="icon icon-sm" data-lucide="award"></i> <strong>${uni.avgScore || 'н/д'}</strong></span>
+                </div>
+            </div>
+        </div>
+    `;
+}
 function populateUniFilterOptions() { const uniqueTypes = [...new Set(universities.map(uni => uni.type))].sort((a,b) => a.localeCompare(b, 'ru')); uniFilterSelect.innerHTML = '<option value="all">Все направления</option>'; const typeNames = { tech: 'Технические', science: 'Научные', engineering: 'Инженерные', international: 'Международные', economics: 'Экономика', medical: 'Медицина', management: 'Управление', art: 'Искусство', law: 'Юриспруденция', humanities: 'Гуманитарные', education: 'Образование', social: 'Социальные', agriculture: 'Аграрные', architecture: 'Архитектура', finance: 'Финансы', transport: 'Транспортные', communications: 'Связь и IT', pedagogy: 'Педагогические', psychology: 'Психологические', food: 'Пищевые', chemical: 'Химические', geodesy: 'Геодезия и картография', music: 'Музыкальные', cinema: 'Кино и ТВ', literature: 'Литературные', aviation: 'Авиация и космос', civil_engineering: 'Строительство' }; uniqueTypes.forEach(type => { const option = document.createElement('option'); option.value = type; option.textContent = typeNames[type] || (type.charAt(0).toUpperCase() + type.slice(1)); uniFilterSelect.appendChild(option); }); }
 function renderUniversities(unisToRender = processedUniversities) { const sortBy = uniSortSelect.value; let sortedUnis = [...unisToRender].sort((a, b) => { switch (sortBy) { case 'avgScore': return (b.avgScore || 0) - (a.avgScore || 0); case 'budgetPlaces': return (b.budgetPlaces || 0) - (a.budgetPlaces || 0); case 'reputation': return (b.reputation || 0) - (a.reputation || 0); case 'name': return a.name.localeCompare(b.name, 'ru'); default: return b.compositeScore - a.compositeScore; } }); allUnisListDiv.innerHTML = sortedUnis.length > 0 ? sortedUnis.map(createUniCardHTML).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">ВУЗы не найдены по вашему запросу.</p>'; updateCompareButtonState(); initLucideIcons(); }
 function applyUniversityFiltersAndSort() { const filterValue = uniFilterSelect.value; let filteredUnis = (filterValue === 'all') ? [...processedUniversities] : processedUniversities.filter(uni => uni.type === filterValue); renderUniversities(filteredUnis); resetUniFilterBtn.classList.toggle('hidden', filterValue === 'all'); }
@@ -391,23 +408,8 @@ async function openUniModal(uniName) {
     fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:372',message:'openUniModal called',data:{uniName,hasImageUrl:!!foundUni?.imageUrl,imageUrl:foundUni?.imageUrl||'missing'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
     // #endregion
     currentUniForModal = foundUni; 
-    if (currentUniForModal) { 
-        uniModalTitle.textContent = currentUniForModal.name; 
-        const defaultImageUrl = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1080'; 
-        const modalImageUrl = currentUniForModal.imageUrl || defaultImageUrl;
-        uniModalImage.src = modalImageUrl; 
-        uniModalImage.alt = `Главный корпус ${currentUniForModal.name}`;
-        uniModalImage.onload = () => {
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:372',message:'Modal image loaded',data:{uniName,imageUrl:modalImageUrl},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
-            // #endregion
-        };
-        uniModalImage.onerror = () => { 
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/1ba22465-09f7-4c1a-bd32-d4585e99c07c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:372',message:'Modal image error',data:{uniName,imageUrl:modalImageUrl},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
-            // #endregion
-            uniModalImage.src = `https://placehold.co/600x300/e2e8f0/94a3b8?text=${uniName.substring(0, 10)}&font=inter`; 
-        }; 
+    if (currentUniForModal) {
+        uniModalTitle.textContent = currentUniForModal.name;
         uniModalPrograms.textContent = currentUniForModal.programs.join(', '); 
         // Show extended info if available, otherwise fallback to basic info
         if (currentUniForModal.extendedInfo) {
