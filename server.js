@@ -4,14 +4,10 @@ const app = express();
 
 app.use(express.json());
 
-app.use((req, res, next) => {
+app.post('/.netlify/functions/gemini-proxy', async (req, res) => {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
-  next();
-});
-
-app.post('/.netlify/functions/gemini-proxy', async (req, res) => {
   try {
     const { prompt } = req.body;
     if (!prompt) {
@@ -52,7 +48,11 @@ app.post('/.netlify/functions/gemini-proxy', async (req, res) => {
   }
 });
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname), {
+  etag: true,
+  lastModified: true,
+  maxAge: '1h'
+}));
 
 app.get('/{*path}', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));

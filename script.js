@@ -350,8 +350,13 @@ function processUniversityData() { processedUniversities = universities.map(uni 
 function createUniCardHTML(uni) {
     const typeIcon = UNI_TYPE_ICONS[uni.type] || UNI_TYPE_ICONS.default;
     const isSelected = selectedForComparison.includes(uni.name);
+    const safeName = sanitizeHTML(uni.name);
+    const imageHTML = uni.imageUrl
+        ? `<div class="uni-card-image"><img src="${uni.imageUrl}" alt="${safeName}" loading="lazy" decoding="async" width="400" height="220" onerror="this.closest('.uni-card-image').classList.add('img-fallback'); this.remove();"></div>`
+        : '';
     return `
         <div class="uni-card" data-uni-name="${uni.name}">
+            ${imageHTML}
             <label class="compare-checkbox-label" title="Выбрать для сравнения">
                 <input type="checkbox" class="compare-checkbox" value="${uni.name}" ${isSelected ? 'checked' : ''}>
             </label>
@@ -359,8 +364,8 @@ function createUniCardHTML(uni) {
                 <i class="icon icon-only icon-sm" data-lucide="${typeIcon}"></i>
             </div>
             <div class="uni-content" data-action="open-modal">
-                <h4>${uni.name}</h4>
-                <p class="preview-info">${uni.info}</p>
+                <h4>${safeName}</h4>
+                <p class="preview-info">${sanitizeHTML(uni.info)}</p>
                 <div class="uni-meta">
                     <span class="uni-composite-score" title="Комплексный балл"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.compositeScore}</strong></span>
                     <span class="uni-avg-score" title="Средний балл ЕГЭ"><i class="icon icon-sm" data-lucide="award"></i> <strong>${uni.avgScore || 'н/д'}</strong></span>
@@ -375,7 +380,7 @@ function applyUniversityFiltersAndSort() { const filterValue = uniFilterSelect.v
 function resetUniversityFilters() { uniFilterSelect.value = 'all'; uniSortSelect.value = 'compositeScore'; selectedForComparison = []; renderUniversities(processedUniversities); showToast("Фильтры и сортировка вузов сброшены."); resetUniFilterBtn.classList.add('hidden'); }
 function updateCompareButtonState() { const count = selectedForComparison.length; compareCountSpan.textContent = count; compareUnisBtn.disabled = !(count >= 2 && count <= 3); compareUnisBtn.classList.toggle('hidden', count === 0); }
 function handleCompareSelection(event) { const checkbox = event.target; const uniName = checkbox.value; if (checkbox.checked) { if (selectedForComparison.length < 3) { selectedForComparison.push(uniName); } else { checkbox.checked = false; showToast("Можно выбрать не более 3 вузов для сравнения."); } } else { selectedForComparison = selectedForComparison.filter(name => name !== uniName); } updateCompareButtonState(); }
-function showCompareModal() { if (selectedForComparison.length < 2 || selectedForComparison.length > 3) { showToast("Выберите 2 или 3 вуза для сравнения."); return; } const unisToCompare = processedUniversities.filter(uni => selectedForComparison.includes(uni.name)); let tableHTML = '<table><thead><tr><th>Параметр</th>'; unisToCompare.forEach(uni => { tableHTML += `<th>${uni.name}</th>`; }); tableHTML += '</tr></thead><tbody>'; const params = [ { key: 'compositeScore', name: 'Компл. балл' }, { key: 'avgScore', name: 'Ср. балл ЕГЭ' }, { key: 'budgetPlaces', name: 'Бюдж. места' }, { key: 'employmentRate', name: 'Трудоустр. (%)' }, { key: 'reputation', name: 'Репутация (/10)' }, { key: 'programs', name: 'Направления' } ]; params.forEach(param => { tableHTML += `<tr><td><strong>${param.name}</strong></td>`; unisToCompare.forEach(uni => { let value = uni[param.key] || 'н/д'; if (param.key === 'programs') value = `<ul>${(uni.programs || []).map(p => `<li>${p}</li>`).join('')}</ul>`; tableHTML += `<td>${value}</td>`; }); tableHTML += '</tr>'; }); tableHTML += '</tbody></table>'; compareTableContainer.innerHTML = tableHTML; openModal('compare-modal'); }
+function showCompareModal() { if (selectedForComparison.length < 2 || selectedForComparison.length > 3) { showToast("Выберите 2 или 3 вуза для сравнения."); return; } const unisToCompare = processedUniversities.filter(uni => selectedForComparison.includes(uni.name)); let tableHTML = '<table><thead><tr><th>Параметр</th>'; unisToCompare.forEach(uni => { tableHTML += `<th>${sanitizeHTML(uni.name)}</th>`; }); tableHTML += '</tr></thead><tbody>'; const params = [ { key: 'compositeScore', name: 'Компл. балл' }, { key: 'avgScore', name: 'Ср. балл ЕГЭ' }, { key: 'budgetPlaces', name: 'Бюдж. места' }, { key: 'employmentRate', name: 'Трудоустр. (%)' }, { key: 'reputation', name: 'Репутация (/10)' }, { key: 'programs', name: 'Направления' } ]; params.forEach(param => { tableHTML += `<tr><td><strong>${param.name}</strong></td>`; unisToCompare.forEach(uni => { let value = uni[param.key] ?? 'н/д'; if (param.key === 'programs') value = `<ul>${(uni.programs || []).map(p => `<li>${sanitizeHTML(p)}</li>`).join('')}</ul>`; else value = sanitizeHTML(String(value)); tableHTML += `<td>${value}</td>`; }); tableHTML += '</tr>'; }); tableHTML += '</tbody></table>'; compareTableContainer.innerHTML = tableHTML; openModal('compare-modal'); }
 async function openUniModal(uniName) {
     const foundUni = processedUniversities.find(u => u.name === uniName);
     currentUniForModal = foundUni; 
@@ -384,7 +389,7 @@ async function openUniModal(uniName) {
         uniModalPrograms.textContent = currentUniForModal.programs.join(', '); 
         // Show extended info if available, otherwise fallback to basic info
         if (currentUniForModal.extendedInfo) {
-            uniModalInfo.innerHTML = `<p class="extended-info">${currentUniForModal.extendedInfo}</p>`;
+            uniModalInfo.innerHTML = `<p class="extended-info">${sanitizeHTML(currentUniForModal.extendedInfo)}</p>`;
         } else {
             uniModalInfo.textContent = currentUniForModal.info;
         }
@@ -398,7 +403,7 @@ async function openUniModal(uniName) {
         openModal('uni-modal'); 
     } 
 }
-function displayMatchingProfessionsInModal(uni) { const keywords = uni.programKeywords || []; modalProfessionsList.innerHTML = '<li class="no-professions">Загрузка...</li>'; setTimeout(() => { const matchingProfessions = professions.filter(prof => (prof.keywords || []).some(pk => keywords.some(uk => uk.toLowerCase().includes(pk.toLowerCase()) || pk.toLowerCase().includes(uk.toLowerCase())))); modalProfessionsList.innerHTML = matchingProfessions.length > 0 ? matchingProfessions.map(prof => `<li class="${lastTestResultTypes.some(t => prof.types.includes(t)) ? 'highlighted' : ''}">${prof.name}</li>`).join('') : '<li class="no-professions">Подходящих профессий не найдено.</li>'; }, 10); }
+function displayMatchingProfessionsInModal(uni) { const keywords = uni.programKeywords || []; modalProfessionsList.innerHTML = '<li class="no-professions">Загрузка...</li>'; setTimeout(() => { const matchingProfessions = professions.filter(prof => (prof.keywords || []).some(pk => keywords.some(uk => uk.toLowerCase().includes(pk.toLowerCase()) || pk.toLowerCase().includes(uk.toLowerCase())))); modalProfessionsList.innerHTML = matchingProfessions.length > 0 ? matchingProfessions.map(prof => `<li class="${lastTestResultTypes.some(t => prof.types.includes(t)) ? 'highlighted' : ''}">${sanitizeHTML(prof.name)}</li>`).join('') : '<li class="no-professions">Подходящих профессий не найдено.</li>'; }, 10); }
 function openModal(id) { const modal = document.getElementById(id); if (modal) { modal.style.display = 'block'; document.body.style.overflow = 'hidden'; initLucideIcons(); } }
 function closeModals() { document.querySelectorAll('.modal').forEach(modal => { modal.style.display = 'none'; }); document.body.style.overflow = 'auto'; }
 function renderTestQuestions() { questionsContainer.innerHTML = testQuestions.map((q, i) => `<div class="question"><p>${q.question}</p><div class="options"><fieldset><legend>Ответы ${i+1}</legend>${q.options.map((opt, oi) => `<label><input type="radio" name="q${i+1}" value="${oi}" required> ${opt.text}</label>`).join('')}</fieldset></div></div>`).join(''); }
@@ -435,9 +440,9 @@ function showResults(resultTypes) {
 function createProfessionCardHTML(prof, searchTerm = '') {
     const salaryInfo = prof.salary ? `<div class="salary-info"><i class="icon icon-sm" data-lucide="dollar-sign"></i> ${prof.salary}</div>` : '';
     return `
-        <div class="profession-card" data-profession-name-raw="${prof.name}" data-profession-desc-raw="${prof.description}">
-            <h4>${highlightText(prof.name, searchTerm)}</h4>
-            <p>${highlightText(prof.description, searchTerm)}</p>
+        <div class="profession-card" data-profession-name-raw="${sanitizeHTML(prof.name)}" data-profession-desc-raw="${sanitizeHTML(prof.description)}">
+            <h4>${highlightText(sanitizeHTML(prof.name), searchTerm)}</h4>
+            <p>${highlightText(sanitizeHTML(prof.description), searchTerm)}</p>
             ${salaryInfo}
             <div class="profession-types">${prof.types.map(createTypeTagHTML).join('')}</div>
             <div class="profession-card-actions">
@@ -513,9 +518,9 @@ function showRecommendations(profession) {
     }).join('');
 
     document.getElementById('related-professions').innerHTML = relatedProfs.map(p => `
-        <div class="related-profession-item" onclick="showRecommendations(professions.find(x => x.name === '${p.name}'))">
-            <strong>${p.name}</strong>
-            <small>${p.description}</small>
+        <div class="related-profession-item" data-profession-name="${p.name}">
+            <strong>${sanitizeHTML(p.name)}</strong>
+            <small>${sanitizeHTML(p.description)}</small>
         </div>
     `).join('');
 
@@ -617,6 +622,12 @@ function setupEventListeners() {
     // КНОПКИ В МОДАЛЬНЫХ ОКНАХ
     addToFavoritesBtn.addEventListener('click', toggleFavorite);
     clearProfileBtn.addEventListener('click', clearProfileData);
+    document.getElementById('related-professions').addEventListener('click', e => {
+        const item = e.target.closest('.related-profession-item');
+        if (!item) return;
+        const prof = professions.find(x => x.name === item.dataset.professionName);
+        if (prof) showRecommendations(prof);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

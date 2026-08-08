@@ -1,4 +1,4 @@
-const CACHE_NAME = 'proforientir-v1';
+const CACHE_NAME = 'proforientir-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -37,6 +37,11 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
+// Code/data that changes between deploys: always try the network first so
+// users get fresh content, falling back to cache only when offline.
+const NETWORK_FIRST_DESTINATIONS = ['document', 'script', 'style'];
+const NETWORK_FIRST_PATHS = ['/professions.json', '/universities.json'];
+
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
@@ -49,6 +54,27 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  const isNetworkFirst = NETWORK_FIRST_DESTINATIONS.includes(request.destination) ||
+    NETWORK_FIRST_PATHS.includes(url.pathname);
+
+  if (isNetworkFirst) {
+    event.respondWith(
+      fetch(request).then(response => {
+        if (response && response.status === 200 && response.type !== 'error') {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, responseToCache));
+        }
+        return response;
+      }).catch(() => caches.match(request).then(cached => {
+        if (cached) return cached;
+        if (request.destination === 'document') return caches.match('/index.html');
+        return new Response('Offline - resource not available', { status: 503 });
+      }))
+    );
+    return;
+  }
+
+  // Static assets (images, fonts): cache-first for speed, network as fallback.
   event.respondWith(
     caches.match(request).then(response => {
       if (response) {
@@ -73,11 +99,6 @@ self.addEventListener('fetch', event => {
             { headers: { 'Content-Type': 'image/svg+xml' } }
           );
         }
-
-        if (request.destination === 'document') {
-          return caches.match('/index.html');
-        }
-
         return new Response('Offline - resource not available', { status: 503 });
       });
     })
