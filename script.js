@@ -186,8 +186,10 @@ const compareTableContainer = document.getElementById('compare-table-container')
 const uniModalTitle = document.getElementById('uni-modal-title');
 const uniModalPrograms = document.getElementById('uni-programs'); const uniModalInfo = document.getElementById('uni-info');
 const uniModalBudget = document.getElementById('uni-budget'); const uniModalAvgScore = document.getElementById('uni-avg-score');
-const uniModalEmployment = document.getElementById('uni-employment'); const uniModalReputation = document.getElementById('uni-reputation');
-const uniModalCompositeScore = document.getElementById('uni-composite-score-modal'); const modalProfessionsList = document.getElementById('modal-professions-list');
+const uniModalEmployment = document.getElementById('uni-employment');
+const uniModalRaexRank = document.getElementById('uni-raex-rank'); const uniModalRaexConditions = document.getElementById('uni-raex-conditions');
+const uniModalRaexEmploymentRank = document.getElementById('uni-raex-employment-rank'); const uniModalRaexScience = document.getElementById('uni-raex-science');
+const uniRaexBlock = document.getElementById('uni-raex-block'); const modalProfessionsList = document.getElementById('modal-professions-list');
 const addToFavoritesBtn = document.getElementById('add-to-favorites-btn'); const savedResultsDiv = document.getElementById('saved-results');
 const favoritesDiv = document.getElementById('favorites'); const clearProfileBtn = document.getElementById('clear-profile-btn');
 const currentYearSpan = document.getElementById('current-year'); const toastElement = document.getElementById('toast');
@@ -345,8 +347,7 @@ function toggleTheme() { const newTheme = document.body.classList.toggle('dark')
 function showToast(message, duration = 3000) { toastElement.textContent = message; toastElement.classList.add('show'); setTimeout(() => { toastElement.classList.remove('show'); }, duration); }
 function highlightText(text, term) { if (!term || !text) return text; const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); const regex = new RegExp(`(${escapedTerm})`, 'gi'); return text.replace(regex, '<mark>$1</mark>'); }
 function createTypeTagHTML(type) { const typeInfo = TYPE_DESCRIPTIONS[type] || { name: type }; return `<span class="type-tag" style="background-color: var(--${type}-color);" title="${typeInfo.description}">${typeInfo.name}</span>`; }
-function calculateCompositeScore(uni) { const weights = { avgScore: 0.35, reputation: 0.30, employmentRate: 0.20, budgetPlaces: 0.15 }; const maxAvgScore = 100, minAvgScore = 60, maxBudgetPlaces = 4000, maxReputation = 10, maxEmploymentRate = 100; const normalizedScore = Math.max(0, ((uni.avgScore || minAvgScore) - minAvgScore)) / (maxAvgScore - minAvgScore); const normalizedReputation = (uni.reputation || 1) / maxReputation; const normalizedEmployment = (uni.employmentRate || 50) / maxEmploymentRate; const normalizedBudget = Math.log1p(uni.budgetPlaces || 0) / Math.log1p(maxBudgetPlaces); const compositeScore = ((normalizedScore * weights.avgScore) + (normalizedReputation * weights.reputation) + (normalizedEmployment * weights.employmentRate) + (normalizedBudget * weights.budgetPlaces)) * 100; return Math.max(0, Math.min(100, Math.round(compositeScore))); }
-function processUniversityData() { processedUniversities = universities.map(uni => ({ ...uni, compositeScore: calculateCompositeScore(uni) })); }
+function processUniversityData() { processedUniversities = universities.map(uni => ({ ...uni })); }
 function createUniCardHTML(uni) {
     const typeIcon = UNI_TYPE_ICONS[uni.type] || UNI_TYPE_ICONS.default;
     const isSelected = selectedForComparison.includes(uni.name);
@@ -354,6 +355,9 @@ function createUniCardHTML(uni) {
     const imageHTML = uni.imageUrl
         ? `<div class="uni-card-image"><img src="${uni.imageUrl}" alt="${safeName}" loading="lazy" decoding="async" width="400" height="220" onerror="this.closest('.uni-card-image').classList.add('img-fallback'); this.remove();"></div>`
         : '';
+    const raexBadge = uni.raex2026
+        ? `<span class="uni-raex-rank" title="Место в рейтинге RAEX-100, 2026"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.raex2026.rank}</strong> место в RAEX</span>`
+        : `<span class="uni-raex-rank uni-raex-none" title="Этот вуз не входит в топ-100 RAEX 2026 года"><i class="icon icon-sm" data-lucide="minus-circle"></i> вне топ-100 RAEX</span>`;
     return `
         <div class="uni-card" data-uni-name="${uni.name}">
             ${imageHTML}
@@ -367,7 +371,7 @@ function createUniCardHTML(uni) {
                 <h4>${safeName}</h4>
                 <p class="preview-info">${sanitizeHTML(uni.info)}</p>
                 <div class="uni-meta">
-                    <span class="uni-composite-score" title="Комплексный балл"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.compositeScore}</strong></span>
+                    ${raexBadge}
                     <span class="uni-avg-score" title="Средний балл ЕГЭ"><i class="icon icon-sm" data-lucide="award"></i> <strong>${uni.avgScore || 'н/д'}</strong></span>
                 </div>
             </div>
@@ -375,12 +379,12 @@ function createUniCardHTML(uni) {
     `;
 }
 function populateUniFilterOptions() { const uniqueTypes = [...new Set(universities.map(uni => uni.type))].sort((a,b) => a.localeCompare(b, 'ru')); uniFilterSelect.innerHTML = '<option value="all">Все направления</option>'; const typeNames = { tech: 'Технические', science: 'Научные', engineering: 'Инженерные', international: 'Международные', economics: 'Экономика', medical: 'Медицина', management: 'Управление', art: 'Искусство', law: 'Юриспруденция', humanities: 'Гуманитарные', education: 'Образование', social: 'Социальные', agriculture: 'Аграрные', architecture: 'Архитектура', finance: 'Финансы', transport: 'Транспортные', communications: 'Связь и IT', pedagogy: 'Педагогические', psychology: 'Психологические', food: 'Пищевые', chemical: 'Химические', geodesy: 'Геодезия и картография', music: 'Музыкальные', cinema: 'Кино и ТВ', literature: 'Литературные', aviation: 'Авиация и космос', civil_engineering: 'Строительство' }; uniqueTypes.forEach(type => { const option = document.createElement('option'); option.value = type; option.textContent = typeNames[type] || (type.charAt(0).toUpperCase() + type.slice(1)); uniFilterSelect.appendChild(option); }); }
-function renderUniversities(unisToRender = processedUniversities) { const sortBy = uniSortSelect.value; let sortedUnis = [...unisToRender].sort((a, b) => { switch (sortBy) { case 'avgScore': return (b.avgScore || 0) - (a.avgScore || 0); case 'budgetPlaces': return (b.budgetPlaces || 0) - (a.budgetPlaces || 0); case 'reputation': return (b.reputation || 0) - (a.reputation || 0); case 'name': return a.name.localeCompare(b.name, 'ru'); default: return b.compositeScore - a.compositeScore; } }); allUnisListDiv.innerHTML = sortedUnis.length > 0 ? sortedUnis.map(createUniCardHTML).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">ВУЗы не найдены по вашему запросу.</p>'; updateCompareButtonState(); initLucideIcons(); }
+function renderUniversities(unisToRender = processedUniversities) { const sortBy = uniSortSelect.value; let sortedUnis = [...unisToRender].sort((a, b) => { switch (sortBy) { case 'avgScore': return (b.avgScore || 0) - (a.avgScore || 0); case 'budgetPlaces': return (b.budgetPlaces || 0) - (a.budgetPlaces || 0); case 'name': return a.name.localeCompare(b.name, 'ru'); default: { const rankA = a.raex2026 ? a.raex2026.rank : Infinity; const rankB = b.raex2026 ? b.raex2026.rank : Infinity; return rankA - rankB; } } }); allUnisListDiv.innerHTML = sortedUnis.length > 0 ? sortedUnis.map(createUniCardHTML).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">ВУЗы не найдены по вашему запросу.</p>'; updateCompareButtonState(); initLucideIcons(); }
 function applyUniversityFiltersAndSort() { const filterValue = uniFilterSelect.value; let filteredUnis = (filterValue === 'all') ? [...processedUniversities] : processedUniversities.filter(uni => uni.type === filterValue); renderUniversities(filteredUnis); resetUniFilterBtn.classList.toggle('hidden', filterValue === 'all'); }
-function resetUniversityFilters() { uniFilterSelect.value = 'all'; uniSortSelect.value = 'compositeScore'; selectedForComparison = []; renderUniversities(processedUniversities); showToast("Фильтры и сортировка вузов сброшены."); resetUniFilterBtn.classList.add('hidden'); }
+function resetUniversityFilters() { uniFilterSelect.value = 'all'; uniSortSelect.value = 'raex2026'; selectedForComparison = []; renderUniversities(processedUniversities); showToast("Фильтры и сортировка вузов сброшены."); resetUniFilterBtn.classList.add('hidden'); }
 function updateCompareButtonState() { const count = selectedForComparison.length; compareCountSpan.textContent = count; compareUnisBtn.disabled = !(count >= 2 && count <= 3); compareUnisBtn.classList.toggle('hidden', count === 0); }
 function handleCompareSelection(event) { const checkbox = event.target; const uniName = checkbox.value; if (checkbox.checked) { if (selectedForComparison.length < 3) { selectedForComparison.push(uniName); } else { checkbox.checked = false; showToast("Можно выбрать не более 3 вузов для сравнения."); } } else { selectedForComparison = selectedForComparison.filter(name => name !== uniName); } updateCompareButtonState(); }
-function showCompareModal() { if (selectedForComparison.length < 2 || selectedForComparison.length > 3) { showToast("Выберите 2 или 3 вуза для сравнения."); return; } const unisToCompare = processedUniversities.filter(uni => selectedForComparison.includes(uni.name)); let tableHTML = '<table><thead><tr><th>Параметр</th>'; unisToCompare.forEach(uni => { tableHTML += `<th>${sanitizeHTML(uni.name)}</th>`; }); tableHTML += '</tr></thead><tbody>'; const params = [ { key: 'compositeScore', name: 'Компл. балл' }, { key: 'avgScore', name: 'Ср. балл ЕГЭ' }, { key: 'budgetPlaces', name: 'Бюдж. места' }, { key: 'employmentRate', name: 'Трудоустр. (%)' }, { key: 'reputation', name: 'Репутация (/10)' }, { key: 'programs', name: 'Направления' } ]; params.forEach(param => { tableHTML += `<tr><td><strong>${param.name}</strong></td>`; unisToCompare.forEach(uni => { let value = uni[param.key] ?? 'н/д'; if (param.key === 'programs') value = `<ul>${(uni.programs || []).map(p => `<li>${sanitizeHTML(p)}</li>`).join('')}</ul>`; else value = sanitizeHTML(String(value)); tableHTML += `<td>${value}</td>`; }); tableHTML += '</tr>'; }); tableHTML += '</tbody></table>'; compareTableContainer.innerHTML = tableHTML; openModal('compare-modal'); }
+function showCompareModal() { if (selectedForComparison.length < 2 || selectedForComparison.length > 3) { showToast("Выберите 2 или 3 вуза для сравнения."); return; } const unisToCompare = processedUniversities.filter(uni => selectedForComparison.includes(uni.name)); let tableHTML = '<table><thead><tr><th>Параметр</th>'; unisToCompare.forEach(uni => { tableHTML += `<th>${sanitizeHTML(uni.name)}</th>`; }); tableHTML += '</tr></thead><tbody>'; const raexRow = (label, getter) => `<tr><td><strong>${label}</strong></td>${unisToCompare.map(uni => `<td>${uni.raex2026 ? getter(uni.raex2026) : 'не входит в топ-100'}</td>`).join('')}</tr>`; tableHTML += raexRow('Место в RAEX-100 (2026)', r => r.rank); tableHTML += raexRow('— условия обучения, ранг', r => r.conditionsRank); tableHTML += raexRow('— востребованность у работодателей, ранг', r => r.employmentRank); tableHTML += raexRow('— научная деятельность, ранг', r => r.scienceRank); const params = [ { key: 'avgScore', name: 'Ср. балл ЕГЭ' }, { key: 'budgetPlaces', name: 'Бюдж. места' }, { key: 'employmentRate', name: 'Трудоустр. (%)' }, { key: 'programs', name: 'Направления' } ]; params.forEach(param => { tableHTML += `<tr><td><strong>${param.name}</strong></td>`; unisToCompare.forEach(uni => { let value = uni[param.key] ?? 'н/д'; if (param.key === 'programs') value = `<ul>${(uni.programs || []).map(p => `<li>${sanitizeHTML(p)}</li>`).join('')}</ul>`; else value = sanitizeHTML(String(value)); tableHTML += `<td>${value}</td>`; }); tableHTML += '</tr>'; }); tableHTML += '</tbody></table>'; compareTableContainer.innerHTML = tableHTML; openModal('compare-modal'); }
 async function openUniModal(uniName) {
     const foundUni = processedUniversities.find(u => u.name === uniName);
     currentUniForModal = foundUni; 
@@ -396,8 +400,14 @@ async function openUniModal(uniName) {
         uniModalBudget.textContent = currentUniForModal.budgetPlaces || 'н/д'; 
         uniModalAvgScore.textContent = currentUniForModal.avgScore || 'н/д'; 
         uniModalEmployment.textContent = `${currentUniForModal.employmentRate || 'н/д'}%`; 
-        uniModalReputation.textContent = `${currentUniForModal.reputation || 'н/д'}/10`; 
-        uniModalCompositeScore.textContent = currentUniForModal.compositeScore; 
+        if (currentUniForModal.raex2026) {
+            uniModalRaexRank.textContent = `${currentUniForModal.raex2026.rank} место`;
+            uniModalRaexConditions.textContent = currentUniForModal.raex2026.conditionsRank;
+            uniModalRaexEmploymentRank.textContent = currentUniForModal.raex2026.employmentRank;
+            uniModalRaexScience.textContent = currentUniForModal.raex2026.scienceRank;
+        } else {
+            uniRaexBlock.innerHTML = '<p>Этот вуз не входит в топ-100 рейтинга RAEX 2026 года.</p>';
+        }
         await updateFavoriteButtonText(); 
         displayMatchingProfessionsInModal(currentUniForModal); 
         openModal('uni-modal'); 
@@ -547,7 +557,7 @@ function showRecommendations(profession) {
     recommendationsModal.style.display = 'block';
 }
 
-function filterUniversitiesByProfession(professionName) { const profession = professions.find(p => p.name === professionName); if (!profession) { renderUniversities(processedUniversities); return; } showToast(`Поиск ВУЗов для: ${professionName}`); const profKeywords = new Set((profession.keywords || [profession.name]).map(k => k.toLowerCase())); const matchingUnis = processedUniversities.filter(uni => (uni.programKeywords || []).some(uk => profKeywords.has(uk.toLowerCase()) || [...profKeywords].some(pk => uk.toLowerCase().includes(pk) || pk.includes(uk.toLowerCase())))); uniFilterSelect.value = 'all'; uniSortSelect.value = 'compositeScore'; renderUniversities(matchingUnis); resetUniFilterBtn.classList.remove('hidden'); document.getElementById('universities').scrollIntoView({ behavior: 'smooth' }); }
+function filterUniversitiesByProfession(professionName) { const profession = professions.find(p => p.name === professionName); if (!profession) { renderUniversities(processedUniversities); return; } showToast(`Поиск ВУЗов для: ${professionName}`); const profKeywords = new Set((profession.keywords || [profession.name]).map(k => k.toLowerCase())); const matchingUnis = processedUniversities.filter(uni => (uni.programKeywords || []).some(uk => profKeywords.has(uk.toLowerCase()) || [...profKeywords].some(pk => uk.toLowerCase().includes(pk) || pk.includes(uk.toLowerCase())))); uniFilterSelect.value = 'all'; uniSortSelect.value = 'raex2026'; renderUniversities(matchingUnis); resetUniFilterBtn.classList.remove('hidden'); document.getElementById('universities').scrollIntoView({ behavior: 'smooth' }); }
 function sanitizeHTML(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 function simpleMarkdownToHtml(text) { if (!text) return ''; let html = sanitizeHTML(text); html = html.replace(/^## (.*?)$/gm, '<h5>$1</h5>').replace(/^# (.*?)$/gm, '<h4>$1</h4>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/^[\*\-\+] +(.*?)$/gm, '<li>$1</li>').replace(/^\d+\. +(.*?)$/gm, '<li>$1</li>').replace(/((<li>.*<\/li>\s*)+)/gm, '<ul>$1</ul>').replace(/\n/g, '<br>'); return html; }
 function setupEventListeners() {
@@ -562,7 +572,7 @@ function setupEventListeners() {
     themeSwitchBtn.addEventListener('click', toggleTheme);
     profileBtn.addEventListener('click', () => openModal('profile-modal'));
     closeModalBtns.forEach(btn => btn.addEventListener('click', closeModals));
-    window.addEventListener('click', e => { if (e.target.classList.contains('modal')) closeModals(); });
+    window.addEventListener('click', e => { if (e.target.classList.contains('modal')) { if (e.target.id === 'edu-level-modal' && !getEduLevel()) return; closeModals(); } });
     document.querySelectorAll('header nav a, .logo-container').forEach(a => a.addEventListener('click', function(e) { e.preventDefault(); const targetId = this.getAttribute('href')?.substring(1); if(targetId) { const el = document.getElementById(targetId); if(el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' }); } else window.scrollTo({ top: 0, behavior: 'smooth' }); }));
 
     // ТЕСТ И РЕЗУЛЬТАТЫ
@@ -630,8 +640,64 @@ function setupEventListeners() {
     });
 }
 
+// --- Уровень образования (колледж / бакалавриат / магистратура) ---
+const EDU_LEVEL_KEY = 'proforientirEduLevel';
+const EDU_LEVELS_INFO = {
+    college: { label: 'Колледж', short: 'Колледж (СПО)' },
+    bachelor: { label: 'Бакалавриат / Специалитет', short: 'Бакалавриат' },
+    master: { label: 'Магистратура', short: 'Магистратура' }
+};
+function getEduLevel() { return localStorage.getItem(EDU_LEVEL_KEY); }
+function setEduLevel(level) { localStorage.setItem(EDU_LEVEL_KEY, level); applyEduLevelUI(); }
+function openEduLevelModal() {
+    const modal = document.getElementById('edu-level-modal');
+    const hasLevel = !!getEduLevel();
+    modal.querySelector('.close').style.display = hasLevel ? '' : 'none';
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    initLucideIcons();
+}
+function applyEduLevelUI() {
+    const level = getEduLevel();
+    const mainEl = document.querySelector('main');
+    const stubEl = document.getElementById('college-stub');
+    const banner = document.getElementById('edu-level-banner');
+    const indicatorText = document.getElementById('edu-level-indicator-text');
+
+    if (!level) { return; }
+
+    indicatorText.textContent = EDU_LEVELS_INFO[level].short;
+
+    if (level === 'college') {
+        mainEl.classList.add('hidden');
+        stubEl.classList.remove('hidden');
+        banner.classList.add('hidden');
+        return;
+    }
+
+    mainEl.classList.remove('hidden');
+    stubEl.classList.add('hidden');
+    banner.classList.remove('hidden');
+
+    if (level === 'master') {
+        banner.innerHTML = `Вы выбрали уровень: <strong>${EDU_LEVELS_INFO[level].label}</strong>. Список вузов пока общий — подбор по конкретным программам магистратуры добавим отдельно. <button type="button" id="edu-level-banner-switch">Изменить уровень</button>`;
+    } else {
+        banner.innerHTML = `Вы выбрали уровень: <strong>${EDU_LEVELS_INFO[level].label}</strong>. <button type="button" id="edu-level-banner-switch">Изменить уровень</button>`;
+    }
+    document.getElementById('edu-level-banner-switch').addEventListener('click', openEduLevelModal);
+}
+function setupEduLevelListeners() {
+    document.querySelectorAll('.edu-level-card').forEach(card => {
+        card.addEventListener('click', () => { setEduLevel(card.dataset.level); closeModals(); });
+    });
+    document.getElementById('edu-level-indicator').addEventListener('click', openEduLevelModal);
+    document.getElementById('college-stub-switch-btn').addEventListener('click', openEduLevelModal);
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     initTheme();
+    setupEduLevelListeners();
+    if (getEduLevel()) { applyEduLevelUI(); } else { openEduLevelModal(); }
     await Promise.all([loadUniversities(), loadProfessions()]);
     renderTestQuestions();
     setupEventListeners();

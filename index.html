@@ -22,6 +22,40 @@
     <link rel="canonical" href="https://proforientir.ru">
 </head>
 <body class="light">
+    <div class="modal" id="edu-level-modal">
+        <div class="modal-content edu-level-modal-content">
+            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
+            <h3><i class="icon" data-lucide="graduation-cap"></i>Какой уровень образования вас интересует?</h3>
+            <p class="edu-level-subtitle">Выберите, куда вы поступаете — мы покажем подходящие вузы и специальности именно для этого уровня. Выбор всегда можно изменить кнопкой в шапке сайта.</p>
+            <div class="edu-level-cards">
+                <button type="button" class="edu-level-card" data-level="college">
+                    <i class="icon icon-lg" data-lucide="school"></i>
+                    <strong>Колледж</strong>
+                    <span>Среднее специальное образование, после 9 или 11 класса</span>
+                </button>
+                <button type="button" class="edu-level-card" data-level="bachelor">
+                    <i class="icon icon-lg" data-lucide="graduation-cap"></i>
+                    <strong>Бакалавриат / Специалитет</strong>
+                    <span>Базовое высшее образование, после 11 класса</span>
+                </button>
+                <button type="button" class="edu-level-card" data-level="master">
+                    <i class="icon icon-lg" data-lucide="award"></i>
+                    <strong>Магистратура</strong>
+                    <span>Специализированное высшее образование, после бакалавриата</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="college-stub" class="hidden">
+        <div class="college-stub-content">
+            <i class="icon icon-lg" data-lucide="construction"></i>
+            <h2>Раздел для колледжей скоро появится</h2>
+            <p>Мы готовим список колледжей с описаниями и фотографиями. Пока этот раздел в разработке, а весь функционал уже доступен для уровней «Бакалавриат» и «Магистратура».</p>
+            <button type="button" id="college-stub-switch-btn"><i class="icon" data-lucide="arrow-left-right"></i>Выбрать другой уровень</button>
+        </div>
+    </div>
+
     <header>
         <div class="header-content">
             <a href="#test" class="logo-container" aria-label="Proforientir Главная">
@@ -58,11 +92,16 @@
                 <button type="button" class="theme-switch" title="Переключить тему">
                     <i class="icon icon-only" data-lucide="moon"></i>
                 </button>
+                <button type="button" id="edu-level-indicator" class="edu-level-indicator" title="Изменить уровень образования">
+                    <i class="icon icon-sm" data-lucide="graduation-cap"></i>
+                    <span id="edu-level-indicator-text">Выбрать уровень</span>
+                </button>
             </div>
         </div>
     </header>
 
     <main>
+        <div id="edu-level-banner" class="edu-level-banner hidden"></div>
         <section id="test">
             <h2><i class="icon icon-lg" data-lucide="compass"></i>Найдите свой профессиональный путь</h2>
             <div id="test-start" style="text-align: center;">
@@ -129,10 +168,9 @@
                  <div>
                     <label for="uni-sort"><i class="icon icon-sm" data-lucide="arrow-up-down"></i>Сортировать:</label>
                     <select id="uni-sort">
-                        <option value="compositeScore">Комплексный балл</option>
+                        <option value="raex2026">Место в рейтинге RAEX</option>
                         <option value="avgScore">Балл ЕГЭ</option>
                         <option value="budgetPlaces">Бюджетные места</option>
-                        <option value="reputation">Репутация</option>
                         <option value="name">Название (А-Я)</option>
                     </select>
                  </div>
@@ -155,14 +193,22 @@
             <div class="uni-details"> <p id="uni-info"></p> </div>
             <h4><i class="icon" data-lucide="book-marked"></i>Основные направления</h4>
             <div class="uni-details"> <p><span id="uni-programs"></span></p> </div>
-            <h4><i class="icon" data-lucide="bar-chart-3"></i>Ключевые показатели (примерные)</h4>
+            <h4><i class="icon" data-lucide="bar-chart-3"></i>Место в рейтинге RAEX-100 (2026)</h4>
+            <div class="uni-rating-details" id="uni-raex-block">
+                <ul>
+                    <li><strong><i class="icon icon-sm" data-lucide="trophy"></i>Место в общем рейтинге:</strong> <span id="uni-raex-rank"></span></li>
+                    <li><strong><i class="icon icon-sm" data-lucide="graduation-cap"></i>Условия для получения образования, ранг:</strong> <span id="uni-raex-conditions"></span></li>
+                    <li><strong><i class="icon icon-sm" data-lucide="briefcase"></i>Востребованность у работодателей, ранг:</strong> <span id="uni-raex-employment-rank"></span></li>
+                    <li><strong><i class="icon icon-sm" data-lucide="flask-conical"></i>Научная деятельность, ранг:</strong> <span id="uni-raex-science"></span></li>
+                </ul>
+                <p class="raex-source">Источник: <a href="https://raex-rr.com/education/russian_universities/top-100_universities/2026/" target="_blank" rel="noopener">RAEX-100, 2026 год</a>. Чем меньше число — тем выше место.</p>
+            </div>
+            <h4><i class="icon" data-lucide="list-checks"></i>Другие показатели</h4>
             <div class="uni-rating-details">
                 <ul>
                     <li><strong><i class="icon icon-sm" data-lucide="award"></i>Средний балл ЕГЭ (бюджет):</strong> <span id="uni-avg-score"></span></li>
                     <li><strong><i class="icon icon-sm" data-lucide="users"></i>Бюджетных мест:</strong> <span id="uni-budget"></span></li>
                     <li><strong><i class="icon icon-sm" data-lucide="briefcase"></i>Трудоустройство (%):</strong> <span id="uni-employment"></span></li>
-                    <li><strong><i class="icon icon-sm" data-lucide="star"></i>Репутация (условно):</strong> <span id="uni-reputation"></span></li>
-                    <li><strong><i class="icon icon-sm" data-lucide="trending-up"></i>Комплексный балл:</strong> <span id="uni-composite-score-modal"></span></li>
                 </ul>
             </div>
             <h4><i class="icon" data-lucide="link"></i>Подходящие профессии</h4>
