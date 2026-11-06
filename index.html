@@ -72,7 +72,7 @@
                 </svg>
             </a>
             <div class="controls">
-                <nav aria-label="Основная навигация">
+                <nav id="primary-navigation" aria-label="Основная навигация">
                     <ul>
                         <li><a href="#test"><i class="icon" data-lucide="compass"></i><span class="nav-text">Тест</span></a></li>
                         <li><a href="#professions"><i class="icon" data-lucide="briefcase"></i><span class="nav-text">Профессии</span></a></li>
@@ -93,7 +93,10 @@
                 </button>
                 <button type="button" id="edu-level-indicator" class="edu-level-indicator" title="Изменить уровень образования">
                     <i class="icon icon-sm" data-lucide="graduation-cap"></i>
-                    <span id="edu-level-indicator-text">Выбрать уровень</span>
+                    <span id="edu-level-indicator-text" class="edu-level-label">Выбрать уровень</span>
+                </button>
+                <button type="button" id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Открыть меню" aria-controls="primary-navigation" aria-expanded="false" title="Открыть меню">
+                    <i class="icon icon-only" data-lucide="menu"></i>
                 </button>
             </div>
         </div>
