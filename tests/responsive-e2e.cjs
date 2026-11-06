@@ -103,11 +103,12 @@ async function run() {
             initializeApp(config) { this.apps.push({ config }); },
             auth: undefined
         };
-        window.firebase = firebase;
+        window.__mockFirebaseBase = firebase;
+        window.firebase = undefined;
         window.__firestoreLoadCount = 0;
         window.__installTestFirestore = () => {
-            if (typeof firebase.firestore !== 'function') {
-                firebase.firestore = firestore;
+            if (typeof window.firebase.firestore !== 'function') {
+                window.firebase.firestore = firestore;
                 window.__firestoreLoadCount += 1;
             }
         };
@@ -151,13 +152,21 @@ async function run() {
     });
     const page = await context.newPage();
     const pageErrors = [];
-    const authSdkRequests = [];
+    const firebaseSdkRequests = { app: [], auth: [] };
     page.on('pageerror', error => pageErrors.push(error.message));
     page.on('request', request => {
-        if (request.url().includes('firebase-auth-compat.js')) authSdkRequests.push(request.url());
+        if (request.url().includes('firebase-app-compat.js')) firebaseSdkRequests.app.push(request.url());
+        if (request.url().includes('firebase-auth-compat.js')) firebaseSdkRequests.auth.push(request.url());
     });
     await page.route('**/*', async route => {
         const requestUrl = route.request().url();
+        if (requestUrl === 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js') {
+            return route.fulfill({
+                status: 200,
+                contentType: 'application/javascript',
+                body: 'window.firebase = window.__mockFirebaseBase;'
+            });
+        }
         if (requestUrl === 'https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js') {
             return route.fulfill({
                 status: 200,
@@ -194,8 +203,8 @@ async function run() {
             'Проверка сессии не должна запускаться до отрисовки первого экрана');
         assert.equal(await page.evaluate(() => window.__authInstanceCount), 0,
             'Firebase Auth не должен создаваться во время начальной загрузки');
-        assert.equal(authSdkRequests.length, 0,
-            'Firebase Auth SDK не должен запрашиваться во время начальной загрузки');
+        assert.deepEqual(firebaseSdkRequests, { app: [], auth: [] },
+            'Firebase App и Auth SDK не должны запрашиваться во время начальной загрузки');
         const creditStats = await page.evaluate(() => {
             const credits = [...document.querySelectorAll('.uni-image-credit')];
             const commons = credits.filter(el => el.dataset.creditType === 'commons');
@@ -289,8 +298,12 @@ async function run() {
         }));
         await menuButton.click();
         await page.waitForFunction(() => window.__authObserverRegistered === true);
-        assert.equal(authSdkRequests.length, 1,
+        assert.equal(firebaseSdkRequests.app.length, 1,
+            'Первое действие пользователя должно один раз подгрузить Firebase App SDK');
+        assert.equal(firebaseSdkRequests.auth.length, 1,
             'Первое действие пользователя должно один раз подгрузить Firebase Auth SDK');
+        assert.equal(await page.evaluate(() => window.firebase.apps.length), 1,
+            'Firebase App должен инициализироваться только один раз');
         assert.equal(await menuButton.getAttribute('aria-expanded'), 'true',
             'Мобильное меню не открылось. Кнопка: ' + JSON.stringify(menuButtonDebug) + '; ошибки: ' + pageErrors.join('; '));
         assert.equal(await page.locator('#primary-navigation').evaluate(el => getComputedStyle(el).display), 'block');
