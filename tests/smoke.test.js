@@ -107,3 +107,19 @@ test('image licence links have a minimum touch target size', () => {
   const css = read('style.css');
   assert.match(css, /\.uni-image-credit a[\s\S]*?min-width:\s*24px[\s\S]*?min-height:\s*24px/);
 });
+
+
+test('Firebase Auth SDK is requested lazily rather than blocking the initial page', () => {
+  const html = read('index.html');
+  const script = read('script.js');
+  assert.ok(!html.includes('firebase-auth-compat.js'),
+    'Firebase Auth must not be downloaded with the initial HTML');
+  assert.ok(script.includes('const FIREBASE_AUTH_SDK_URL'),
+    'the lazy Auth loader must define the SDK URL');
+  assert.ok(script.includes('script.src = FIREBASE_AUTH_SDK_URL'),
+    'the Auth SDK must be injected only when required');
+  assert.ok(script.includes('window.setTimeout(initializeAuthStateListener, 3500)'),
+    'session restoration must wait until after initial rendering');
+  assert.ok(script.includes("document.addEventListener('pointerdown', initializeAuthStateListener"),
+    'user interaction must start session restoration immediately');
+});
