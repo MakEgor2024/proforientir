@@ -1,4 +1,4 @@
-const CACHE_NAME = 'proforientir-v3';
+const CACHE_NAME = 'proforientir-4';
 const urlsToCache = [
   '/',
   '/index.html',
