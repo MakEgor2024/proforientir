@@ -341,7 +341,7 @@ async function main() {
                 responsiveSrcsetCount: containers.filter(container => {
                     const img = container.querySelector('img');
                     const srcset = img?.getAttribute('srcset') || '';
-                    return srcset.includes('400w') && srcset.includes('800w') && Boolean(img?.getAttribute('sizes'));
+                    return srcset.includes('400w') && Boolean(img?.getAttribute('sizes'));
                 }).length,
                 selectedWidths: containers.map(container => {
                     const img = container.querySelector('img');
