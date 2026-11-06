@@ -80,40 +80,63 @@ const firebaseConfig = {
     measurementId: "G-174BSZEDGV"
 };
 
-try {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
-} catch (e) {
-    console.error("Firebase initialization error:", e);
-}
-
+let firebaseAppLoadingPromise = null;
 let auth = null;
 let authLoadingPromise = null;
+const FIREBASE_APP_SDK_URL = 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js';
 const FIREBASE_AUTH_SDK_URL = 'https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js';
+
+function loadFirebaseSdk(url, isReady, errorMessage) {
+    if (isReady()) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.async = true;
+        script.onload = () => {
+            if (isReady()) resolve();
+            else reject(new Error(errorMessage));
+        };
+        script.onerror = () => reject(new Error(errorMessage));
+        document.head.appendChild(script);
+    });
+}
+
+function ensureFirebaseApp() {
+    if (window.firebase && typeof window.firebase.initializeApp === 'function') {
+        if (!window.firebase.apps.length) window.firebase.initializeApp(firebaseConfig);
+        return Promise.resolve(window.firebase);
+    }
+    if (!firebaseAppLoadingPromise) {
+        firebaseAppLoadingPromise = loadFirebaseSdk(
+            FIREBASE_APP_SDK_URL,
+            () => Boolean(window.firebase && typeof window.firebase.initializeApp === 'function'),
+            'Не удалось загрузить базовый модуль Firebase.'
+        ).then(() => {
+            if (!window.firebase.apps.length) window.firebase.initializeApp(firebaseConfig);
+            return window.firebase;
+        }).catch(error => {
+            firebaseAppLoadingPromise = null;
+            throw error;
+        });
+    }
+    return firebaseAppLoadingPromise;
+}
 
 function ensureAuth() {
     if (auth) return Promise.resolve(auth);
-    if (typeof firebase.auth === 'function') {
-        auth = firebase.auth();
-        return Promise.resolve(auth);
-    }
     if (!authLoadingPromise) {
-        authLoadingPromise = new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = FIREBASE_AUTH_SDK_URL;
-            script.async = true;
-            script.onload = () => {
-                if (typeof firebase.auth !== 'function') {
-                    reject(new Error('Firebase Auth SDK загружен, но firebase.auth недоступен.'));
-                    return;
-                }
-                auth = firebase.auth();
-                resolve(auth);
-            };
-            script.onerror = () => reject(new Error('Не удалось загрузить модуль авторизации.'));
-            document.head.appendChild(script);
-        }).catch(error => {
+        authLoadingPromise = (async () => {
+            const firebaseSdk = await ensureFirebaseApp();
+            if (typeof firebaseSdk.auth !== 'function') {
+                await loadFirebaseSdk(
+                    FIREBASE_AUTH_SDK_URL,
+                    () => Boolean(window.firebase && typeof window.firebase.auth === 'function'),
+                    'Firebase Auth SDK загружен, но firebase.auth недоступен.'
+                );
+            }
+            auth = firebaseSdk.auth();
+            return auth;
+        })().catch(error => {
             authLoadingPromise = null;
             throw error;
         });
@@ -127,8 +150,9 @@ const FIRESTORE_SDK_URL = 'https://www.gstatic.com/firebasejs/9.15.0/firebase-fi
 
 async function ensureFirestore() {
     if (db) return db;
-    if (typeof firebase.firestore === 'function') {
-        db = firebase.firestore();
+    const firebaseSdk = await ensureFirebaseApp();
+    if (typeof firebaseSdk.firestore === 'function') {
+        db = firebaseSdk.firestore();
         return db;
     }
     if (!firestoreLoadingPromise) {
