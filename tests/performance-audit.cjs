@@ -70,10 +70,17 @@ async function checkImageUrl(api, url) {
 async function main() {
     const universities = JSON.parse(fs.readFileSync(path.join(root, 'universities.json'), 'utf8'));
     assert.ok(Array.isArray(universities) && universities.length > 0, 'Каталог вузов не загружен');
+    const activeUniversities = universities.filter(university => university.catalogStatus !== 'closed');
+    const archivedUniversities = universities.filter(university => university.catalogStatus === 'closed');
+    const reviewUniversities = universities.filter(university => university.catalogStatus === 'review');
+    const missingPhotos = activeUniversities.filter(university => !university.imageUrl);
     const imageMap = new Map();
-    for (const university of universities) {
+    for (const university of activeUniversities) {
         if (!university.imageUrl) {
-            throw new Error('У организации нет imageUrl: ' + university.name);
+            if (!university.imageStatusNote) {
+                throw new Error('У организации без фотографии должна быть причина: ' + university.name);
+            }
+            continue;
         }
         if (!/^https?:\/\//i.test(university.imageUrl)) {
             throw new Error('Некорректный URL изображения: ' + university.name);
@@ -319,6 +326,8 @@ async function main() {
             const containers = [...document.querySelectorAll('.uni-card-image')];
             return {
                 rendered: containers.length,
+                imageElements: containers.filter(container => Boolean(container.querySelector('img'))).length,
+                placeholders: containers.filter(container => !container.querySelector('img')).length,
                 visibleImages: containers.filter(container => {
                     const img = container.querySelector('img');
                     return img && img.complete && img.naturalWidth > 0;
@@ -358,7 +367,22 @@ async function main() {
                 browser: 'Chromium via Playwright'
             },
             catalog: {
-                organizations: universities.length,
+                organizationsInData: universities.length,
+                activeOrganizations: activeUniversities.length,
+                archivedOrganizations: archivedUniversities.map(university => ({
+                    name: university.name,
+                    note: university.statusNote,
+                    source: university.statusSourceUrl || null
+                })),
+                reviewOrganizations: reviewUniversities.map(university => ({
+                    name: university.name,
+                    note: university.statusNote,
+                    source: university.statusSourceUrl || null
+                })),
+                organizationsWithoutVerifiedPhotos: missingPhotos.map(university => ({
+                    name: university.name,
+                    note: university.imageStatusNote || null
+                })),
                 uniqueImageUrls: uniqueImageUrls.length,
                 duplicateImageUrls: duplicateImages.length,
                 duplicateImageGroups: duplicateImages
@@ -407,8 +431,8 @@ async function main() {
             'Для всех фото Commons должны быть получены автор, точная лицензия и ссылка на оригинал: ' + completeCommonsMetadata + '/' + commonsUrls.length);
         assert.equal(pageErrors.length, 0, 'Ошибки JavaScript: ' + pageErrors.join('; '));
         assert.equal(renderedImageStats.pendingImages, 0, 'Остались незавершённые запросы изображений после ожидания');
-        assert.equal(renderedImageStats.responsiveSrcsetCount, renderedImageStats.rendered,
-            'Для каждой карточки должен быть выбран адаптивный srcset 400/800 px');
+        assert.equal(renderedImageStats.responsiveSrcsetCount, renderedImageStats.imageElements,
+            'Для каждой фотографии должен быть выбран адаптивный srcset 400/800 px');
         assert.ok(firstPartyBytes < 300000, 'Объём первых локальных ресурсов превысил бюджет 300 КБ: ' + firstPartyBytes);
         assert.ok(firstPaintMetrics.fcpMs !== null && firstPaintMetrics.fcpMs < 2500,
             'FCP на тестовом мобильном соединении должен быть меньше 2,5 сек: ' + firstPaintMetrics.fcpMs);
