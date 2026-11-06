@@ -8,7 +8,13 @@ app.use(express.json());
 // Compress text-based static responses before they leave the app server.
 // Brotli is preferred; gzip is used for older clients. Images are already compressed.
 app.use((req, res, next) => {
-  if (req.method !== 'GET' || req.headers.range) return next();
+  if (req.method !== 'GET') return next();
+
+  const currentVary = String(res.getHeader('Vary') || '');
+  if (!currentVary.split(',').some(value => value.trim().toLowerCase() === 'accept-encoding')) {
+    res.setHeader('Vary', currentVary ? currentVary + ', Accept-Encoding' : 'Accept-Encoding');
+  }
+  if (req.headers.range) return next();
 
   const acceptedEncodings = (req.headers['accept-encoding'] || '')
     .split(',')
