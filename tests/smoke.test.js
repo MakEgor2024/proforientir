@@ -65,7 +65,19 @@ test('legacy commented-out profession catalogue was removed', () => {
 
 test('service worker cache contains only local application assets', () => {
   const sw = read('sw.js');
-  assert.match(sw, /proforientir-v3/);
+  assert.match(sw, /proforientir-4/);
   assert.ok(!sw.includes('fonts.googleapis.com'));
   assert.ok(!sw.includes('cdn.jsdelivr.net'));
+});
+
+
+test('Firestore SDK is loaded only when profile data is needed', () => {
+  const html = read('index.html');
+  const script = read('script.js');
+  assert.ok(!html.includes('firebase-firestore-compat.js'),
+    'Firestore must not be part of the initial HTML payload');
+  assert.ok(script.includes('async function ensureFirestore()'),
+    'profile operations must use the lazy Firestore loader');
+  assert.ok(script.includes('FIRESTORE_SDK_URL'),
+    'lazy loader must define the Firestore SDK URL');
 });
