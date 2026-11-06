@@ -63,7 +63,11 @@
       "employmentRank": 3,
       "scienceRank": 1,
       "rankPrevYear": 1
-    }
+    },
+    "imageAuthor": "Sergey Norin from Moscow, Russia",
+    "imageLicense": "CC BY 2.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Main_building_of_Moscow_State_University_(14481975902).jpg"
   },
   {
     "name": "МГТУ им. Н.Э. Баумана",
@@ -95,7 +99,11 @@
       "employmentRank": 1,
       "scienceRank": 16,
       "rankPrevYear": 2
-    }
+    },
+    "imageAuthor": "Lestest",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Main_building_of_the_Bauman_Moscow_State_Technical_University_20220412_122519.jpg"
   },
   {
     "name": "НИУ Высшая школа экономики (ВШЭ)",
@@ -127,7 +135,11 @@
       "employmentRank": 5,
       "scienceRank": 13,
       "rankPrevYear": 7
-    }
+    },
+    "imageAuthor": "NVO",
+    "imageLicense": "CC BY 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Moscow%2C_Stremyanny_12-4_01.jpg"
   },
   {
     "name": "МФТИ (Физтех)",
@@ -158,7 +170,11 @@
       "employmentRank": 7,
       "scienceRank": 2,
       "rankPrevYear": 3
-    }
+    },
+    "imageAuthor": "Andrey Gusev",
+    "imageLicense": "FAL",
+    "imageLicenseUrl": "http://artlibre.org/licence/lal/en",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Mipt_phystech.jpg"
   },
   {
     "name": "МГИМО",
@@ -187,7 +203,11 @@
       "employmentRank": 6,
       "scienceRank": 26,
       "rankPrevYear": 6
-    }
+    },
+    "imageAuthor": "Foma at Polish Wikipedia",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:MGIMO-University-main_building.jpg"
   },
   {
     "name": "Первый МГМУ им. И.М. Сеченова",
@@ -216,7 +236,11 @@
       "employmentRank": 17,
       "scienceRank": 8,
       "rankPrevYear": 15
-    }
+    },
+    "imageAuthor": "Максим Мишин",
+    "imageLicense": "CC BY 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Opening_of_engineering_center_of_Sechenov_University_01.jpg"
   },
   {
     "name": "НИЯУ МИФИ",
@@ -244,7 +268,11 @@
       "employmentRank": 12,
       "scienceRank": 3,
       "rankPrevYear": 5
-    }
+    },
+    "imageAuthor": "Brateevsky",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%98%D0%AF%D0%A3_%C2%AB%D0%9C%D0%98%D0%A4%D0%98%C2%BB%2C_%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%B8_%D0%BF%D1%80%D0%BE%D1%85%D0%BE%D0%B4%D0%BD%D0%B0%D1%8F%2C_12.12.12.JPG"
   },
   {
     "name": "РТУ МИРЭА",
@@ -272,7 +300,11 @@
       "employmentRank": 34,
       "scienceRank": 31,
       "rankPrevYear": 42
-    }
+    },
+    "imageAuthor": "YesSayYes",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%A3%D1%87%D0%B5%D0%B1%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%E2%84%96_5_%D0%9C%D0%98%D0%A0%D0%AD%D0%90_%D0%BD%D0%B0_5-%D0%B9_%D1%83%D0%BB%D0%B8%D1%86%D0%B5_%D0%A1%D0%BE%D0%BA%D0%BE%D0%BB%D0%B8%D0%BD%D0%BE%D0%B9_%D0%93%D0%BE%D1%80%D1%8B.jpg"
   },
   {
     "name": "РНИМУ им. Н.И. Пирогова",
@@ -301,7 +333,11 @@
       "employmentRank": 28,
       "scienceRank": 18,
       "rankPrevYear": 21
-    }
+    },
+    "imageAuthor": "Pirogov Russian National Research Medical University",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Pirogov_Russian_National_Research_Medical_University_Frontal_View.jpg"
   },
   {
     "name": "Финансовый университет",
@@ -360,7 +396,11 @@
       "employmentRank": 2,
       "scienceRank": 28,
       "rankPrevYear": 9
-    }
+    },
+    "imageAuthor": "ГД РФ",
+    "imageLicense": "CC BY 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Summer_campus_(2013-07-17).jpg"
   },
   {
     "name": "РУДН",
@@ -389,7 +429,11 @@
       "employmentRank": 19,
       "scienceRank": 14,
       "rankPrevYear": 14
-    }
+    },
+    "imageAuthor": "Александр Сигачёв",
+    "imageLicense": "CC0",
+    "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%9C%D0%B8%D0%BA%D0%BB%D1%83%D1%85%D0%BE-%D0%9C%D0%B0%D0%BA%D0%BB%D0%B0%D1%8F_21_%D0%BA2.jpg"
   },
   {
     "name": "НИУ МГСУ",
@@ -417,7 +461,11 @@
       "employmentRank": 29,
       "scienceRank": 43,
       "rankPrevYear": 30
-    }
+    },
+    "imageAuthor": "Александр Сигачёв",
+    "imageLicense": "CC0",
+    "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Moscow_State_University_of_Civil_Engineering_-_2025-09_-_p01.jpg"
   },
   {
     "name": "МАИ",
@@ -446,7 +494,11 @@
       "employmentRank": 18,
       "scienceRank": 23,
       "rankPrevYear": 23
-    }
+    },
+    "imageAuthor": "Andreykor",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%90%D0%98_%D0%BD%D0%B0_%D1%83%D0%BB._%D0%9F%D0%B0%D0%BD%D1%84%D0%B8%D0%BB%D0%BE%D0%B2%D0%B0_(1).JPG"
   },
   {
     "name": "РЭУ им. Г.В. Плеханова",
@@ -474,7 +526,11 @@
       "employmentRank": 4,
       "scienceRank": 38,
       "rankPrevYear": 18
-    }
+    },
+    "imageAuthor": "Brateevsky",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Third_housing_of_Plekhanov_University_of_Economics_in_Moscow%2C_front_view.JPG"
   },
   {
     "name": "НИУ МЭИ",
@@ -533,7 +589,11 @@
       "employmentRank": 27,
       "scienceRank": 53,
       "rankPrevYear": 31
-    }
+    },
+    "imageAuthor": "A.Savin",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Mpgu-campus.jpg"
   },
   {
     "name": "МГЛУ",
@@ -708,7 +768,11 @@
       "employmentRank": 58,
       "scienceRank": 76,
       "rankPrevYear": 52
-    }
+    },
+    "imageAuthor": "Alton",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Rggu_main.JPG"
   },
   {
     "name": "МИТХТ им. М.В. Ломоносова (часть МИРЭА)",
@@ -730,7 +794,11 @@
       "технолог",
       "фармацевт"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Артемий Петрухин",
+    "imageLicense": "CC BY 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%98%D0%A0%D0%AD%D0%90_%E2%80%94_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9_%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82%2C_2024_%D0%B3%D0%BE%D0%B4.jpg"
   },
   {
     "name": "РГУ нефти и газа им. И.М. Губкина",
@@ -759,7 +827,11 @@
       "employmentRank": 15,
       "scienceRank": 45,
       "rankPrevYear": 27
-    }
+    },
+    "imageAuthor": "HarrySmitch",
+    "imageLicense": "CC BY 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%A3%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82_%D0%BD%D0%B5%D1%84%D1%82%D0%B8_%D0%B8_%D0%B3%D0%B0%D0%B7%D0%B0_%D0%B8%D0%BC.%D0%93%D1%83%D0%B1%D0%BA%D0%B8%D0%BD%D0%B0_-_panoramio.jpg"
   },
   {
     "name": "МАДИ",
@@ -788,7 +860,11 @@
       "employmentRank": 107,
       "scienceRank": 66,
       "rankPrevYear": 81
-    }
+    },
+    "imageAuthor": "Котомкина",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%90%D0%94%D0%98.jpg"
   },
   {
     "name": "МИИТ (РУТ)",
@@ -817,7 +893,11 @@
       "employmentRank": 85,
       "scienceRank": 83,
       "rankPrevYear": 85
-    }
+    },
+    "imageAuthor": "Mikhail (Vokabre) Shcherbakov from Moscow, Russia",
+    "imageLicense": "CC BY-SA 2.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:MIIT_main_building_(%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%BE%D0%B5_%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%9C%D0%98%D0%98%D0%A2%D0%B0)_(7175797830).jpg"
   },
   {
     "name": "МГУПП (Росбиотех)",
@@ -951,7 +1031,11 @@
       "geodesist",
       "cartographer"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Mike1979 Russia",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Moscow_MIIGAIK_Panel_2023-06-18_4932.jpg"
   },
   {
     "name": "МХПИ",
@@ -994,7 +1078,11 @@
       "журналист",
       "дизайнер"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Lev.Borisovitch",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%92%D1%8B%D1%81%D1%88%D0%B0%D1%8F_%D1%88%D0%BA%D0%BE%D0%BB%D0%B0_%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D0%B8_%D0%B8_%D0%BC%D0%B5%D0%B4%D0%B8%D0%B0%D0%B8%D0%BD%D0%B4%D1%83%D1%81%D1%82%D1%80%D0%B8%D0%B8%2C_%D0%9A%D0%BE%D0%BF%D1%82%D0%B5%D0%B2%D0%BE%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0.jpg"
   },
   {
     "name": "МГИК",
@@ -1016,7 +1104,11 @@
       "музыкант",
       "хореограф"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Горицкий Денис",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B8%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82%D0%B0_%D0%BA%D1%83%D0%BB%D1%82%D1%83%D1%80%D1%8B.jpg"
   },
   {
     "name": "ВГИК",
@@ -1101,7 +1193,11 @@
       "архитектор",
       "дизайнер"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Sergey Norin from Moscow, Russia",
+    "imageLicense": "CC BY 2.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C_2-%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%90%D0%A0%D0%A5%D0%98_(%D0%B2%D0%B8%D0%B4_%D1%81%D0%BE_%D0%B4%D0%B2%D0%BE%D1%80%D0%B0).jpg"
   },
   {
     "name": "МГАХ им. Сурикова (филиал)",
@@ -1141,7 +1237,11 @@
       "педагог",
       "психолог"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "A.Savin",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Mpgu-campus.jpg"
   },
   {
     "name": "МПСУ",
@@ -1293,7 +1393,11 @@
       "психолог",
       "дизайнер"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Alton",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Rggu_main.JPG"
   },
   {
     "name": "МАП",
@@ -1443,7 +1547,11 @@
       "дизайнер",
       "музыкант"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Горицкий Денис",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B8%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82%D0%B0_%D0%BA%D1%83%D0%BB%D1%82%D1%83%D1%80%D1%8B.jpg"
   },
   {
     "name": "МГИ им. Дашковой",
@@ -1465,6 +1573,10 @@
       "рекламист",
       "психолог"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Alton",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Rggu_main.JPG"
   }
 ]
