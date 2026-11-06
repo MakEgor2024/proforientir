@@ -347,7 +347,7 @@
     "avgScore": 88,
     "budgetPlaces": 2240,
     "employmentRate": 91,
-    "reputation": 9.0,
+    "reputation": 9,
     "programKeywords": [
       "управленец",
       "чиновник",
@@ -433,7 +433,7 @@
     "avgScore": 83,
     "budgetPlaces": 2950,
     "employmentRate": 91,
-    "reputation": 9.0,
+    "reputation": 9,
     "programKeywords": [
       "конструктор",
       "пилот",
@@ -764,7 +764,7 @@
   {
     "name": "МАДИ",
     "type": "transport",
-    "imageUrl": "https://mgsu.ru/upload/iblock/944/9446abd2946c3d8b071330eba6f41e25.jpg",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%9C%D0%90%D0%94%D0%98.jpg?width=800",
     "programs": [
       "Дорожное строительство",
       "Автосервис",
@@ -804,7 +804,7 @@
     "avgScore": 80,
     "budgetPlaces": 2150,
     "employmentRate": 92,
-    "reputation": 9.0,
+    "reputation": 9,
     "programKeywords": [
       "инженер",
       "логист",
@@ -935,7 +935,7 @@
   {
     "name": "МИИГАиК",
     "type": "geodesy",
-    "imageUrl": "https://mgsu.ru/upload/iblock/944/9446abd2946c3d8b071330eba6f41e25.jpg",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Moscow_MIIGAIK_Panel_2023-06-18_4932.jpg?width=800",
     "programs": [
       "Геодезия",
       "Картография",
@@ -946,7 +946,7 @@
     "avgScore": 77,
     "budgetPlaces": 820,
     "employmentRate": 89,
-    "reputation": 9.0,
+    "reputation": 9,
     "programKeywords": [
       "geodesist",
       "cartographer"
@@ -1178,7 +1178,7 @@
     "avgScore": 74,
     "budgetPlaces": 0,
     "employmentRate": 82,
-    "reputation": 8.0,
+    "reputation": 8,
     "programKeywords": [
       "менеджер",
       "рекламист",
