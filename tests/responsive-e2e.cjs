@@ -66,7 +66,11 @@ async function run() {
                 window.__authObserverRegistered = true;
                 callback(authApi.currentUser);
             },
-            signOut: async () => ({}),
+            signOut: async () => {
+                authApi.currentUser = null;
+                if (authStateListener) authStateListener(null);
+                return {};
+            },
             createUserWithEmailAndPassword: async () => ({ user: null }),
             signInWithEmailAndPassword: async () => ({ user: null }),
             signInWithPopup: async () => ({ user: null })
@@ -152,11 +156,12 @@ async function run() {
     });
     const page = await context.newPage();
     const pageErrors = [];
-    const firebaseSdkRequests = { app: [], auth: [] };
+    const firebaseSdkRequests = { app: [], auth: [], firestore: [] };
     page.on('pageerror', error => pageErrors.push(error.message));
     page.on('request', request => {
         if (request.url().includes('firebase-app-compat.js')) firebaseSdkRequests.app.push(request.url());
         if (request.url().includes('firebase-auth-compat.js')) firebaseSdkRequests.auth.push(request.url());
+        if (request.url().includes('firebase-firestore-compat.js')) firebaseSdkRequests.firestore.push(request.url());
     });
     await page.route('**/*', async route => {
         const requestUrl = route.request().url();
@@ -199,12 +204,14 @@ async function run() {
         }));
         assert.deepEqual(initialFirestoreState, { sdkAvailable: false, loadCount: 0 },
             'Firestore не должен загружаться для неавторизованного посетителя');
+        assert.equal(await page.evaluate(() => window.firebase === undefined), true,
+            'Firebase App должен оставаться незагруженным до взаимодействия');
         assert.equal(await page.evaluate(() => window.__authObserverRegistered), false,
             'Проверка сессии не должна запускаться до отрисовки первого экрана');
         assert.equal(await page.evaluate(() => window.__authInstanceCount), 0,
             'Firebase Auth не должен создаваться во время начальной загрузки');
-        assert.deepEqual(firebaseSdkRequests, { app: [], auth: [] },
-            'Firebase App и Auth SDK не должны запрашиваться во время начальной загрузки');
+        assert.deepEqual(firebaseSdkRequests, { app: [], auth: [], firestore: [] },
+            'Firebase App, Auth и Firestore не должны запрашиваться во время начальной загрузки');
         const creditStats = await page.evaluate(() => {
             const credits = [...document.querySelectorAll('.uni-image-credit')];
             const commons = credits.filter(el => el.dataset.creditType === 'commons');
@@ -302,6 +309,8 @@ async function run() {
             'Первое действие пользователя должно один раз подгрузить Firebase App SDK');
         assert.equal(firebaseSdkRequests.auth.length, 1,
             'Первое действие пользователя должно один раз подгрузить Firebase Auth SDK');
+        assert.equal(firebaseSdkRequests.firestore.length, 0,
+            'Firestore не нужен до входа в профиль');
         assert.equal(await page.evaluate(() => window.firebase.apps.length), 1,
             'Firebase App должен инициализироваться только один раз');
         assert.equal(await menuButton.getAttribute('aria-expanded'), 'true',
@@ -315,6 +324,20 @@ async function run() {
         await page.locator('#primary-navigation a[href="#test"]').click();
         assert.equal(await menuButton.getAttribute('aria-expanded'), 'false', 'Меню должно закрываться после перехода');
         assert.equal(await page.locator('#primary-navigation').evaluate(el => getComputedStyle(el).display), 'none');
+
+        await page.evaluate(() => window.__setTestAuthUser({ uid: 'e2e-user', displayName: 'Тестовый пользователь' }));
+        await page.waitForFunction(() => window.__firestoreLoadCount === 1);
+        assert.equal(firebaseSdkRequests.firestore.length, 1,
+            'Firestore должен загружаться только после входа и получения данных профиля');
+        await menuButton.click();
+        await page.locator('#primary-navigation #profile-btn').click();
+        assert.equal(await page.locator('#profile-modal').evaluate(el => el.style.display), 'block',
+            'Авторизованный пользователь должен открывать профиль из мобильного меню');
+        await page.locator('#profile-modal .close').click();
+        await menuButton.click();
+        await page.locator('#primary-navigation #logout-btn').click();
+        await page.waitForFunction(() => document.getElementById('login-item').classList.contains('hidden') === false);
+        assert.equal(firebaseSdkRequests.firestore.length, 1, 'Повторная навигация не должна загружать Firestore заново');
 
         await page.locator('.theme-switch').click();
         assert.ok(await page.locator('body').evaluate(el => el.classList.contains('dark')), 'Переключатель темы не включил тёмную тему');
@@ -476,6 +499,7 @@ async function run() {
             result: 'PASS',
             testedViewports: layoutReport,
             flows: [
+                'Firebase App/Auth lazy loading and Firestore loading only for authenticated profile',
                 'mobile navigation open/close and anchor routing',
                 'theme switch',
                 '12-question Holland test submission',
