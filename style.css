@@ -567,6 +567,7 @@ footer { margin-top: 3rem; padding: 1.4rem; }
 }
 
 /* Mobile navigation and compact controls */
+header { box-sizing: border-box; }
 .mobile-menu-toggle { display: none; }
 @media (max-width: 820px) {
     body { padding-top: 60px; }
