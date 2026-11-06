@@ -144,6 +144,27 @@ async function run() {
             null,
             { timeout: 15000 }
         );
+        const creditStats = await page.evaluate(() => {
+            const credits = [...document.querySelectorAll('.uni-image-credit')];
+            return {
+                count: credits.length,
+                allHaveSource: credits.every(el => {
+                    const link = el.querySelector('[data-credit-source]');
+                    return link && link.href.startsWith('https://commons.wikimedia.org/wiki/File:');
+                }),
+                allHaveLicense: credits.every(el => {
+                    const link = el.querySelector('[data-credit-license]');
+                    return link && /creativecommons.org|artlibre.org/.test(link.href);
+                }),
+                allOpenSafely: credits.every(el => [...el.querySelectorAll('a')].every(a =>
+                    a.target === '_blank' && a.rel.includes('noopener') && a.rel.includes('noreferrer')
+                ))
+            };
+        });
+        assert.ok(creditStats.count > 0, 'В карточках Commons должны отображаться подписи фото');
+        assert.ok(creditStats.allHaveSource, 'У каждой подписи должна быть ссылка на оригинал');
+        assert.ok(creditStats.allHaveLicense, 'У каждой подписи должна быть ссылка на лицензию');
+        assert.ok(creditStats.allOpenSafely, 'Ссылки атрибуции должны безопасно открываться в новой вкладке');
 
         const widths = [320, 360, 390, 430, 600, 768, 820, 821, 1024, 1440];
         const layoutReport = [];
