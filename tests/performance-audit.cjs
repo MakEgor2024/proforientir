@@ -107,7 +107,6 @@ async function main() {
             originalUrl: target.originalUrl
         }))));
     }
-    await api.dispose();
 
     async function fetchCommonsAttribution(imageUrl) {
         const url = new URL(imageUrl);
@@ -170,6 +169,7 @@ async function main() {
     for (let i = 0; i < commonsUrls.length; i += 4) {
         commonsAttribution.push(...await Promise.all(commonsUrls.slice(i, i + 4).map(fetchCommonsAttribution)));
     }
+    await api.dispose();
 
     const brokenImages = imageChecks.filter(item => !item.ok);
     const duplicateImages = [...imageMap.entries()]
