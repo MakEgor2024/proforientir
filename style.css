@@ -767,3 +767,12 @@ body.dark .uni-status-note a { color: var(--primary-color); }
     .uni-name-line { flex-direction: column; gap: 0.3rem; }
     .uni-review-badge { white-space: normal; }
 }
+
+/* Show the initial education selector without waiting for application JavaScript. */
+html:not(.edu-level-selected) #edu-level-modal {
+    display: block;
+    animation: none;
+}
+html:not(.edu-level-selected) #edu-level-modal .modal-content {
+    animation: none;
+}
