@@ -166,7 +166,6 @@ async function run() {
             display: getComputedStyle(button).display,
             rect: (() => { const r = button.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; })(),
             inHeader: Boolean(button.closest('header')),
-            listenerAttached: button.dataset.menuListenerAttached || 'no'
         }));
         await menuButton.click();
         assert.equal(await menuButton.getAttribute('aria-expanded'), 'true',
@@ -246,8 +245,23 @@ async function run() {
         const screenshotDir = path.join(root, 'artifacts');
         fs.mkdirSync(screenshotDir, { recursive: true });
         await page.setViewportSize({ width: 390, height: 844 });
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.waitForTimeout(100);
+        const mobileHeader = await page.evaluate(() => {
+            const header = document.querySelector('header').getBoundingClientRect();
+            const logo = document.querySelector('.logo-svg').getBoundingClientRect();
+            return {
+                height: Math.round(header.height),
+                logoVisible: logo.width > 0 && logo.height > 0 && logo.top >= 0 && logo.bottom <= header.bottom + 1
+            };
+        });
+        assert.ok(mobileHeader.height >= 48 && mobileHeader.logoVisible, 'Шапка и логотип должны быть видны в начале мобильной страницы');
         await page.screenshot({ path: path.join(screenshotDir, 'mobile-390.png'), fullPage: true });
         await page.setViewportSize({ width: 1440, height: 1000 });
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.waitForTimeout(100);
+        const desktopLogoVisible = await page.locator('.logo-svg').isVisible();
+        assert.ok(desktopLogoVisible, 'Логотип должен быть виден в начале десктопной страницы');
         await page.screenshot({ path: path.join(screenshotDir, 'desktop-1440.png'), fullPage: true });
 
         assert.deepEqual(pageErrors, [], 'Ошибки JavaScript в браузере: ' + pageErrors.join('; '));
@@ -258,8 +272,10 @@ async function run() {
                 'mobile navigation open/close and anchor routing',
                 'theme switch',
                 '12-question Holland test submission',
-                'profession search, type filter and pagination',
-                'university pagination, compare selection, comparison modal and details modal',
+                'profession search, type filter, recommendations and pagination',
+                'profession-to-university selection and filter reset',
+                'university filter, pagination, compare selection, comparison modal and details modal',
+                'favorite action prompts authentication and preserves the university modal',
                 'login modal open/close'
             ],
             pageErrors
