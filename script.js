@@ -330,14 +330,45 @@ function showToast(message, duration = 3000) {
 function highlightText(text, term) { if (!term || !text) return text; const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); const regex = new RegExp(`(${escapedTerm})`, 'gi'); return text.replace(regex, '<mark>$1</mark>'); }
 function createTypeTagHTML(type) { const typeInfo = TYPE_DESCRIPTIONS[type] || { name: type }; return `<span class="type-tag" style="background-color: var(--${type}-color);" title="${typeInfo.description}">${typeInfo.name}</span>`; }
 function processUniversityData() { processedUniversities = universities.map(uni => ({ ...uni })); }
+function getUniversityImageUrl(imageUrl, width) {
+    try {
+        const url = new URL(imageUrl);
+        if (url.hostname === 'images.unsplash.com') {
+            url.searchParams.set('w', String(width));
+            url.searchParams.set('q', '75');
+            url.searchParams.set('auto', 'format');
+        } else if (url.hostname === 'commons.wikimedia.org' && url.pathname.includes('/Special:FilePath/')) {
+            url.searchParams.set('width', String(width));
+        } else {
+            return imageUrl;
+        }
+        return url.toString();
+    } catch (_) {
+        return imageUrl;
+    }
+}
+function getUniversityImageSrcset(imageUrl) {
+    try {
+        const hostname = new URL(imageUrl).hostname;
+        if (hostname !== 'images.unsplash.com' && hostname !== 'commons.wikimedia.org') return '';
+        return [400, 800]
+            .map(width => escapeHTMLAttribute(getUniversityImageUrl(imageUrl, width)) + ' ' + width + 'w')
+            .join(', ');
+    } catch (_) {
+        return '';
+    }
+}
+
 function createUniCardHTML(uni) {
     const typeIcon = UNI_TYPE_ICONS[uni.type] || UNI_TYPE_ICONS.default;
     const isSelected = selectedForComparison.includes(uni.name);
     const safeName = sanitizeHTML(uni.name);
     const safeNameAttribute = escapeHTMLAttribute(uni.name);
+    const imageSrc = uni.imageUrl ? escapeHTMLAttribute(getUniversityImageUrl(uni.imageUrl, 400)) : '';
+    const imageSrcset = uni.imageUrl ? getUniversityImageSrcset(uni.imageUrl) : '';
     const imageHTML = uni.imageUrl
-        ? `<div class="uni-card-image"><img src="${escapeHTMLAttribute(uni.imageUrl)}" alt="Здание или кампус: ${safeName}" loading="lazy" decoding="async" fetchpriority="low" width="400" height="225" onerror="this.closest('.uni-card-image').classList.add('img-fallback'); this.remove();"></div>`
-        : `<div class="uni-card-image img-fallback" aria-hidden="true"><i class="icon icon-lg" data-lucide="building-2"></i></div>`;
+        ? '<div class="uni-card-image"><img src="' + imageSrc + '"' + (imageSrcset ? ' srcset="' + imageSrcset + '" sizes="(max-width: 600px) calc(100vw - 2rem), (max-width: 900px) 45vw, 400px"' : '') + ' alt="Изображение для ' + safeNameAttribute + '" loading="lazy" decoding="async" fetchpriority="low" width="400" height="225" onerror="this.closest(\'.uni-card-image\').classList.add(\'img-fallback\'); this.remove();"></div>'
+        : '<div class="uni-card-image img-fallback" aria-hidden="true"><i class="icon icon-lg" data-lucide="building-2"></i></div>';
     const raexBadge = uni.raex2026
         ? `<span class="uni-raex-rank" title="Место в рейтинге RAEX-100, 2026"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.raex2026.rank}</strong> место в RAEX</span>`
         : `<span class="uni-raex-rank uni-raex-none" title="Нет подтверждённого места в RAEX-100 за 2026 год"><i class="icon icon-sm" data-lucide="minus-circle"></i> нет данных RAEX</span>`;
