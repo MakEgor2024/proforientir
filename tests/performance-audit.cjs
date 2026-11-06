@@ -455,6 +455,12 @@ async function main() {
             'Для всех фото Commons должны быть получены автор, точная лицензия и ссылка на оригинал: ' + completeCommonsMetadata + '/' + commonsUrls.length);
         assert.equal(pageErrors.length, 0, 'Ошибки JavaScript: ' + pageErrors.join('; '));
         assert.equal(renderedImageStats.pendingImages, 0, 'Остались незавершённые запросы изображений после ожидания');
+        assert.equal(renderedImageStats.firstPageImages.length, 12, 'Ожидалось 12 карточек на первой странице каталога');
+        assert.ok(
+            renderedImageStats.firstPageImages.every(image => image.complete && image.naturalWidth > 0),
+            'Не все фотографии первой страницы реально загрузились: ' + JSON.stringify(renderedImageStats.firstPageImages.filter(image => !image.complete || image.naturalWidth === 0))
+        );
+        assert.equal(renderedImageStats.fallbackCards, 0, 'На первой странице каталога появились карточки без фотографий');
         assert.equal(renderedImageStats.responsiveSrcsetCount, renderedImageStats.imageElements,
             'Для каждой фотографии должен быть выбран адаптивный srcset 400/800 px');
         assert.ok(firstPartyBytes < 300000, 'Объём первых локальных ресурсов превысил бюджет 300 КБ: ' + firstPartyBytes);
