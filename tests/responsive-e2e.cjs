@@ -251,18 +251,23 @@ async function run() {
             const header = document.querySelector('header').getBoundingClientRect();
             const logo = document.querySelector('.logo-svg').getBoundingClientRect();
             return {
+                top: Math.round(header.top),
                 height: Math.round(header.height),
+                background: getComputedStyle(document.querySelector('header')).backgroundColor,
+                visibility: getComputedStyle(document.querySelector('header')).visibility,
+                opacity: getComputedStyle(document.querySelector('header')).opacity,
+                logoRect: { x: Math.round(logo.x), y: Math.round(logo.y), width: Math.round(logo.width), height: Math.round(logo.height) },
                 logoVisible: logo.width > 0 && logo.height > 0 && logo.top >= 0 && logo.bottom <= header.bottom + 1
             };
         });
-        assert.ok(mobileHeader.height >= 48 && mobileHeader.logoVisible, 'Шапка и логотип должны быть видны в начале мобильной страницы');
-        await page.screenshot({ path: path.join(screenshotDir, 'mobile-390.png'), fullPage: true });
+        assert.ok(mobileHeader.top === 0 && mobileHeader.height >= 48 && mobileHeader.logoVisible, 'Шапка и логотип должны быть видны в начале мобильной страницы: ' + JSON.stringify(mobileHeader));
+        await page.screenshot({ path: path.join(screenshotDir, 'mobile-390.png'), fullPage: false });
         await page.setViewportSize({ width: 1440, height: 1000 });
         await page.evaluate(() => window.scrollTo(0, 0));
         await page.waitForTimeout(100);
         const desktopLogoVisible = await page.locator('.logo-svg').isVisible();
         assert.ok(desktopLogoVisible, 'Логотип должен быть виден в начале десктопной страницы');
-        await page.screenshot({ path: path.join(screenshotDir, 'desktop-1440.png'), fullPage: true });
+        await page.screenshot({ path: path.join(screenshotDir, 'desktop-1440.png'), fullPage: false });
 
         assert.deepEqual(pageErrors, [], 'Ошибки JavaScript в браузере: ' + pageErrors.join('; '));
         console.log(JSON.stringify({
