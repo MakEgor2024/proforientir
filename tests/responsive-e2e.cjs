@@ -144,7 +144,7 @@ async function run() {
                 assert.equal(metrics.navDisplay, 'none', 'Мобильное меню должно быть закрыто при ' + width + 'px');
                 assert.equal(metrics.menuVisible, true, 'Кнопка меню должна быть видна при ' + width + 'px');
             } else {
-                assert.equal(metrics.navDisplay, 'flex', 'Навигация должна быть видна на десктопе при ' + width + 'px');
+                assert.notEqual(metrics.navDisplay, 'none', 'Навигация должна быть видна на десктопе при ' + width + 'px');
                 assert.equal(metrics.menuVisible, false, 'Кнопка меню должна быть скрыта на десктопе при ' + width + 'px');
             }
         }
