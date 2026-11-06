@@ -58,11 +58,13 @@ async function run() {
     });
     await context.addInitScript(() => {
         let authStateListener = null;
+        window.__authObserverRegistered = false;
         const authApi = {
             currentUser: null,
             onAuthStateChanged(callback) {
                 authStateListener = callback;
-                callback(null);
+                window.__authObserverRegistered = true;
+                callback(authApi.currentUser);
             },
             signOut: async () => ({}),
             createUserWithEmailAndPassword: async () => ({ user: null }),
@@ -171,6 +173,8 @@ async function run() {
         }));
         assert.deepEqual(initialFirestoreState, { sdkAvailable: false, loadCount: 0 },
             'Firestore не должен загружаться для неавторизованного посетителя');
+        assert.equal(await page.evaluate(() => window.__authObserverRegistered), false,
+            'Проверка сессии не должна запускаться до отрисовки первого экрана');
         const creditStats = await page.evaluate(() => {
             const credits = [...document.querySelectorAll('.uni-image-credit')];
             const commons = credits.filter(el => el.dataset.creditType === 'commons');
@@ -414,6 +418,7 @@ async function run() {
 
         assert.deepEqual(pageErrors, [], 'Ошибки JavaScript в браузере: ' + pageErrors.join('; '));
 
+        await page.waitForFunction(() => window.__authObserverRegistered === true, null, { timeout: 5000 });
         await page.evaluate(() => window.__setTestAuthUser({ uid: 'test-profile-user' }));
         await page.waitForFunction(() => window.__firestoreLoadCount === 1, null, { timeout: 5000 });
         await page.waitForFunction(() =>
