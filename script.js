@@ -650,13 +650,6 @@ function setupMobileNavigation() {
             setMobileMenuOpen(false);
         }
     });
-    document.addEventListener('click', event => {
-        if (mobileMenuToggleBtn.getAttribute('aria-expanded') === 'true'
-            && event.target instanceof Element
-            && !event.target.closest('header')) {
-            setMobileMenuOpen(false);
-        }
-    });
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape' && mobileMenuToggleBtn.getAttribute('aria-expanded') === 'true') {
             setMobileMenuOpen(false);
