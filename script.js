@@ -89,10 +89,38 @@ try {
 }
 
 let auth = null;
+let authLoadingPromise = null;
+const FIREBASE_AUTH_SDK_URL = 'https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js';
+
 function ensureAuth() {
-    if (!auth) auth = firebase.auth();
-    return auth;
+    if (auth) return Promise.resolve(auth);
+    if (typeof firebase.auth === 'function') {
+        auth = firebase.auth();
+        return Promise.resolve(auth);
+    }
+    if (!authLoadingPromise) {
+        authLoadingPromise = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = FIREBASE_AUTH_SDK_URL;
+            script.async = true;
+            script.onload = () => {
+                if (typeof firebase.auth !== 'function') {
+                    reject(new Error('Firebase Auth SDK загружен, но firebase.auth недоступен.'));
+                    return;
+                }
+                auth = firebase.auth();
+                resolve(auth);
+            };
+            script.onerror = () => reject(new Error('Не удалось загрузить модуль авторизации.'));
+            document.head.appendChild(script);
+        }).catch(error => {
+            authLoadingPromise = null;
+            throw error;
+        });
+    }
+    return authLoadingPromise;
 }
+
 let db = null;
 let firestoreLoadingPromise = null;
 const FIRESTORE_SDK_URL = 'https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js';
@@ -181,25 +209,36 @@ let isRegisterMode = false;
 // --- FIREBASE AUTHENTICATION LOGIC ---
 let authStateListenerInitialized = false;
 
-function initializeAuthStateListener() {
+async function initializeAuthStateListener() {
     if (authStateListenerInitialized) return;
     authStateListenerInitialized = true;
-    ensureAuth().onAuthStateChanged(user => {
-        if (user) {
-            updateUIAfterAuthStateChange(true);
-            loadProfileData();
-        } else {
-            updateUIAfterAuthStateChange(false);
-            savedResultsDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть сохраненные результаты.</p>';
-            favoritesDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть избранное.</p>';
-        }
-    });
+    try {
+        const authInstance = await ensureAuth();
+        authInstance.onAuthStateChanged(user => {
+            if (user) {
+                updateUIAfterAuthStateChange(true);
+                loadProfileData();
+            } else {
+                updateUIAfterAuthStateChange(false);
+                savedResultsDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть сохраненные результаты.</p>';
+                favoritesDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть избранное.</p>';
+            }
+        });
+    } catch (error) {
+        authStateListenerInitialized = false;
+        updateUIAfterAuthStateChange(false);
+        console.warn('Не удалось восстановить сессию Firebase:', error);
+    }
 }
 
 function scheduleAuthStateListener() {
-    // Restore an existing session after the first screen has had time to render.
-    window.setTimeout(initializeAuthStateListener, 1800);
-    // User intent takes priority: restore the session immediately on first interaction.
+    // Restore saved sessions only after the first screen is rendered and the browser is idle.
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(initializeAuthStateListener, { timeout: 3500 });
+    } else {
+        window.setTimeout(initializeAuthStateListener, 3000);
+    }
+    // User intent takes priority: start loading Auth immediately on first interaction.
     document.addEventListener('pointerdown', initializeAuthStateListener, { once: true, passive: true });
     document.addEventListener('keydown', initializeAuthStateListener, { once: true });
 }
@@ -224,7 +263,7 @@ function handleAuthError(error) {
 
 // --- PROFILE DATA LOGIC (FIRESTORE) ---
 async function getUserData() {
-    const user = ensureAuth().currentUser;
+    const user = (await ensureAuth()).currentUser;
     if (!user) return null;
     await ensureFirestore();
     const userDocRef = db.collection('profiles').doc(user.uid);
@@ -262,7 +301,7 @@ async function loadProfileData() {
 }
 
 async function saveResult() {
-    const user = ensureAuth().currentUser;
+    const user = (await ensureAuth()).currentUser;
     if (!user) { showToast("Пожалуйста, войдите в профиль, чтобы сохранить результат."); loginBtn.click(); return; }
     if (lastTestResultTypes.length === 0) { showToast("Сначала пройдите тест."); return; }
     const resultToSave = { id: `res_${Date.now()}`, types: lastTestResultTypes, date: new Date().toLocaleDateString('ru-RU') };
@@ -279,7 +318,7 @@ async function saveResult() {
 }
 
 window.removeTestResult = async function(resultId) {
-    const user = ensureAuth().currentUser;
+    const user = (await ensureAuth()).currentUser;
     if (!user) return;
     const userData = await getUserData();
     if (!userData || !userData.savedResults) return;
@@ -292,7 +331,7 @@ window.removeTestResult = async function(resultId) {
 }
 
 async function toggleFavorite() {
-    const user = ensureAuth().currentUser;
+    const user = (await ensureAuth()).currentUser;
     if (!user) { showToast("Пожалуйста, войдите в профиль, чтобы добавить в избранное."); loginBtn.click(); return; }
     if (!currentUniForModal) return;
     const uniName = currentUniForModal.name;
@@ -315,7 +354,7 @@ async function toggleFavorite() {
 }
 
 async function updateFavoriteButtonText() {
-    const user = ensureAuth().currentUser;
+    const user = (await ensureAuth()).currentUser;
     if (!user || !currentUniForModal) {
         addToFavoritesBtn.innerHTML = `<i class="icon" data-lucide="heart"></i> В избранное`;
         addToFavoritesBtn.style.backgroundColor = 'var(--accent-color)';
@@ -330,7 +369,7 @@ async function updateFavoriteButtonText() {
 }
 
 window.removeFavorite = async function(uniName) {
-    const user = ensureAuth().currentUser;
+    const user = (await ensureAuth()).currentUser;
     if (!user) return;
     try {
         await ensureFirestore();
@@ -345,7 +384,7 @@ window.removeFavorite = async function(uniName) {
 }
 
 async function clearProfileData() {
-    const user = ensureAuth().currentUser;
+    const user = (await ensureAuth()).currentUser;
     if (!user) { showToast("Вы не вошли в профиль."); return; }
     if (!confirm("Вы уверены, что хотите очистить все сохраненные результаты и избранное? Это действие необратимо.")) return;
     try {
@@ -793,10 +832,44 @@ function setupMobileNavigation() {
 function setupEventListeners() {
     // АУТЕНТИФИКАЦИЯ
     loginBtn.addEventListener('click', () => { isRegisterMode = false; authModalTitle.textContent = 'Вход'; authSubmitBtn.textContent = 'Войти'; authSwitchLink.textContent = 'Нет аккаунта? Зарегистрироваться'; authErrorP.classList.add('hidden'); openModal('auth-modal'); });
-    logoutBtn.addEventListener('click', () => ensureAuth().signOut().then(() => showToast("Вы успешно вышли.")).catch(handleAuthError));
+    logoutBtn.addEventListener('click', async () => {
+        try {
+            await (await ensureAuth()).signOut();
+            showToast("Вы успешно вышли.");
+        } catch (error) {
+            handleAuthError(error);
+        }
+    });
     authSwitchLink.addEventListener('click', e => { e.preventDefault(); isRegisterMode = !isRegisterMode; authModalTitle.textContent = isRegisterMode ? 'Регистрация' : 'Вход'; authSubmitBtn.textContent = isRegisterMode ? 'Зарегистрироваться' : 'Войти'; authSwitchLink.textContent = isRegisterMode ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться'; });
-    authForm.addEventListener('submit', e => { e.preventDefault(); const email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value; if(isRegisterMode) ensureAuth().createUserWithEmailAndPassword(email, password).then(() => { showToast("Регистрация успешна!"); closeModals(); }).catch(handleAuthError); else ensureAuth().signInWithEmailAndPassword(email, password).then(() => { showToast("Вы успешно вошли!"); closeModals(); }).catch(handleAuthError); });
-    googleSigninBtn.addEventListener('click', () => { const provider = new firebase.auth.GoogleAuthProvider(); ensureAuth().signInWithPopup(provider).then(res => { showToast(`Добро пожаловать, ${res.user.displayName}!`); closeModals(); }).catch(handleAuthError); });
+    authForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        const email = document.getElementById('auth-email').value;
+        const password = document.getElementById('auth-password').value;
+        try {
+            const authInstance = await ensureAuth();
+            if (isRegisterMode) {
+                await authInstance.createUserWithEmailAndPassword(email, password);
+                showToast("Регистрация успешна!");
+            } else {
+                await authInstance.signInWithEmailAndPassword(email, password);
+                showToast("Вы успешно вошли!");
+            }
+            closeModals();
+        } catch (error) {
+            handleAuthError(error);
+        }
+    });
+    googleSigninBtn.addEventListener('click', async () => {
+        try {
+            const authInstance = await ensureAuth();
+            const provider = new firebase.auth.GoogleAuthProvider();
+            const result = await authInstance.signInWithPopup(provider);
+            showToast(`Добро пожаловать, ${result.user.displayName}!`);
+            closeModals();
+        } catch (error) {
+            handleAuthError(error);
+        }
+    });
 
     // ОБЩИЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
     themeSwitchBtn.addEventListener('click', toggleTheme);
