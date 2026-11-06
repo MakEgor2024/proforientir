@@ -342,7 +342,7 @@
   {
     "name": "Финансовый университет",
     "type": "finance",
-    "imageUrl": "https://static.tildacdn.com/tild3062-6365-4237-a430-356330356431/514.jpg",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Finance_University_of_Russia.JPG?width=800",
     "programs": [
       "Финансы",
       "Аудит",
@@ -367,7 +367,11 @@
       "employmentRank": 8,
       "scienceRank": 30,
       "rankPrevYear": 10
-    }
+    },
+    "imageAuthor": "Andreykor",
+    "imageLicense": "CC0 1.0",
+    "imageLicenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Finance_University_of_Russia.JPG"
   },
   {
     "name": "РАНХиГС",
@@ -655,7 +659,7 @@
   {
     "name": "МИСиС",
     "type": "tech",
-    "imageUrl": "https://static.themoscowtimes.com/image_archive/1360/41/i315598_misis-science-institute-russia-top.jpg",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9D%D0%98%D0%A2%D0%A3_%22%D0%9C%D0%98%D0%A1%D0%B8%D0%A1%22.jpg?width=800",
     "programs": [
       "Материаловедение",
       "IT",
@@ -680,7 +684,11 @@
       "employmentRank": 14,
       "scienceRank": 6,
       "rankPrevYear": 17
-    }
+    },
+    "imageAuthor": "Sgnuskov",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9D%D0%98%D0%A2%D0%A3_%22%D0%9C%D0%98%D0%A1%D0%B8%D0%A1%22.jpg"
   },
   {
     "name": "МТУСИ",
