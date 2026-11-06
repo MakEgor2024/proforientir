@@ -252,7 +252,18 @@ async function main() {
                     const img = container.querySelector('img');
                     return img && !img.complete;
                 }).length,
-                lazyCount: document.querySelectorAll('.uni-card-image img[loading="lazy"]').length
+                lazyCount: document.querySelectorAll('.uni-card-image img[loading="lazy"]').length,
+                responsiveSrcsetCount: containers.filter(container => {
+                    const img = container.querySelector('img');
+                    const srcset = img?.getAttribute('srcset') || '';
+                    return srcset.includes('400w') && srcset.includes('800w') && Boolean(img?.getAttribute('sizes'));
+                }).length,
+                selectedWidths: containers.map(container => {
+                    const img = container.querySelector('img');
+                    if (!img || !img.currentSrc) return null;
+                    const url = new URL(img.currentSrc);
+                    return Number(url.searchParams.get('w') || url.searchParams.get('width') || 0) || null;
+                }).filter(Boolean)
             };
         });
 
@@ -305,6 +316,12 @@ async function main() {
         assert.equal(brokenImages.length, 0, 'Не все URL изображений доступны: ' + brokenImages.map(item => item.url + ' (' + item.error + ')').join('; '));
         assert.equal(pageErrors.length, 0, 'Ошибки JavaScript: ' + pageErrors.join('; '));
         assert.equal(renderedImageStats.pendingImages, 0, 'Остались незавершённые запросы изображений после ожидания');
+        assert.equal(renderedImageStats.responsiveSrcsetCount, renderedImageStats.rendered,
+            'Для каждой карточки должен быть выбран адаптивный srcset 400/800 px');
+        assert.ok(firstPartyBytes < 300000, 'Объём первых локальных ресурсов превысил бюджет 300 КБ: ' + firstPartyBytes);
+        assert.ok(firstPaintMetrics.fcpMs !== null && firstPaintMetrics.fcpMs < 2500,
+            'FCP на тестовом мобильном соединении должен быть меньше 2,5 сек: ' + firstPaintMetrics.fcpMs);
+        assert.ok(firstPaintMetrics.cls <= 0.1, 'CLS на первом экране выше 0,1: ' + firstPaintMetrics.cls);
     } finally {
         await context.close();
         await browser.close();
