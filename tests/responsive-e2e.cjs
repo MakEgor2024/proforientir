@@ -303,6 +303,25 @@ async function run() {
         assert.equal(await page.locator('#auth-modal').evaluate(el => el.style.display), 'block', 'Кнопка входа не открывает форму авторизации');
         await page.locator('#auth-modal .close').click();
 
+        await page.locator('#universities').scrollIntoViewIfNeeded();
+        while (await page.locator('#show-more-universities-btn').isVisible()) {
+            await page.locator('#show-more-universities-btn').click();
+        }
+        assert.equal(await page.locator('.uni-card[data-uni-name="МФЭИ"]').count(), 0,
+            'Ликвидированный МФЭИ не должен попадать в активный каталог');
+        for (const name of ['МГТА', 'МАБИВ']) {
+            const card = page.locator('.uni-card[data-uni-name="' + name + '"]');
+            assert.equal(await card.count(), 1, 'Запись на проверке должна сохраняться: ' + name);
+            assert.ok(await card.locator('.uni-review-badge').count() > 0,
+                'Запись должна иметь видимую отметку о проверке: ' + name);
+            assert.ok(await card.locator('.uni-image-missing').count() > 0,
+                'Для неподтверждённой фотографии должен показываться placeholder: ' + name);
+        }
+        await page.locator('.uni-card[data-uni-name="МГТА"] .uni-content').click();
+        assert.ok(await page.locator('#uni-info .uni-status-note').isVisible(),
+            'Подробности организации должны содержать пояснение о статусе');
+        await page.locator('#uni-modal .close').click();
+
         const screenshotDir = path.join(root, 'artifacts');
         fs.mkdirSync(screenshotDir, { recursive: true });
         await page.setViewportSize({ width: 390, height: 844 });
