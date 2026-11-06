@@ -89,7 +89,41 @@ try {
 }
 
 const auth = firebase.auth();
-const db = firebase.firestore();
+let db = null;
+let firestoreLoadingPromise = null;
+const FIRESTORE_SDK_URL = 'https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js';
+
+async function ensureFirestore() {
+    if (db) return db;
+    if (typeof firebase.firestore === 'function') {
+        db = firebase.firestore();
+        return db;
+    }
+    if (!firestoreLoadingPromise) {
+        firestoreLoadingPromise = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = FIRESTORE_SDK_URL;
+            script.async = true;
+            script.onload = () => {
+                try {
+                    if (typeof firebase.firestore !== 'function') {
+                        throw new Error('Firebase Firestore SDK loaded without exposing firebase.firestore');
+                    }
+                    db = firebase.firestore();
+                    resolve(db);
+                } catch (error) {
+                    reject(error);
+                }
+            };
+            script.onerror = () => reject(new Error('Не удалось загрузить модуль базы данных профиля.'));
+            document.head.appendChild(script);
+        }).catch(error => {
+            firestoreLoadingPromise = null;
+            throw error;
+        });
+    }
+    return firestoreLoadingPromise;
+}
 
 // --- DOM Элементы ---
 let currentUniForModal = null; let lastTestResultTypes = []; let currentProfessionFilterTypes = [];
@@ -174,6 +208,7 @@ function handleAuthError(error) {
 async function getUserData() {
     const user = auth.currentUser;
     if (!user) return null;
+    await ensureFirestore();
     const userDocRef = db.collection('profiles').doc(user.uid);
     const doc = await userDocRef.get();
     return doc.exists ? doc.data() : { savedResults: [], favorites: [] };
@@ -214,6 +249,7 @@ async function saveResult() {
     if (lastTestResultTypes.length === 0) { showToast("Сначала пройдите тест."); return; }
     const resultToSave = { id: `res_${Date.now()}`, types: lastTestResultTypes, date: new Date().toLocaleDateString('ru-RU') };
     try {
+        await ensureFirestore();
         const userDocRef = db.collection('profiles').doc(user.uid);
         await userDocRef.set({ savedResults: firebase.firestore.FieldValue.arrayUnion(resultToSave) }, { merge: true });
         showToast("Результат теста сохранен в профиле!");
@@ -243,6 +279,7 @@ async function toggleFavorite() {
     if (!currentUniForModal) return;
     const uniName = currentUniForModal.name;
     try {
+        await ensureFirestore();
         const userDocRef = db.collection('profiles').doc(user.uid);
         const userData = await getUserData();
         const isFavorite = userData?.favorites?.includes(uniName);
@@ -277,19 +314,30 @@ async function updateFavoriteButtonText() {
 window.removeFavorite = async function(uniName) {
     const user = auth.currentUser;
     if (!user) return;
-    await db.collection('profiles').doc(user.uid).update({ favorites: firebase.firestore.FieldValue.arrayRemove(uniName) });
-    loadProfileData();
-    showToast(`${uniName} удален из избранного.`);
-    if (uniModal.style.display === 'block' && currentUniForModal?.name === uniName) updateFavoriteButtonText();
+    try {
+        await ensureFirestore();
+        await db.collection('profiles').doc(user.uid).update({ favorites: firebase.firestore.FieldValue.arrayRemove(uniName) });
+        await loadProfileData();
+        showToast(`${uniName} удален из избранного.`);
+        if (uniModal.style.display === 'block' && currentUniForModal?.name === uniName) await updateFavoriteButtonText();
+    } catch (error) {
+        console.error('Ошибка удаления из избранного:', error);
+        showToast('Не удалось удалить учебное заведение из избранного.');
+    }
 }
 
-function clearProfileData() {
+async function clearProfileData() {
     const user = auth.currentUser;
     if (!user) { showToast("Вы не вошли в профиль."); return; }
-    if (confirm("Вы уверены, что хотите очистить все сохраненные результаты и избранное? Это действие необратимо.")) {
-        db.collection('profiles').doc(user.uid).delete()
-            .then(() => { loadProfileData(); showToast("Данные профиля очищены."); })
-            .catch(error => { console.error("Ошибка при очистке профиля:", error); showToast("Не удалось очистить профиль."); });
+    if (!confirm("Вы уверены, что хотите очистить все сохраненные результаты и избранное? Это действие необратимо.")) return;
+    try {
+        await ensureFirestore();
+        await db.collection('profiles').doc(user.uid).delete();
+        await loadProfileData();
+        showToast("Данные профиля очищены.");
+    } catch (error) {
+        console.error("Ошибка при очистке профиля:", error);
+        showToast("Не удалось очистить профиль.");
     }
 }
 
