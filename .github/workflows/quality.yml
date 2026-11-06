@@ -45,4 +45,5 @@ jobs:
           path: |
             artifacts/*.png
             artifacts/performance-report.json
+            artifacts/commons-attribution-report.json
           if-no-files-found: ignore
