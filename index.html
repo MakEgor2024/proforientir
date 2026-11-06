@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Proforientir - тест Голланда, 68+ профессий России, вузы, требования к ЕГЭ, зарплаты. Помоги найти идеальную профессию.">
+    <meta name="description" content="Proforientir помогает разобраться в профессиональных интересах, изучить профессии и подобрать образовательный маршрут.">
     <meta name="keywords" content="профориентация, тест Голланда, профессии, вузы, образование, выбор профессии, ЕГЭ, карьера, специальности">
     <meta name="author" content="Proforientir">
     <meta name="theme-color" content="#0a4a8e">
@@ -15,17 +15,16 @@
     <meta name="twitter:description" content="Профессиональная ориентация для школьников с тестом Голланда">
     <title>Proforientir - Тест Голланда и выбор профессии | Гид по вузам</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧭</text></svg>">
     <link rel="canonical" href="https://proforientir.ru">
 </head>
 <body class="light">
-    <div class="modal" id="edu-level-modal">
+    <div class="modal" id="edu-level-modal" role="dialog" aria-modal="true" aria-labelledby="edu-level-modal-title" aria-hidden="true">
         <div class="modal-content edu-level-modal-content">
-            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
-            <h3><i class="icon" data-lucide="graduation-cap"></i>Какой уровень образования вас интересует?</h3>
+            <button type="button" class="close" title="Закрыть" aria-label="Закрыть окно"><i class="icon icon-only" data-lucide="x"></i></button>
+            <h3 id="edu-level-modal-title"><i class="icon" data-lucide="graduation-cap"></i>Какой уровень образования вас интересует?</h3>
             <p class="edu-level-subtitle">Выберите, куда вы поступаете — мы покажем подходящие вузы и специальности именно для этого уровня. Выбор всегда можно изменить кнопкой в шапке сайта.</p>
             <div class="edu-level-cards">
                 <button type="button" class="edu-level-card" data-level="college">
@@ -58,7 +57,7 @@
 
     <header>
         <div class="header-content">
-            <a href="#test" class="logo-container" aria-label="Proforientir Главная">
+            <a href="#top" class="logo-container" aria-label="Proforientir — на главную">
                 <svg class="logo-svg" viewBox="0 0 210 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <style>
                         .logo-text-main { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 28px; fill: currentColor; }
@@ -73,7 +72,7 @@
                 </svg>
             </a>
             <div class="controls">
-                <nav>
+                <nav aria-label="Основная навигация">
                     <ul>
                         <li><a href="#test"><i class="icon" data-lucide="compass"></i><span class="nav-text">Тест</span></a></li>
                         <li><a href="#professions"><i class="icon" data-lucide="briefcase"></i><span class="nav-text">Профессии</span></a></li>
@@ -100,8 +99,31 @@
         </div>
     </header>
 
-    <main>
+    <main id="top">
         <div id="edu-level-banner" class="edu-level-banner hidden"></div>
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <span class="hero-eyebrow"><i class="icon icon-sm" data-lucide="compass"></i> Твой маршрут начинается здесь</span>
+                <h1 id="hero-title">Выбирай будущее <span>осознанно</span></h1>
+                <p>Разберись в своих интересах, открой новые профессии и найди образовательный путь, который подходит именно тебе.</p>
+                <div class="hero-actions">
+                    <a class="hero-button hero-button-primary" href="#test"><i class="icon" data-lucide="play"></i> Пройти профориентацию</a>
+                    <a class="hero-button hero-button-secondary" href="#professions">Изучить профессии <i class="icon" data-lucide="arrow-up-right"></i></a>
+                </div>
+                <div class="hero-stats" aria-label="Содержимое каталога">
+                    <div><strong id="hero-profession-count">68</strong><span>профессий</span></div>
+                    <div><strong id="hero-university-count">57</strong><span>вузов Москвы</span></div>
+                    <div><strong>RIASEC</strong><span>тест Голланда</span></div>
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="hero-orbit hero-orbit-one"></div>
+                <div class="hero-orbit hero-orbit-two"></div>
+                <div class="hero-compass"><i class="icon icon-only" data-lucide="compass"></i></div>
+                <div class="hero-float hero-float-top"><i class="icon" data-lucide="lightbulb"></i><span>Узнай свои сильные стороны</span></div>
+                <div class="hero-float hero-float-bottom"><i class="icon" data-lucide="graduation-cap"></i><span>Найди свой путь в образовании</span></div>
+            </div>
+        </section>
         <section id="test">
             <h2><i class="icon icon-lg" data-lucide="compass"></i>Найдите свой профессиональный путь</h2>
             <div id="test-start" style="text-align: center;">
@@ -132,7 +154,7 @@
         <section id="professions">
             <h2><i class="icon icon-lg" data-lucide="briefcase"></i>Каталог профессий</h2>
             <div class="search-filter-container">
-                <input type="text" id="profession-search" placeholder="Поиск по названию или описанию...">
+                <input type="search" id="profession-search" aria-label="Поиск профессий" placeholder="Поиск по названию или описанию..." autocomplete="off">
                 <select id="profession-type-filter">
                     <option value="all">Все типы</option>
                     <option value="investigative">Исследовательский</option>
@@ -181,20 +203,24 @@
                      <i class="icon icon-only" data-lucide="rotate-ccw"></i>
                  </button>
             </div>
-            <div class="uni-grid" id="all-unis-list"></div>
+            <div class="uni-grid" id="all-unis-list" aria-live="polite"></div>
+            <div id="show-more-universities-container" class="catalog-pagination hidden">
+                <p id="universities-counter" class="pagination-info" aria-live="polite"></p>
+                <button type="button" id="show-more-universities-btn" class="btn-secondary"><i class="icon" data-lucide="chevron-down"></i> Показать ещё вузы</button>
+            </div>
         </section>
     </main>
 
-    <div class="modal" id="uni-modal">
+    <div class="modal" id="uni-modal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-content">
-            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
+            <button type="button" class="close" title="Закрыть" aria-label="Закрыть окно"><i class="icon icon-only" data-lucide="x"></i></button>
             <h3 id="uni-modal-title">Название ВУЗа</h3>
             <h4><i class="icon" data-lucide="info"></i>Описание</h4>
             <div class="uni-details"> <p id="uni-info"></p> </div>
             <h4><i class="icon" data-lucide="book-marked"></i>Основные направления</h4>
             <div class="uni-details"> <p><span id="uni-programs"></span></p> </div>
             <h4><i class="icon" data-lucide="bar-chart-3"></i>Место в рейтинге RAEX-100 (2026)</h4>
-            <div class="uni-rating-details" id="uni-raex-block">
+            <div class="uni-rating-details hidden" id="uni-raex-block">
                 <ul>
                     <li><strong><i class="icon icon-sm" data-lucide="trophy"></i>Место в общем рейтинге:</strong> <span id="uni-raex-rank"></span></li>
                     <li><strong><i class="icon icon-sm" data-lucide="graduation-cap"></i>Условия для получения образования, ранг:</strong> <span id="uni-raex-conditions"></span></li>
@@ -203,6 +229,7 @@
                 </ul>
                 <p class="raex-source">Источник: <a href="https://raex-rr.com/education/russian_universities/top-100_universities/2026/" target="_blank" rel="noopener">RAEX-100, 2026 год</a>. Чем меньше число — тем выше место.</p>
             </div>
+            <p id="uni-raex-unavailable" class="uni-raex-unavailable hidden">Для этой организации нет подтверждённого места в рейтинге RAEX-100 за 2026 год.</p>
             <h4><i class="icon" data-lucide="list-checks"></i>Другие показатели</h4>
             <div class="uni-rating-details">
                 <ul>
@@ -219,9 +246,9 @@
         </div>
     </div>
 
-    <div class="modal" id="profile-modal">
+    <div class="modal" id="profile-modal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-content">
-            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
+            <button type="button" class="close" title="Закрыть" aria-label="Закрыть окно"><i class="icon icon-only" data-lucide="x"></i></button>
             <h3><i class="icon" data-lucide="user"></i>Мой профиль</h3>
             <h4><i class="icon" data-lucide="clipboard-check"></i>Сохраненные результаты теста</h4>
             <div id="saved-results"> <p>Войдите в профиль, чтобы увидеть сохраненные результаты.</p> </div>
@@ -231,9 +258,9 @@
         </div>
     </div>
 
-    <div class="modal" id="compare-modal">
+    <div class="modal" id="compare-modal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-content">
-            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
+            <button type="button" class="close" title="Закрыть" aria-label="Закрыть окно"><i class="icon icon-only" data-lucide="x"></i></button>
             <h3><i class="icon" data-lucide="git-compare"></i>Сравнение ВУЗов</h3>
             <div id="compare-table-container" style="overflow-x: auto;">
                 <p>Выберите от 2 до 3 вузов для сравнения.</p>
@@ -241,9 +268,9 @@
         </div>
     </div>
 
-    <div class="modal" id="auth-modal">
+    <div class="modal" id="auth-modal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-content" style="max-width: 400px;">
-            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
+            <button type="button" class="close" title="Закрыть" aria-label="Закрыть окно"><i class="icon icon-only" data-lucide="x"></i></button>
             <h3 id="auth-modal-title">Вход в профиль</h3>
             <form id="auth-form">
                 <div class="form-group">
@@ -266,9 +293,9 @@
         </div>
     </div>
 
-    <div class="modal" id="recommendations-modal">
+    <div class="modal" id="recommendations-modal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-content" style="max-width: 700px;">
-            <button class="close" title="Закрыть"><i class="icon icon-only" data-lucide="x"></i></button>
+            <button type="button" class="close" title="Закрыть" aria-label="Закрыть окно"><i class="icon icon-only" data-lucide="x"></i></button>
             <h3 id="recommendations-title"><i class="icon" data-lucide="sparkles"></i> Рекомендации и развитие</h3>
 
             <div id="recommendations-content">
@@ -296,7 +323,7 @@
     </div>
 
     <footer> <p>© <span id="current-year">2025</span> Proforientir. Все права защищены.</p> </footer>
-    <div id="toast" class="toast">Сообщение</div>
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true">Сообщение</div>
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js" defer></script>
