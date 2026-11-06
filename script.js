@@ -96,7 +96,7 @@ let currentUniForModal = null; let lastTestResultTypes = []; let currentProfessi
 let processedUniversities = []; let currentFilteredUniversities = []; const UNIVERSITY_PAGE_SIZE = 12; let universitiesVisibleCount = UNIVERSITY_PAGE_SIZE;
 const PROFESSIONS_PAGE_SIZE = 12; let professionsVisibleCount = PROFESSIONS_PAGE_SIZE;
 let currentFilteredProfessions = []; let selectedForComparison = [];
-const themeSwitchBtn = document.querySelector('.theme-switch'); const profileBtn = document.getElementById('profile-btn');
+const themeSwitchBtn = document.querySelector('.theme-switch'); const profileBtn = document.getElementById('profile-btn'); const mobileMenuToggleBtn = document.getElementById('mobile-menu-toggle'); const primaryNav = document.getElementById('primary-navigation');
 const startTestBtn = document.getElementById('start-test-btn'); const testStartDiv = document.getElementById('test-start');
 const careerTestForm = document.getElementById('career-test'); const questionsContainer = document.getElementById('questions-container');
 const resultsSection = document.getElementById('results'); const resultTextDiv = document.getElementById('result-text');
@@ -631,6 +631,15 @@ function updateHeroStats() {
     if (heroUniversityCount && processedUniversities.length) heroUniversityCount.textContent = String(processedUniversities.length);
 }
 function simpleMarkdownToHtml(text) { if (!text) return ''; let html = sanitizeHTML(text); html = html.replace(/^## (.*?)$/gm, '<h5>$1</h5>').replace(/^# (.*?)$/gm, '<h4>$1</h4>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/^[\*\-\+] +(.*?)$/gm, '<li>$1</li>').replace(/^\d+\. +(.*?)$/gm, '<li>$1</li>').replace(/((<li>.*<\/li>\s*)+)/gm, '<ul>$1</ul>').replace(/\n/g, '<br>'); return html; }
+function setMobileMenuOpen(isOpen) {
+    primaryNav.classList.toggle('is-open', isOpen);
+    mobileMenuToggleBtn.setAttribute('aria-expanded', String(isOpen));
+    mobileMenuToggleBtn.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    mobileMenuToggleBtn.title = isOpen ? 'Закрыть меню' : 'Открыть меню';
+    mobileMenuToggleBtn.innerHTML = '<i class="icon icon-only" data-lucide="' + (isOpen ? 'x' : 'menu') + '"></i>';
+    initLucideIcons();
+}
+
 function setupEventListeners() {
     // АУТЕНТИФИКАЦИЯ
     loginBtn.addEventListener('click', () => { isRegisterMode = false; authModalTitle.textContent = 'Вход'; authSubmitBtn.textContent = 'Войти'; authSwitchLink.textContent = 'Нет аккаунта? Зарегистрироваться'; authErrorP.classList.add('hidden'); openModal('auth-modal'); });
@@ -641,6 +650,32 @@ function setupEventListeners() {
 
     // ОБЩИЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
     themeSwitchBtn.addEventListener('click', toggleTheme);
+    mobileMenuToggleBtn.addEventListener('click', () => {
+        setMobileMenuOpen(mobileMenuToggleBtn.getAttribute('aria-expanded') !== 'true');
+    });
+    primaryNav.addEventListener('click', event => {
+        if (event.target instanceof Element && event.target.closest('a, button') && window.innerWidth <= 820) {
+            setMobileMenuOpen(false);
+        }
+    });
+    document.addEventListener('click', event => {
+        if (mobileMenuToggleBtn.getAttribute('aria-expanded') === 'true'
+            && event.target instanceof Element
+            && !event.target.closest('header')) {
+            setMobileMenuOpen(false);
+        }
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && mobileMenuToggleBtn.getAttribute('aria-expanded') === 'true') {
+            setMobileMenuOpen(false);
+            mobileMenuToggleBtn.focus();
+        }
+    });
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 820 && mobileMenuToggleBtn.getAttribute('aria-expanded') === 'true') {
+            setMobileMenuOpen(false);
+        }
+    });
     profileBtn.addEventListener('click', () => openModal('profile-modal'));
     closeModalBtns.forEach(btn => btn.addEventListener('click', closeModals));
     window.addEventListener('click', e => { if (e.target.classList.contains('modal')) { if (e.target.id === 'edu-level-modal' && !getEduLevel()) return; closeModals(); } });
