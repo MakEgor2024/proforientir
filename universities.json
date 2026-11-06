@@ -1198,7 +1198,7 @@
   {
     "name": "МГАХ им. Сурикова (филиал)",
     "type": "art",
-    "imageUrl": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Живопись",
       "Графика"
@@ -1213,7 +1213,11 @@
       "художник",
       "график"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "closed",
+    "statusNote": "Не предлагать как отдельный филиал. Официальные сведения МГАХИ им. В.И. Сурикова указывают, что филиалы у образовательной организации отсутствуют; основной вуз уже есть в каталоге отдельной записью.",
+    "statusSourceUrl": "https://lk.surikov-vuz.com/sveden/common/",
+    "imageStatusNote": "Фотография не показывается: отдельный филиал не подтверждён."
   },
   {
     "name": "МПГУ (филиал)",
@@ -1285,7 +1289,7 @@
   {
     "name": "МИП",
     "type": "psychology",
-    "imageUrl": "https://existedu.ru/images/mip2.jpg",
+    "imageUrl": "https://inpsycho.ru/files/vo/index/kKbTEHFZbzLd0aEXu2MdOZqg5AFfwkccqRxGRhIu.jpg",
     "programs": [
       "Психоанализ",
       "Клиническая психология",
@@ -1301,7 +1305,9 @@
       "психолог",
       "психоаналитик"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageSourcePage": "https://inpsycho.ru/higher_education",
+    "imageSourceLabel": "Официальный сайт"
   },
   {
     "name": "МИТУ-МАСИ",
@@ -1419,7 +1425,7 @@
   {
     "name": "ИНЭКБИ",
     "type": "economics",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Бизнес",
       "Инновации"
@@ -1435,7 +1441,8 @@
       "менеджер",
       "инноватор"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageStatusNote": "Действующая организация, но точная фотография здания по подтверждённому адресу не найдена. Вместо несвязанного стокового изображения показана заглушка."
   },
   {
     "name": "МФЭИ",
@@ -1491,7 +1498,7 @@
   {
     "name": "МГЭИ",
     "type": "economics",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Экономика",
       "Менеджмент",
@@ -1508,7 +1515,11 @@
       "менеджер",
       "юрист"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "closed",
+    "statusNote": "Не предлагать как отдельный вуз. «Московский гуманитарно-экономический институт» — прежнее название того же юридического лица/вуза, который в каталоге уже представлен актуальной записью «МГЭУ». Историческое название не должно создавать вторую карточку.",
+    "statusSourceUrl": "https://www.movuz.net/moskva/vuzy/mgeu/",
+    "imageStatusNote": "Фотография не нужна: это архивное название уже представленного МГЭУ."
   },
   {
     "name": "МАБИВ",
