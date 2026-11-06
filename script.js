@@ -815,7 +815,7 @@ function applyEduLevelUI() {
     const extraNote = level === 'master'
         ? ' Список вузов пока общий — подбор по конкретным программам магистратуры добавим отдельно.'
         : '';
-    banner.innerHTML = `Вы выбрали уровень: <strong>${EDU_LEVELS_INFO[level].label}</strong>.${extraNote} <button type="button" id="edu-level-banner-switch">Изменить уровень</button>`;
+    banner.innerHTML = `<div class="edu-level-banner-copy">Вы выбрали уровень: <strong>${EDU_LEVELS_INFO[level].label}</strong>.${extraNote}</div><button type="button" id="edu-level-banner-switch">Изменить уровень</button>`;
     banner.querySelector('#edu-level-banner-switch')?.addEventListener('click', openEduLevelModal);
 }
 function setupEduLevelListeners() {
