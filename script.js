@@ -449,7 +449,7 @@ function createUniCardHTML(uni) {
               '</div>'
             : '';
     const imageHTML = uni.imageUrl
-        ? '<div class="uni-card-image"><img src="' + imageSrc + '"' + (imageSrcset ? ' srcset="' + imageSrcset + '" sizes="(max-width: 600px) calc(100vw - 2rem), (max-width: 900px) 45vw, 400px"' : '') + ' alt="Изображение для ' + safeNameAttribute + '" crossorigin="anonymous" referrerpolicy="no-referrer" loading="lazy" decoding="async" fetchpriority="low" width="400" height="225" onerror="this.closest(\'.uni-card-image\').classList.add(\'img-fallback\'); this.remove();">' + imageCreditHTML + '</div>'
+        ? '<div class="uni-card-image"><img src="' + imageSrc + '"' + (imageSrcset ? ' srcset="' + imageSrcset + '" sizes="(max-width: 600px) calc(100vw - 2rem), (max-width: 900px) 45vw, 400px"' : '') + ' alt="Изображение для ' + safeNameAttribute + '" referrerpolicy="no-referrer" loading="lazy" decoding="async" fetchpriority="low" width="400" height="225" onerror="this.closest(\'.uni-card-image\').classList.add(\'img-fallback\'); this.remove();">' + imageCreditHTML + '</div>'
         : '<div class="uni-card-image img-fallback"><i class="icon icon-lg" data-lucide="building-2" aria-hidden="true"></i><span class="uni-image-missing">Фото уточняется</span></div>';
     const reviewBadge = uni.catalogStatus === 'review'
         ? '<span class="uni-review-badge" title="' + escapeHTMLAttribute(uni.statusNote || 'Запись требует проверки') + '">Проверить статус</span>'
