@@ -63,7 +63,11 @@
       "employmentRank": 3,
       "scienceRank": 1,
       "rankPrevYear": 1
-    }
+    },
+    "imageAuthor": "Sergey Norin from Moscow, Russia",
+    "imageLicense": "CC BY 2.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Main_building_of_Moscow_State_University_(14481975902).jpg"
   },
   {
     "name": "МГТУ им. Н.Э. Баумана",
@@ -95,7 +99,11 @@
       "employmentRank": 1,
       "scienceRank": 16,
       "rankPrevYear": 2
-    }
+    },
+    "imageAuthor": "Lestest",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Main_building_of_the_Bauman_Moscow_State_Technical_University_20220412_122519.jpg"
   },
   {
     "name": "НИУ Высшая школа экономики (ВШЭ)",
@@ -127,7 +135,11 @@
       "employmentRank": 5,
       "scienceRank": 13,
       "rankPrevYear": 7
-    }
+    },
+    "imageAuthor": "NVO",
+    "imageLicense": "CC BY 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Moscow%2C_Stremyanny_12-4_01.jpg"
   },
   {
     "name": "МФТИ (Физтех)",
@@ -158,7 +170,11 @@
       "employmentRank": 7,
       "scienceRank": 2,
       "rankPrevYear": 3
-    }
+    },
+    "imageAuthor": "Andrey Gusev",
+    "imageLicense": "FAL",
+    "imageLicenseUrl": "http://artlibre.org/licence/lal/en",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Mipt_phystech.jpg"
   },
   {
     "name": "МГИМО",
@@ -187,7 +203,11 @@
       "employmentRank": 6,
       "scienceRank": 26,
       "rankPrevYear": 6
-    }
+    },
+    "imageAuthor": "Foma at Polish Wikipedia",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:MGIMO-University-main_building.jpg"
   },
   {
     "name": "Первый МГМУ им. И.М. Сеченова",
@@ -216,7 +236,11 @@
       "employmentRank": 17,
       "scienceRank": 8,
       "rankPrevYear": 15
-    }
+    },
+    "imageAuthor": "Максим Мишин",
+    "imageLicense": "CC BY 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Opening_of_engineering_center_of_Sechenov_University_01.jpg"
   },
   {
     "name": "НИЯУ МИФИ",
@@ -244,7 +268,11 @@
       "employmentRank": 12,
       "scienceRank": 3,
       "rankPrevYear": 5
-    }
+    },
+    "imageAuthor": "Brateevsky",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%98%D0%AF%D0%A3_%C2%AB%D0%9C%D0%98%D0%A4%D0%98%C2%BB%2C_%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%B8_%D0%BF%D1%80%D0%BE%D1%85%D0%BE%D0%B4%D0%BD%D0%B0%D1%8F%2C_12.12.12.JPG"
   },
   {
     "name": "РТУ МИРЭА",
@@ -272,12 +300,16 @@
       "employmentRank": 34,
       "scienceRank": 31,
       "rankPrevYear": 42
-    }
+    },
+    "imageAuthor": "YesSayYes",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%A3%D1%87%D0%B5%D0%B1%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%E2%84%96_5_%D0%9C%D0%98%D0%A0%D0%AD%D0%90_%D0%BD%D0%B0_5-%D0%B9_%D1%83%D0%BB%D0%B8%D1%86%D0%B5_%D0%A1%D0%BE%D0%BA%D0%BE%D0%BB%D0%B8%D0%BD%D0%BE%D0%B9_%D0%93%D0%BE%D1%80%D1%8B.jpg"
   },
   {
     "name": "РНИМУ им. Н.И. Пирогова",
     "type": "medical",
-    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Pirogov_Russian_National_Research_Medical_University.jpg?width=800",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Pirogov_Russian_National_Research_Medical_University_Frontal_View.jpg?width=800",
     "programs": [
       "Педиатрия",
       "Лечебное дело",
@@ -301,12 +333,16 @@
       "employmentRank": 28,
       "scienceRank": 18,
       "rankPrevYear": 21
-    }
+    },
+    "imageAuthor": "Pirogov Russian National Research Medical University",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Pirogov_Russian_National_Research_Medical_University_Frontal_View.jpg"
   },
   {
     "name": "Финансовый университет",
     "type": "finance",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Finance_University_of_Russia.JPG?width=800",
     "programs": [
       "Финансы",
       "Аудит",
@@ -331,12 +367,16 @@
       "employmentRank": 8,
       "scienceRank": 30,
       "rankPrevYear": 10
-    }
+    },
+    "imageAuthor": "Andreykor",
+    "imageLicense": "CC0 1.0",
+    "imageLicenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Finance_University_of_Russia.JPG"
   },
   {
     "name": "РАНХиГС",
     "type": "management",
-    "imageUrl": "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Summer_campus_(2013-07-17).jpg?width=800",
     "programs": [
       "Госуправление",
       "Менеджмент",
@@ -347,7 +387,7 @@
     "avgScore": 88,
     "budgetPlaces": 2240,
     "employmentRate": 91,
-    "reputation": 9.0,
+    "reputation": 9,
     "programKeywords": [
       "управленец",
       "чиновник",
@@ -360,7 +400,11 @@
       "employmentRank": 2,
       "scienceRank": 28,
       "rankPrevYear": 9
-    }
+    },
+    "imageAuthor": "ГД РФ",
+    "imageLicense": "CC BY 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Summer_campus_(2013-07-17).jpg"
   },
   {
     "name": "РУДН",
@@ -389,12 +433,16 @@
       "employmentRank": 19,
       "scienceRank": 14,
       "rankPrevYear": 14
-    }
+    },
+    "imageAuthor": "Александр Сигачёв",
+    "imageLicense": "CC0",
+    "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%9C%D0%B8%D0%BA%D0%BB%D1%83%D1%85%D0%BE-%D0%9C%D0%B0%D0%BA%D0%BB%D0%B0%D1%8F_21_%D0%BA2.jpg"
   },
   {
     "name": "НИУ МГСУ",
     "type": "civil_engineering",
-    "imageUrl": "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Moscow_State_University_of_Civil_Engineering_-_2025-09_-_p01.jpg?width=800",
     "programs": [
       "Строительство",
       "Архитектура",
@@ -417,7 +465,11 @@
       "employmentRank": 29,
       "scienceRank": 43,
       "rankPrevYear": 30
-    }
+    },
+    "imageAuthor": "Александр Сигачёв",
+    "imageLicense": "CC0",
+    "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Moscow_State_University_of_Civil_Engineering_-_2025-09_-_p01.jpg"
   },
   {
     "name": "МАИ",
@@ -433,7 +485,7 @@
     "avgScore": 83,
     "budgetPlaces": 2950,
     "employmentRate": 91,
-    "reputation": 9.0,
+    "reputation": 9,
     "programKeywords": [
       "конструктор",
       "пилот",
@@ -446,7 +498,11 @@
       "employmentRank": 18,
       "scienceRank": 23,
       "rankPrevYear": 23
-    }
+    },
+    "imageAuthor": "Andreykor",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%90%D0%98_%D0%BD%D0%B0_%D1%83%D0%BB._%D0%9F%D0%B0%D0%BD%D1%84%D0%B8%D0%BB%D0%BE%D0%B2%D0%B0_(1).JPG"
   },
   {
     "name": "РЭУ им. Г.В. Плеханова",
@@ -474,12 +530,16 @@
       "employmentRank": 4,
       "scienceRank": 38,
       "rankPrevYear": 18
-    }
+    },
+    "imageAuthor": "Brateevsky",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Third_housing_of_Plekhanov_University_of_Economics_in_Moscow%2C_front_view.JPG"
   },
   {
     "name": "НИУ МЭИ",
     "type": "engineering",
-    "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
+    "imageUrl": "https://galaktika-it.ru/wp-content/uploads/2020/10/compressed_file-scaled.jpeg",
     "programs": [
       "Электроэнергетика",
       "Теплоэнергетика",
@@ -509,7 +569,7 @@
   {
     "name": "МПГУ",
     "type": "pedagogy",
-    "imageUrl": "https://images.unsplash.com/photo-1524178232363-1fb28f74b0cd?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mpgu-campus.jpg?width=800",
     "programs": [
       "Педагогическое образование",
       "Психология",
@@ -533,7 +593,11 @@
       "employmentRank": 27,
       "scienceRank": 53,
       "rankPrevYear": 31
-    }
+    },
+    "imageAuthor": "A.Savin",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Mpgu-campus.jpg"
   },
   {
     "name": "МГЛУ",
@@ -566,7 +630,7 @@
   {
     "name": "МГЮА им. О.Е. Кутафина",
     "type": "law",
-    "imageUrl": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1080",
+    "imageUrl": "https://smapse.ru/storage/2021/11/converted/825_585_fv.jpg",
     "programs": [
       "Юриспруденция",
       "Судебная экспертиза"
@@ -595,7 +659,7 @@
   {
     "name": "МИСиС",
     "type": "tech",
-    "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9D%D0%98%D0%A2%D0%A3_%22%D0%9C%D0%98%D0%A1%D0%B8%D0%A1%22.jpg?width=800",
     "programs": [
       "Материаловедение",
       "IT",
@@ -620,7 +684,11 @@
       "employmentRank": 14,
       "scienceRank": 6,
       "rankPrevYear": 17
-    }
+    },
+    "imageAuthor": "Sgnuskov",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9D%D0%98%D0%A2%D0%A3_%22%D0%9C%D0%98%D0%A1%D0%B8%D0%A1%22.jpg"
   },
   {
     "name": "МТУСИ",
@@ -683,7 +751,7 @@
   {
     "name": "РГГУ",
     "type": "humanities",
-    "imageUrl": "https://images.unsplash.com/photo-1491843342373-1f19b380f331?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Rggu_main.JPG?width=800",
     "programs": [
       "История",
       "Архивоведение",
@@ -708,12 +776,16 @@
       "employmentRank": 58,
       "scienceRank": 76,
       "rankPrevYear": 52
-    }
+    },
+    "imageAuthor": "Alton",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Rggu_main.JPG"
   },
   {
     "name": "МИТХТ им. М.В. Ломоносова (часть МИРЭА)",
     "type": "chemical",
-    "imageUrl": "https://images.unsplash.com/photo-1532187875605-7fe3470409a8?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%9C%D0%98%D0%A0%D0%AD%D0%90_%E2%80%94_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9_%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82%2C_2024_%D0%B3%D0%BE%D0%B4.jpg?width=800",
     "programs": [
       "Химия",
       "Химическая технология",
@@ -730,12 +802,16 @@
       "технолог",
       "фармацевт"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Артемий Петрухин",
+    "imageLicense": "CC BY 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%98%D0%A0%D0%AD%D0%90_%E2%80%94_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9_%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82%2C_2024_%D0%B3%D0%BE%D0%B4.jpg"
   },
   {
     "name": "РГУ нефти и газа им. И.М. Губкина",
     "type": "engineering",
-    "imageUrl": "https://images.unsplash.com/photo-1544006659-f0b21f04cb1d?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%A3%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82_%D0%BD%D0%B5%D1%84%D1%82%D0%B8_%D0%B8_%D0%B3%D0%B0%D0%B7%D0%B0_%D0%B8%D0%BC.%D0%93%D1%83%D0%B1%D0%BA%D0%B8%D0%BD%D0%B0_-_panoramio.jpg?width=800",
     "programs": [
       "Нефтегазовое дело",
       "Геология",
@@ -759,12 +835,16 @@
       "employmentRank": 15,
       "scienceRank": 45,
       "rankPrevYear": 27
-    }
+    },
+    "imageAuthor": "HarrySmitch",
+    "imageLicense": "CC BY 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%A3%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82_%D0%BD%D0%B5%D1%84%D1%82%D0%B8_%D0%B8_%D0%B3%D0%B0%D0%B7%D0%B0_%D0%B8%D0%BC.%D0%93%D1%83%D0%B1%D0%BA%D0%B8%D0%BD%D0%B0_-_panoramio.jpg"
   },
   {
     "name": "МАДИ",
     "type": "transport",
-    "imageUrl": "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%9C%D0%90%D0%94%D0%98.jpg?width=800",
     "programs": [
       "Дорожное строительство",
       "Автосервис",
@@ -788,12 +868,16 @@
       "employmentRank": 107,
       "scienceRank": 66,
       "rankPrevYear": 81
-    }
+    },
+    "imageAuthor": "Котомкина",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%90%D0%94%D0%98.jpg"
   },
   {
     "name": "МИИТ (РУТ)",
     "type": "transport",
-    "imageUrl": "https://images.unsplash.com/photo-1532105956690-db91409397b1?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/MIIT_main_building_(%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%BE%D0%B5_%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%9C%D0%98%D0%98%D0%A2%D0%B0)_(7175797830).jpg?width=800",
     "programs": [
       "ЖКД",
       "Логистика",
@@ -804,7 +888,7 @@
     "avgScore": 80,
     "budgetPlaces": 2150,
     "employmentRate": 92,
-    "reputation": 9.0,
+    "reputation": 9,
     "programKeywords": [
       "инженер",
       "логист",
@@ -817,12 +901,16 @@
       "employmentRank": 85,
       "scienceRank": 83,
       "rankPrevYear": 85
-    }
+    },
+    "imageAuthor": "Mikhail (Vokabre) Shcherbakov from Moscow, Russia",
+    "imageLicense": "CC BY-SA 2.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:MIIT_main_building_(%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%BE%D0%B5_%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%9C%D0%98%D0%98%D0%A2%D0%B0)_(7175797830).jpg"
   },
   {
     "name": "МГУПП (Росбиотех)",
     "type": "food",
-    "imageUrl": "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=1080",
+    "imageUrl": "https://1foodexpo.com/storage/events/locations/bgs/778/778/700x525/778.webp",
     "programs": [
       "Пищевые технологии",
       "Биотехнология",
@@ -844,7 +932,7 @@
   {
     "name": "МГУТУ им. Разумовского (ПКУ)",
     "type": "food",
-    "imageUrl": "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=1080",
+    "imageUrl": "https://static.ucheba.ru/pix/uz_photo/thumbnail_690c64e8bfbcd.thumbnail.webp",
     "programs": [
       "Технологический менеджмент",
       "Дизайн",
@@ -906,7 +994,7 @@
   {
     "name": "МГТУ СТАНКИН",
     "type": "tech",
-    "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
+    "imageUrl": "https://cdn.greensoft.mn/uploads/site/948/photos/block/20211013211506_04040ea04405cdd84600ebf07c122614.jpg",
     "programs": [
       "Робототехника",
       "Автоматизация",
@@ -935,7 +1023,7 @@
   {
     "name": "МИИГАиК",
     "type": "geodesy",
-    "imageUrl": "https://images.unsplash.com/photo-1506527568337-241f4a141578?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Moscow_MIIGAIK_Panel_2023-06-18_4932.jpg?width=800",
     "programs": [
       "Геодезия",
       "Картография",
@@ -946,17 +1034,21 @@
     "avgScore": 77,
     "budgetPlaces": 820,
     "employmentRate": 89,
-    "reputation": 9.0,
+    "reputation": 9,
     "programKeywords": [
       "geodesist",
       "cartographer"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Mike1979 Russia",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Moscow_MIIGAIK_Panel_2023-06-18_4932.jpg"
   },
   {
     "name": "МХПИ",
     "type": "art",
-    "imageUrl": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1080",
+    "imageUrl": "https://static.ucheba.ru/pix/uz_photo/22406.full.webp",
     "programs": [
       "Дизайн",
       "Графический дизайн",
@@ -977,7 +1069,7 @@
   {
     "name": "МГУП им. Ивана Федорова",
     "type": "communications",
-    "imageUrl": "https://images.unsplash.com/photo-1544640805-3536bd2347eb?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%92%D1%8B%D1%81%D1%88%D0%B0%D1%8F_%D1%88%D0%BA%D0%BE%D0%BB%D0%B0_%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D0%B8_%D0%B8_%D0%BC%D0%B5%D0%B4%D0%B8%D0%B0%D0%B8%D0%BD%D0%B4%D1%83%D1%81%D1%82%D1%80%D0%B8%D0%B8%2C_%D0%9A%D0%BE%D0%BF%D1%82%D0%B5%D0%B2%D0%BE%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0.jpg?width=800",
     "programs": [
       "Издательское дело",
       "Полиграфия",
@@ -994,12 +1086,16 @@
       "журналист",
       "дизайнер"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Lev.Borisovitch",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%92%D1%8B%D1%81%D1%88%D0%B0%D1%8F_%D1%88%D0%BA%D0%BE%D0%BB%D0%B0_%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D0%B8_%D0%B8_%D0%BC%D0%B5%D0%B4%D0%B8%D0%B0%D0%B8%D0%BD%D0%B4%D1%83%D1%81%D1%82%D1%80%D0%B8%D0%B8%2C_%D0%9A%D0%BE%D0%BF%D1%82%D0%B5%D0%B2%D0%BE%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0.jpg"
   },
   {
     "name": "МГИК",
     "type": "art",
-    "imageUrl": "https://images.unsplash.com/photo-1514525253361-bee8718a34e1?q=80&w=1080",
+    "imageUrl": "https://festivalnauki.ru/upload/iblock/864/2xrihhoxs2zv8gi0wwvwhuwq84hzns9i/mgik.jpg",
     "programs": [
       "Режиссура",
       "Музыкальное искусство",
@@ -1086,7 +1182,7 @@
   {
     "name": "МАРХИ",
     "type": "architecture",
-    "imageUrl": "https://images.unsplash.com/photo-1503387762-592dea58292b?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C_2-%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%90%D0%A0%D0%A5%D0%98_(%D0%B2%D0%B8%D0%B4_%D1%81%D0%BE_%D0%B4%D0%B2%D0%BE%D1%80%D0%B0).jpg?width=800",
     "programs": [
       "Архитектура",
       "Дизайн архитектурной среды"
@@ -1101,12 +1197,16 @@
       "архитектор",
       "дизайнер"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Sergey Norin from Moscow, Russia",
+    "imageLicense": "CC BY 2.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C_2-%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%90%D0%A0%D0%A5%D0%98_(%D0%B2%D0%B8%D0%B4_%D1%81%D0%BE_%D0%B4%D0%B2%D0%BE%D1%80%D0%B0).jpg"
   },
   {
     "name": "МГАХ им. Сурикова (филиал)",
     "type": "art",
-    "imageUrl": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Живопись",
       "Графика"
@@ -1121,12 +1221,16 @@
       "художник",
       "график"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "closed",
+    "statusNote": "Не предлагать как отдельный филиал. Официальные сведения МГАХИ им. В.И. Сурикова указывают, что филиалы у образовательной организации отсутствуют; основной вуз уже есть в каталоге отдельной записью.",
+    "statusSourceUrl": "https://lk.surikov-vuz.com/sveden/common/",
+    "imageStatusNote": "Фотография не показывается: отдельный филиал не подтверждён."
   },
   {
     "name": "МПГУ (филиал)",
     "type": "pedagogy",
-    "imageUrl": "https://images.unsplash.com/photo-1524178232363-1fb28f74b0cd?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mpgu-campus.jpg?width=800",
     "programs": [
       "Педагогика",
       "Психология"
@@ -1141,12 +1245,16 @@
       "педагог",
       "психолог"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "A.Savin",
+    "imageLicense": "CC BY-SA 3.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Mpgu-campus.jpg"
   },
   {
     "name": "МПСУ",
     "type": "psychology",
-    "imageUrl": "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?q=80&w=1080",
+    "imageUrl": "https://smapse.ru/storage/2022/07/converted/825_585_cpcvpi.png",
     "programs": [
       "Психология",
       "Логопедия",
@@ -1167,7 +1275,7 @@
   {
     "name": "ММУ",
     "type": "management",
-    "imageUrl": "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%BD%D0%BE%D0%B3%D0%BE_%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82%D0%B0_%D1%81%D0%BE_%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D1%8B_%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D1%88%D0%BE%D1%81%D1%81%D0%B5.jpg?width=800",
     "programs": [
       "Менеджмент",
       "Реклама",
@@ -1178,7 +1286,7 @@
     "avgScore": 74,
     "budgetPlaces": 0,
     "employmentRate": 82,
-    "reputation": 8.0,
+    "reputation": 8,
     "programKeywords": [
       "менеджер",
       "рекламист",
@@ -1189,7 +1297,7 @@
   {
     "name": "МИП",
     "type": "psychology",
-    "imageUrl": "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?q=80&w=1080",
+    "imageUrl": "https://inpsycho.ru/files/vo/index/kKbTEHFZbzLd0aEXu2MdOZqg5AFfwkccqRxGRhIu.jpg",
     "programs": [
       "Психоанализ",
       "Клиническая психология",
@@ -1205,12 +1313,14 @@
       "психолог",
       "психоаналитик"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageSourcePage": "https://inpsycho.ru/higher_education",
+    "imageSourceLabel": "Официальный сайт"
   },
   {
     "name": "МИТУ-МАСИ",
     "type": "architecture",
-    "imageUrl": "https://images.unsplash.com/photo-1503387762-592dea58292b?q=80&w=1080",
+    "imageUrl": "https://images.a-a-ah.ru/uploads/items/16346/12105/large_5808db667a8bb204850136.jpg",
     "programs": [
       "Архитектура",
       "Строительство",
@@ -1232,7 +1342,7 @@
   {
     "name": "МФЮА",
     "type": "law",
-    "imageUrl": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1080",
+    "imageUrl": "https://vmrucdn.servicecdn.ru/2022.08/original/63073dfc82682c39bbe59e0f.jpg",
     "programs": [
       "Право",
       "Экономика",
@@ -1254,7 +1364,7 @@
   {
     "name": "МУ им. Витте",
     "type": "economics",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Muiv_building.jpg?width=800",
     "programs": [
       "Экономика",
       "Управление",
@@ -1276,7 +1386,7 @@
   {
     "name": "МГЭУ",
     "type": "humanities",
-    "imageUrl": "https://images.unsplash.com/photo-1491843342373-1f19b380f331?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82_%D0%B4%D0%BE%D0%BC_8_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_16.jpg?width=800",
     "programs": [
       "Журналистика",
       "Психология",
@@ -1293,12 +1403,16 @@
       "психолог",
       "дизайнер"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Katia Sparks",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82_%D0%B4%D0%BE%D0%BC_8_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_16.jpg"
   },
   {
     "name": "МАП",
     "type": "management",
-    "imageUrl": "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080",
+    "imageUrl": "https://mosap-academy.ru/img/contact-img.png",
     "programs": [
       "Предпринимательство",
       "Маркетинг"
@@ -1319,7 +1433,7 @@
   {
     "name": "ИНЭКБИ",
     "type": "economics",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Бизнес",
       "Инновации"
@@ -1335,12 +1449,13 @@
       "менеджер",
       "инноватор"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageStatusNote": "Действующая организация, но точная фотография здания по подтверждённому адресу не найдена. Вместо несвязанного стокового изображения показана заглушка."
   },
   {
     "name": "МФЭИ",
     "type": "finance",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Финансы",
       "Банковское дело"
@@ -1356,12 +1471,16 @@
       "банкир",
       "бухгалтер"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "closed",
+    "statusNote": "Не предлагать как действующий вуз. ОЧУ ВО «Московский финансово-экономический институт» (ОГРН 1027739437142) ликвидировано 26 июля 2019 года; в реестровой карточке указан правопреемник — Московская международная академия.",
+    "statusSourceUrl": "https://reabiz.ru/organization/1027739437142-ochu-vo-mfei",
+    "imageStatusNote": "Фотография не показывается: организация ликвидирована."
   },
   {
     "name": "МГТА",
     "type": "management",
-    "imageUrl": "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Менеджмент",
       "Экономика",
@@ -1378,12 +1497,16 @@
       "дизайнер",
       "экономист"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "review",
+    "statusNote": "Запись требует проверки. В источниках есть сообщение МФЮА от 23.07.2019 об отказе МГТА в государственной аккредитации и соглашении о переводе студентов; сведения о текущем статусе организации в открытых каталогах расходятся. Перед рекомендацией необходимо сверить актуальную выписку ЕГРЮЛ и реестр лицензий/аккредитации.",
+    "statusSourceUrl": "https://www.mfua.ru/news/soglashenie_o_sotrudnichestve_/",
+    "imageStatusNote": "Подтверждённая фотография действующего корпуса не найдена."
   },
   {
     "name": "МГЭИ",
     "type": "economics",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Экономика",
       "Менеджмент",
@@ -1400,12 +1523,16 @@
       "менеджер",
       "юрист"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "closed",
+    "statusNote": "Не предлагать как отдельный вуз. «Московский гуманитарно-экономический институт» — прежнее название того же юридического лица/вуза, который в каталоге уже представлен актуальной записью «МГЭУ». Историческое название не должно создавать вторую карточку.",
+    "statusSourceUrl": "https://www.movuz.net/moskva/vuzy/mgeu/",
+    "imageStatusNote": "Фотография не нужна: это архивное название уже представленного МГЭУ."
   },
   {
     "name": "МАБИВ",
     "type": "management",
-    "imageUrl": "https://images.unsplash.com/photo-1600880292210-85931c0a7281?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Бизнес",
       "Администрирование"
@@ -1421,12 +1548,16 @@
       "бизнесмен",
       "инноватор"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "review",
+    "statusNote": "Название и юридическое лицо требуют проверки. Найдена действующая АНО ДПО «Академия бизнеса и инновационных технологий» (АБИТ), Зеленоград, но это организация дополнительного профессионального образования, а не подтверждённый вуз под названием «МАБИВ». Не подменять одну организацию другой без сверки исходных данных.",
+    "statusSourceUrl": "https://abit.msk.ru/sveden/common",
+    "imageStatusNote": "Подтверждённая фотография организации под названием «МАБИВ» не найдена."
   },
   {
     "name": "МСИ",
     "type": "art",
-    "imageUrl": "https://images.unsplash.com/photo-1514525253361-bee8718a34e1?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B8%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82%D0%B0_%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D1%8B.jpg?width=800",
     "programs": [
       "Актерское искусство",
       "Дизайн",
@@ -1443,12 +1574,16 @@
       "дизайнер",
       "музыкант"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "imageAuthor": "Горицкий Денис",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B8%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82%D0%B0_%D0%BA%D1%83%D0%BB%D1%82%D1%83%D1%80%D1%8B.jpg"
   },
   {
     "name": "МГИ им. Дашковой",
     "type": "humanities",
-    "imageUrl": "https://images.unsplash.com/photo-1491843342373-1f19b380f331?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Журналистика",
       "Реклама",
@@ -1465,6 +1600,10 @@
       "рекламист",
       "психолог"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "closed",
+    "statusNote": "Не предлагать как действующий вуз. АНО ВО «Московский гуманитарный институт имени Е.Р. Дашковой» (ОГРН 1057715059050) ликвидирована 27 апреля 2017 года. Более поздние справочники могут сохранять старую карточку организации.",
+    "statusSourceUrl": "https://companies.rbc.ru/id/1057715059050-ano-ano-vyisshego-obrazovaniya-moskovskij-gumanitarnyij-institut-imeni-er-dashkovoj/",
+    "imageStatusNote": "Фотография не показывается: организация ликвидирована."
   }
 ]

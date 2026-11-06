@@ -1,13 +1,11 @@
-const CACHE_NAME = 'proforientir-v2';
+const CACHE_NAME = 'proforientir-4';
 const urlsToCache = [
   '/',
   '/index.html',
   '/style.css',
   '/script.js',
   '/professions.json',
-  '/universities.json',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
-  'https://cdn.jsdelivr.net/npm/lucide@latest'
+  '/universities.json'
 ];
 
 self.addEventListener('install', event => {

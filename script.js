@@ -25,6 +25,7 @@ async function loadProfessions() {
             types: prof.types.map(t => HOLLAND_TYPES[t.toUpperCase()] || t)
         }));
         renderProfessions();
+        updateHeroStats();
     } catch (error) {
         console.error("Error loading professions:", error);
         showToast("Ошибка при загрузке данных профессий.");
@@ -32,77 +33,7 @@ async function loadProfessions() {
 }
 
 // Старые данные профессий (удалены из-за миграции в JSON)
-/*const professions = [
-    { name: "Адвокат", description: "Защищает права и интересы граждан и организаций в суде.", types: [HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["юриспруденция", "право", "суд", "защита", "адвокатура"] },
-    { name: "Авиаконструктор", description: "Разрабатывает и проектирует самолеты, вертолеты и другие летательные аппараты.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC], keywords: ["авиация", "самолеты", "инженер", "конструирование", "аэрокосмос"] },
-    { name: "Агроном", description: "Разрабатывает технологии выращивания с/х культур. Контролирует качество урожая.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["сельское хозяйство", "растениеводство", "биология", "агрономия", "почвоведение"] },
-    { name: "Актёр", description: "Играет роли в театре и кино. Перевоплощается в разных персонажей.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.SOCIAL], keywords: ["театр", "кино", "искусство", "сцена", "актерское мастерство"] },
-    { name: "Аналитик данных (Data Scientist)", description: "Исследует большие объемы данных, строит модели, выявляет закономерности.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.CONVENTIONAL], keywords: ["data science", "big data", "статистика", "программирование", "анализ", "машинное обучение", "python"] },
-    { name: "Архитектор", description: "Проектирует здания и сооружения. Разрабатывает планировку и дизайн.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["архитектура", "строительство", "проектирование", "дизайн", "черчение", "градостроительство"] },
-    { name: "Астрофизик", description: "Изучает физические процессы, происходящие в космосе, звезды, галактики.", types: [HOLLAND_TYPES.INVESTIGATIVE], keywords: ["астрономия", "физика", "космос", "наука", "исследование"] },
-    { name: "Аудитор", description: "Проверяет финансовую отчетность компаний на достоверность и соответствие законам.", types: [HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.ENTERPRISING], keywords: ["аудит", "бухгалтерский учет", "финансы", "проверка", "отчетность", "экономика"] },
-    { name: "Библиотекарь-архивист", description: "Систематизирует, хранит и выдает книги, документы и другие источники информации.", types: [HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.SOCIAL], keywords: ["библиотека", "архив", "документы", "книги", "информация"] },
-    { name: "Биоинженер", description: "Применяет инженерные принципы к биологическим системам, разрабатывает биотехнологии.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC], keywords: ["биология", "генная инженерия", "медицина", "технологии", "биотехнология", "биомедицина"] },
-    { name: "Бизнес-аналитик", description: "Изучает потребности бизнеса и предлагает решения для улучшения процессов и систем.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.CONVENTIONAL], keywords: ["бизнес-анализ", "it", "требования", "аналитика", "консалтинг"] },
-    { name: "Веб-разработчик", description: "Создает и поддерживает веб-сайты и веб-приложения.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.CONVENTIONAL], keywords: ["программирование", "html", "css", "javascript", "it", "веб", "frontend", "backend"] },
-    { name: "Ветеринар", description: "Лечит животных, проводит профилактику заболеваний и консультирует владельцев.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["ветеринария", "животные", "медицина", "лечение"] },
-    { name: "Вирусолог", description: "Изучает вирусы и разрабатывает методы борьбы с вирусными заболеваниями.", types: [HOLLAND_TYPES.INVESTIGATIVE], keywords: ["вирусология", "микробиология", "медицина", "эпидемиология", "наука"] },
-    { name: "Врач", description: "Диагностирует, лечит и предотвращает заболевания у людей.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.REALISTIC], keywords: ["медицина", "здравоохранение", "лечение", "биология", "лечебное дело", "педиатрия", "стоматология", "хирургия"] },
-    { name: "Генетик", description: "Изучает гены, наследственность и изменчивость организмов.", types: [HOLLAND_TYPES.INVESTIGATIVE], keywords: ["генетика", "биология", "днк", "наследственность", "медицина", "исследование"] },
-    { name: "Геодезист", description: "Выполняет измерения на местности для создания карт и планов, сопровождает строительство.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["геодезия", "картография", "измерения", "строительство", "топография"] },
-    { name: "Графический дизайнер", description: "Создает визуальные решения, логотипы, брендинг и рекламные материалы.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.REALISTIC], keywords: ["дизайн", "графика", "иллюстрация", "реклама", "photoshop", "illustrator", "визуальные коммуникации"] },
-    { name: "DevOps инженер", description: "Автоматизирует процессы разработки, тестирования и развертывания ПО.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.CONVENTIONAL], keywords: ["devops", "ci/cd", "автоматизация", "облачные технологии", "it", "программирование"] },
-    { name: "Дизайнер интерьера", description: "Создает функциональные и эстетичные пространства внутри помещений.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.ENTERPRISING], keywords: ["дизайн интерьера", "декор", "ремонт", "проектирование"] },
-    { name: "Журналист", description: "Собирает, обрабатывает и распространяет информацию через СМИ. Пишет статьи, репортажи.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.ENTERPRISING], keywords: ["журналистика", "сми", "медиа", "репортаж", "статья", "тексты"] },
-    { name: "Звукорежиссер", description: "Работает со звуком в кино, на радио, телевидении и в музыкальной индустрии.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.REALISTIC], keywords: ["звук", "музыка", "аудио", "саунд-дизайн", "запись"] },
-    { name: "Инженер-механик", description: "Проектирует, конструирует и эксплуатирует механическое оборудование и машины.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["инженер", "механика", "машиностроение", "конструирование"] },
-    { name: "Инженер-программист (Software Engineer)", description: "Разрабатывает программное обеспечение, алгоритмы, тестирует код.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC], keywords: ["программирование", "разработка по", "it", "технологии", "кодинг", "java", "c++", "python"] },
-    { name: "Инженер-строитель", description: "Проектирует, возводит и эксплуатирует здания и сооружения.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.ENTERPRISING], keywords: ["строительство", "инженер", "пгс", "проектирование", "здания"] },
-    { name: "Инженер-электроник", description: "Разрабатывает, проектирует и обслуживает электронные устройства, схемы и системы.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC], keywords: ["электроника", "схемотехника", "микроэлектроника", "приборостроение", "радиотехника"] },
-    { name: "Инженер по автоматизации (АСУ ТП)", description: "Разрабатывает и внедряет системы автоматического управления технологическими процессами.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["асу тп", "автоматизация", "программирование", "плк", "инженер"] },
-    { name: "Искусствовед", description: "Изучает историю и теорию изобразительного искусства, курирует выставки.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["искусствоведение", "история искусств", "музей", "выставка", "критика", "арт-рынок"] },
-    { name: "Историк", description: "Изучает прошлое человечества на основе источников. Работает в науке, образовании, архивах.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.ARTISTIC], keywords: ["история", "архив", "исследование", "археология", "прошлое"] },
-    { name: "IT-специалист по связи", description: "Проектирует, настраивает и обслуживает телекоммуникационные системы и сети.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["связь", "телекоммуникации", "сети", "it", "информационные технологии"] },
-    { name: "Картограф", description: "Создает и обновляет географические, топографические и другие карты.", types: [HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC], keywords: ["картография", "география", "гис", "карты", "геодезия"] },
-    { name: "Культуролог", description: "Изучает культуру как систему, ее развитие и взаимодействие различных культур.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.ARTISTIC], keywords: ["культурология", "культура", "искусство", "общество", "антропология"] },
-    { name: "Ландшафтный дизайнер", description: "Проектирует и озеленяет сады, парки и другие открытые пространства.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.REALISTIC], keywords: ["ландшафтный дизайн", "озеленение", "растения", "архитектура"] },
-    { name: "Литературный работник", description: "Создает художественные, публицистические или научные тексты.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["литература", "писательство", "поэзия", "критика", "филология", "журналистика", "редактор"] },
-    { name: "Логист", description: "Организует и управляет потоками товаров, информации и финансов.", types: [HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.ENTERPRISING], keywords: ["логистика", "транспорт", "склад", "цепи поставок", "менеджмент"] },
-    { name: "Маркетолог", description: "Исследует рынок, разрабатывает и реализует стратегии продвижения товаров и услуг.", types: [HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["маркетинг", "реклама", "продажи", "анализ рынка", "pr", "smm"] },
-    { name: "Менеджер проектов", description: "Планирует, организует и контролирует выполнение проектов.", types: [HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.SOCIAL], keywords: ["управление проектами", "менеджмент", "организация", "планирование", "бизнес"] },
-    { name: "Метеоролог", description: "Изучает атмосферные явления и составляет прогнозы погоды.", types: [HOLLAND_TYPES.INVESTIGATIVE], keywords: ["метеорология", "погода", "климат", "наука", "прогноз"] },
-    { name: "Музыкант", description: "Создает или исполняет музыкальные произведения.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.SOCIAL], keywords: ["музыка", "исполнительство", "композиция", "дирижирование", "искусство"] },
-    { name: "Переводчик", description: "Переводит устную и письменную речь с одного языка на другой.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.CONVENTIONAL], keywords: ["лингвистика", "иностранные языки", "филология", "перевод"] },
-    { name: "Пилот гражданской авиации", description: "Управляет пассажирскими или грузовыми самолетами.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.CONVENTIONAL], keywords: ["авиация", "пилот", "самолет", "транспорт"] },
-    { name: "Пищевой технолог", description: "Разрабатывает рецептуры и технологии производства пищевых продуктов.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["пищевая промышленность", "технология", "продукты питания", "качество"] },
-    { name: "Политолог", description: "Анализирует политические процессы, системы и международные отношения.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.ENTERPRISING], keywords: ["политика", "государство", "международные отношения", "анализ"] },
-    { name: "Предприниматель", description: "Создает и управляет собственным бизнесом, принимая на себя риски.", types: [HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.CONVENTIONAL], keywords: ["бизнес", "стартап", "управление", "предпринимательство"] },
-    { name: "Продакт-менеджер", description: "Отвечает за создание и развитие продукта, от идеи до вывода на рынок.", types: [HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.SOCIAL], keywords: ["product management", "it", "бизнес", "продукт", "менеджмент"] },
-    { name: "Психолог", description: "Помогает людям справляться с эмоциональными и психологическими проблемами.", types: [HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["психология", "консультирование", "социальная работа", "терапия", "клиническая психология"] },
-    { name: "Разработчик мобильных приложений", description: "Создает приложения для смартфонов и планшетов на iOS и Android.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.ARTISTIC], keywords: ["mobile", "ios", "android", "swift", "kotlin", "программирование", "it"] },
-    { name: "Режиссер кино и телевидения", description: "Руководит творческим процессом создания фильмов, телепередач, клипов.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.ENTERPRISING], keywords: ["кино", "телевидение", "режиссура", "искусство", "съемки", "сценарий"] },
-    { name: "Риэлтор", description: "Помогает людям покупать, продавать или арендовать недвижимость.", types: [HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.SOCIAL], keywords: ["недвижимость", "продажи", "переговоры", "риэлтор"] },
-    { name: "Сетевой инженер", description: "Проектирует, настраивает и поддерживает компьютерные сети в организациях.", types: [HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.CONVENTIONAL], keywords: ["сети", "cisco", "network", "it", "администрирование"] },
-    { name: "Системный аналитик", description: "Анализирует бизнес-процессы и проектирует информационные системы для их автоматизации.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.CONVENTIONAL], keywords: ["системный анализ", "it", "бизнес-анализ", "требования", "проектирование ис"] },
-    { name: "Социолог", description: "Изучает общество, социальные явления и поведение людей с помощью опросов и анализа данных.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.SOCIAL], keywords: ["социология", "общество", "исследование", "анализ", "опросы"] },
-    { name: "Социальный работник", description: "Оказывает помощь и поддержку людям, оказавшимся в трудной жизненной ситуации.", types: [HOLLAND_TYPES.SOCIAL], keywords: ["социальная работа", "помощь", "поддержка", "общество"] },
-    { name: "Специалист по кибербезопасности", description: "Защищает компьютерные системы и сети от кибератак, анализирует уязвимости.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.CONVENTIONAL], keywords: ["кибербезопасность", "информационная безопасность", "сети", "защита данных", "it"] },
-    { name: "Тренер (спортивный)", description: "Обучает спортсменов технике, тактике, развивает их физические и психологические качества.", types: [HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.ENTERPRISING], keywords: ["спорт", "тренировки", "физкультура", "педагогика"] },
-    { name: "Учитель / Преподаватель", description: "Преподает предметы в школе или вузе. Помогает ученикам усваивать знания.", types: [HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.ARTISTIC], keywords: ["педагогика", "образование", "обучение", "преподавание"] },
-    { name: "UX/UI дизайнер", description: "Проектирует пользовательские интерфейсы, делая их удобными и понятными.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.SOCIAL], keywords: ["ux", "ui", "дизайн", "интерфейс", "проектирование", "юзабилити", "it"] },
-    { name: "Фармацевт", description: "Работает в аптеке, консультирует по лекарственным препаратам.", types: [HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["фармация", "лекарства", "аптека", "химия", "медицина"] },
-    { name: "Финансовый аналитик", description: "Анализирует финансовые рынки, инвестиции, составляет прогнозы.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.CONVENTIONAL], keywords: ["финансы", "экономика", "инвестиции", "анализ", "банкинг"] },
-    { name: "Фотограф", description: "Создает художественные и документальные фотографии.", types: [HOLLAND_TYPES.ARTISTIC, HOLLAND_TYPES.REALISTIC], keywords: ["фотография", "искусство", "репортаж", "студия"] },
-    { name: "Химик-технолог", description: "Разрабатывает и внедряет химические процессы в производство.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC], keywords: ["химия", "технология", "производство", "лаборатория", "химическая технология"] },
-    { name: "HR-менеджер", description: "Управляет персоналом компании: нанимает, адаптирует, обучает и мотивирует.", types: [HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.ENTERPRISING], keywords: ["hr", "управление персоналом", "рекрутинг", "кадры", "менеджмент"] },
-    { name: "Эколог", description: "Изучает взаимодействие живых организмов и среды, решает проблемы охраны природы.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.REALISTIC, HOLLAND_TYPES.SOCIAL], keywords: ["экология", "охрана природы", "биология", "география", "техносферная безопасность"] },
-    { name: "Экономист", description: "Анализирует экономические процессы. Прогнозирует развитие рынка и бюджета.", types: [HOLLAND_TYPES.INVESTIGATIVE, HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.CONVENTIONAL], keywords: ["экономика", "финансы", "анализ", "статистика", "бухгалтерский учет"] },
-    { name: "Event-менеджер", description: "Организует мероприятия: от конференций и выставок до праздников и свадеб.", types: [HOLLAND_TYPES.ENTERPRISING, HOLLAND_TYPES.SOCIAL, HOLLAND_TYPES.CONVENTIONAL], keywords: ["event", "мероприятия", "организация", "праздник", "менеджмент"] },
-    { name: "AI/ML инженер", description: "Разрабатывает и обучает модели искусственного интеллекта и машинного обучения.", types: [HOLLAND_TYPES.INVESTIGATIVE], keywords: ["ai", "ml", "искусственный интеллект", "машинное обучение", "python", "нейросети"] },
-    { name: "Motion-дизайнер", description: "Создает анимированную графику для видео, рекламы, сайтов и приложений.", types: [HOLLAND_TYPES.ARTISTIC], keywords: ["motion design", "анимация", "after effects", "видео", "дизайн"] },
-    { name: "QA инженер (Тестировщик ПО)", description: "Ищет ошибки и уязвимости в программном обеспечении перед его выпуском.", types: [HOLLAND_TYPES.CONVENTIONAL, HOLLAND_TYPES.INVESTIGATIVE], keywords: ["qa", "тестирование", "it", "качество", "автотесты"] }
-];
-*/
+
 
 // --- РАСШИРЕННАЯ И АКТУАЛИЗИРОВАННАЯ БАЗА ВУЗОВ МОСКВЫ ---
 let universities = [];
@@ -114,6 +45,7 @@ async function loadUniversities() {
         universities = await response.json();
         processUniversityData();
         renderUniversities();
+        updateHeroStats();
         populateUniFilterOptions();
     } catch (error) {
         console.error("Error loading universities:", error);
@@ -156,14 +88,53 @@ try {
     console.error("Firebase initialization error:", e);
 }
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+let auth = null;
+function ensureAuth() {
+    if (!auth) auth = firebase.auth();
+    return auth;
+}
+let db = null;
+let firestoreLoadingPromise = null;
+const FIRESTORE_SDK_URL = 'https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js';
+
+async function ensureFirestore() {
+    if (db) return db;
+    if (typeof firebase.firestore === 'function') {
+        db = firebase.firestore();
+        return db;
+    }
+    if (!firestoreLoadingPromise) {
+        firestoreLoadingPromise = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = FIRESTORE_SDK_URL;
+            script.async = true;
+            script.onload = () => {
+                try {
+                    if (typeof firebase.firestore !== 'function') {
+                        throw new Error('Firebase Firestore SDK loaded without exposing firebase.firestore');
+                    }
+                    db = firebase.firestore();
+                    resolve(db);
+                } catch (error) {
+                    reject(error);
+                }
+            };
+            script.onerror = () => reject(new Error('Не удалось загрузить модуль базы данных профиля.'));
+            document.head.appendChild(script);
+        }).catch(error => {
+            firestoreLoadingPromise = null;
+            throw error;
+        });
+    }
+    return firestoreLoadingPromise;
+}
 
 // --- DOM Элементы ---
 let currentUniForModal = null; let lastTestResultTypes = []; let currentProfessionFilterTypes = [];
-let processedUniversities = []; const PROFESSIONS_PAGE_SIZE = 12; let professionsVisibleCount = PROFESSIONS_PAGE_SIZE;
+let processedUniversities = []; let currentFilteredUniversities = []; const UNIVERSITY_PAGE_SIZE = 12; let universitiesVisibleCount = UNIVERSITY_PAGE_SIZE;
+const PROFESSIONS_PAGE_SIZE = 12; let professionsVisibleCount = PROFESSIONS_PAGE_SIZE;
 let currentFilteredProfessions = []; let selectedForComparison = [];
-const themeSwitchBtn = document.querySelector('.theme-switch'); const profileBtn = document.getElementById('profile-btn');
+const themeSwitchBtn = document.querySelector('.theme-switch'); const profileBtn = document.getElementById('profile-btn'); const mobileMenuToggleBtn = document.getElementById('mobile-menu-toggle'); const primaryNav = document.getElementById('primary-navigation');
 const startTestBtn = document.getElementById('start-test-btn'); const testStartDiv = document.getElementById('test-start');
 const careerTestForm = document.getElementById('career-test'); const questionsContainer = document.getElementById('questions-container');
 const resultsSection = document.getElementById('results'); const resultTextDiv = document.getElementById('result-text');
@@ -180,6 +151,12 @@ const recommendationsModal = document.getElementById('recommendations-modal');
 const uniFilterSelect = document.getElementById('uni-filter'); const uniSortSelect = document.getElementById('uni-sort');
 const resetUniFilterBtn = document.getElementById('reset-uni-filter-btn'); const compareUnisBtn = document.getElementById('compare-unis-btn');
 const compareCountSpan = document.getElementById('compare-count'); const allUnisListDiv = document.getElementById('all-unis-list');
+const showMoreUniversitiesContainer = document.getElementById('show-more-universities-container');
+const showMoreUniversitiesBtn = document.getElementById('show-more-universities-btn');
+const universitiesCounter = document.getElementById('universities-counter');
+const heroProfessionCount = document.getElementById('hero-profession-count');
+const heroUniversityCount = document.getElementById('hero-university-count');
+const uniRaexUnavailable = document.getElementById('uni-raex-unavailable');
 const uniModal = document.getElementById('uni-modal'); const profileModal = document.getElementById('profile-modal');
 const compareModal = document.getElementById('compare-modal');
 const compareTableContainer = document.getElementById('compare-table-container'); const closeModalBtns = document.querySelectorAll('.modal .close');
@@ -202,16 +179,30 @@ const authErrorP = document.getElementById('auth-error'); const authModalTitle =
 let isRegisterMode = false;
 
 // --- FIREBASE AUTHENTICATION LOGIC ---
-auth.onAuthStateChanged(user => {
-    if (user) {
-        updateUIAfterAuthStateChange(true);
-        loadProfileData();
-    } else {
-        updateUIAfterAuthStateChange(false);
-        savedResultsDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть сохраненные результаты.</p>';
-        favoritesDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть избранное.</p>';
-    }
-});
+let authStateListenerInitialized = false;
+
+function initializeAuthStateListener() {
+    if (authStateListenerInitialized) return;
+    authStateListenerInitialized = true;
+    ensureAuth().onAuthStateChanged(user => {
+        if (user) {
+            updateUIAfterAuthStateChange(true);
+            loadProfileData();
+        } else {
+            updateUIAfterAuthStateChange(false);
+            savedResultsDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть сохраненные результаты.</p>';
+            favoritesDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть избранное.</p>';
+        }
+    });
+}
+
+function scheduleAuthStateListener() {
+    // Restore an existing session after the first screen has had time to render.
+    window.setTimeout(initializeAuthStateListener, 1800);
+    // User intent takes priority: restore the session immediately on first interaction.
+    document.addEventListener('pointerdown', initializeAuthStateListener, { once: true, passive: true });
+    document.addEventListener('keydown', initializeAuthStateListener, { once: true });
+}
 
 function updateUIAfterAuthStateChange(isLoggedIn) {
     profileItem.classList.toggle('hidden', !isLoggedIn);
@@ -233,39 +224,62 @@ function handleAuthError(error) {
 
 // --- PROFILE DATA LOGIC (FIRESTORE) ---
 async function getUserData() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) return null;
+    await ensureFirestore();
     const userDocRef = db.collection('profiles').doc(user.uid);
     const doc = await userDocRef.get();
     return doc.exists ? doc.data() : { savedResults: [], favorites: [] };
 }
 
 async function loadProfileData() {
-    const userData = await getUserData();
-    if (!userData) return;
-    const { savedResults = [], favorites = [] } = userData;
-    savedResultsDiv.innerHTML = savedResults.length > 0
-        ? savedResults.map(res => `<div><span>${res.date}: ${res.types.map(type => `<strong>${TYPE_DESCRIPTIONS[type]?.name || type}</strong>`).join(', ')}</span><button type="button" title="Удалить результат" onclick="removeTestResult('${res.id}')"><i class="icon icon-only" data-lucide="trash-2"></i></button></div>`).join('')
-        : '<p>Вы еще не сохраняли результаты теста.</p>';
-    favoritesDiv.innerHTML = favorites.length > 0
-        ? favorites.map(uniName => `<div><span><strong>${uniName}</strong></span><button type="button" title="Удалить из избранного" onclick="removeFavorite('${uniName}')"><i class="icon icon-only" data-lucide="trash-2"></i></button></div>`).join('')
-        : '<p>Вы еще не добавляли ВУЗы в избранное.</p>';
-    initLucideIcons();
+    try {
+        const userData = await getUserData();
+        if (!userData) return;
+        const { savedResults = [], favorites = [] } = userData;
+
+        savedResultsDiv.innerHTML = savedResults.length
+            ? savedResults.map(res => `
+                <div class="profile-list-item">
+                    <span>${sanitizeHTML(res.date || 'Дата не указана')}: ${(res.types || []).map(type => `<strong>${sanitizeHTML(TYPE_DESCRIPTIONS[type]?.name || type)}</strong>`).join(', ')}</span>
+                    <button type="button" class="profile-remove-btn" data-profile-action="remove-result" data-result-id="${escapeHTMLAttribute(res.id)}" title="Удалить результат" aria-label="Удалить сохранённый результат"><i class="icon icon-only" data-lucide="trash-2"></i></button>
+                </div>`).join('')
+            : '<p>Вы еще не сохраняли результаты теста.</p>';
+
+        favoritesDiv.innerHTML = favorites.length
+            ? favorites.map(uniName => `
+                <div class="profile-list-item">
+                    <span><strong>${sanitizeHTML(uniName)}</strong></span>
+                    <button type="button" class="profile-remove-btn" data-profile-action="remove-favorite" data-university-name="${escapeHTMLAttribute(uniName)}" title="Удалить из избранного" aria-label="Удалить учебное заведение из избранного"><i class="icon icon-only" data-lucide="trash-2"></i></button>
+                </div>`).join('')
+            : '<p>Вы еще не добавляли учебные заведения в избранное.</p>';
+
+        initLucideIcons();
+    } catch (error) {
+        console.error("Ошибка загрузки профиля:", error);
+        showToast("Не удалось загрузить данные профиля.");
+    }
 }
 
 async function saveResult() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) { showToast("Пожалуйста, войдите в профиль, чтобы сохранить результат."); loginBtn.click(); return; }
     if (lastTestResultTypes.length === 0) { showToast("Сначала пройдите тест."); return; }
     const resultToSave = { id: `res_${Date.now()}`, types: lastTestResultTypes, date: new Date().toLocaleDateString('ru-RU') };
-    const userDocRef = db.collection('profiles').doc(user.uid);
-    await userDocRef.set({ savedResults: firebase.firestore.FieldValue.arrayUnion(resultToSave) }, { merge: true });
-    showToast("Результат теста сохранен в профиле!");
-    loadProfileData();
+    try {
+        await ensureFirestore();
+        const userDocRef = db.collection('profiles').doc(user.uid);
+        await userDocRef.set({ savedResults: firebase.firestore.FieldValue.arrayUnion(resultToSave) }, { merge: true });
+        showToast("Результат теста сохранен в профиле!");
+        await loadProfileData();
+    } catch (error) {
+        console.error("Ошибка сохранения результата:", error);
+        showToast("Не удалось сохранить результат. Попробуйте ещё раз.");
+    }
 }
 
 window.removeTestResult = async function(resultId) {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) return;
     const userData = await getUserData();
     if (!userData || !userData.savedResults) return;
@@ -278,24 +292,30 @@ window.removeTestResult = async function(resultId) {
 }
 
 async function toggleFavorite() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) { showToast("Пожалуйста, войдите в профиль, чтобы добавить в избранное."); loginBtn.click(); return; }
     if (!currentUniForModal) return;
     const uniName = currentUniForModal.name;
-    const userDocRef = db.collection('profiles').doc(user.uid);
-    const userData = await getUserData();
-    const isFavorite = userData?.favorites?.includes(uniName);
-    const updateData = isFavorite
-        ? { favorites: firebase.firestore.FieldValue.arrayRemove(uniName) }
-        : { favorites: firebase.firestore.FieldValue.arrayUnion(uniName) };
-    await userDocRef.set(updateData, { merge: true });
-    showToast(isFavorite ? `${uniName} удален из избранного.` : `${uniName} добавлен в избранное!`);
-    updateFavoriteButtonText();
-    loadProfileData();
+    try {
+        await ensureFirestore();
+        const userDocRef = db.collection('profiles').doc(user.uid);
+        const userData = await getUserData();
+        const isFavorite = userData?.favorites?.includes(uniName);
+        const updateData = isFavorite
+            ? { favorites: firebase.firestore.FieldValue.arrayRemove(uniName) }
+            : { favorites: firebase.firestore.FieldValue.arrayUnion(uniName) };
+        await userDocRef.set(updateData, { merge: true });
+        showToast(isFavorite ? `${uniName} удален из избранного.` : `${uniName} добавлен в избранное!`);
+        await updateFavoriteButtonText();
+        await loadProfileData();
+    } catch (error) {
+        console.error("Ошибка обновления избранного:", error);
+        showToast("Не удалось обновить избранное. Попробуйте ещё раз.");
+    }
 }
 
 async function updateFavoriteButtonText() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user || !currentUniForModal) {
         addToFavoritesBtn.innerHTML = `<i class="icon" data-lucide="heart"></i> В избранное`;
         addToFavoritesBtn.style.backgroundColor = 'var(--accent-color)';
@@ -310,21 +330,32 @@ async function updateFavoriteButtonText() {
 }
 
 window.removeFavorite = async function(uniName) {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) return;
-    await db.collection('profiles').doc(user.uid).update({ favorites: firebase.firestore.FieldValue.arrayRemove(uniName) });
-    loadProfileData();
-    showToast(`${uniName} удален из избранного.`);
-    if (uniModal.style.display === 'block' && currentUniForModal?.name === uniName) updateFavoriteButtonText();
+    try {
+        await ensureFirestore();
+        await db.collection('profiles').doc(user.uid).update({ favorites: firebase.firestore.FieldValue.arrayRemove(uniName) });
+        await loadProfileData();
+        showToast(`${uniName} удален из избранного.`);
+        if (uniModal.style.display === 'block' && currentUniForModal?.name === uniName) await updateFavoriteButtonText();
+    } catch (error) {
+        console.error('Ошибка удаления из избранного:', error);
+        showToast('Не удалось удалить учебное заведение из избранного.');
+    }
 }
 
-function clearProfileData() {
-    const user = auth.currentUser;
+async function clearProfileData() {
+    const user = ensureAuth().currentUser;
     if (!user) { showToast("Вы не вошли в профиль."); return; }
-    if (confirm("Вы уверены, что хотите очистить все сохраненные результаты и избранное? Это действие необратимо.")) {
-        db.collection('profiles').doc(user.uid).delete()
-            .then(() => { loadProfileData(); showToast("Данные профиля очищены."); })
-            .catch(error => { console.error("Ошибка при очистке профиля:", error); showToast("Не удалось очистить профиль."); });
+    if (!confirm("Вы уверены, что хотите очистить все сохраненные результаты и избранное? Это действие необратимо.")) return;
+    try {
+        await ensureFirestore();
+        await db.collection('profiles').doc(user.uid).delete();
+        await loadProfileData();
+        showToast("Данные профиля очищены.");
+    } catch (error) {
+        console.error("Ошибка при очистке профиля:", error);
+        showToast("Не удалось очистить профиль.");
     }
 }
 
@@ -342,80 +373,220 @@ window.addEventListener('scroll', () => {
 });
 
 function initLucideIcons() { try { if (window.lucide) { lucide.createIcons(); } } catch (error) { console.error("Error initializing Lucide icons:", error); } }
-function initTheme() { const savedTheme = localStorage.getItem('proforientirTheme') || 'light'; document.body.className = savedTheme; themeSwitchBtn.innerHTML = `<i class="icon icon-only" data-lucide="${savedTheme === 'dark' ? 'sun' : 'moon'}"></i>`; themeSwitchBtn.title = savedTheme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на темную тему'; initLucideIcons(); }
+function initTheme() {
+    const storedTheme = localStorage.getItem('proforientirTheme');
+    const savedTheme = storedTheme === 'dark' ? 'dark' : 'light';
+    document.body.classList.remove('light', 'dark');
+    document.body.classList.add(savedTheme);
+    themeSwitchBtn.innerHTML = `<i class="icon icon-only" data-lucide="${savedTheme === 'dark' ? 'sun' : 'moon'}"></i>`;
+    themeSwitchBtn.title = savedTheme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на тёмную тему';
+    initLucideIcons();
+}
 function toggleTheme() { const newTheme = document.body.classList.toggle('dark') ? 'dark' : 'light'; localStorage.setItem('proforientirTheme', newTheme); themeSwitchBtn.innerHTML = `<i class="icon icon-only" data-lucide="${newTheme === 'dark' ? 'sun' : 'moon'}"></i>`; themeSwitchBtn.title = newTheme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на темную тему'; initLucideIcons(); }
-function showToast(message, duration = 3000) { toastElement.textContent = message; toastElement.classList.add('show'); setTimeout(() => { toastElement.classList.remove('show'); }, duration); }
+let toastTimer = null;
+function showToast(message, duration = 3000) {
+    toastElement.textContent = message;
+    toastElement.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        toastElement.classList.remove('show');
+        toastTimer = null;
+    }, duration);
+}
 function highlightText(text, term) { if (!term || !text) return text; const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); const regex = new RegExp(`(${escapedTerm})`, 'gi'); return text.replace(regex, '<mark>$1</mark>'); }
 function createTypeTagHTML(type) { const typeInfo = TYPE_DESCRIPTIONS[type] || { name: type }; return `<span class="type-tag" style="background-color: var(--${type}-color);" title="${typeInfo.description}">${typeInfo.name}</span>`; }
-function processUniversityData() { processedUniversities = universities.map(uni => ({ ...uni })); }
+function processUniversityData() { processedUniversities = universities.filter(uni => uni.catalogStatus !== 'closed').map(uni => ({ ...uni })); }
+function getUniversityImageUrl(imageUrl, width) {
+    try {
+        const url = new URL(imageUrl);
+        if (url.hostname === 'images.unsplash.com') {
+            url.searchParams.set('w', String(width));
+            url.searchParams.set('q', '75');
+            url.searchParams.set('auto', 'format');
+        } else if (url.hostname === 'commons.wikimedia.org' && url.pathname.includes('/Special:FilePath/')) {
+            url.searchParams.set('width', String(width));
+        } else {
+            return imageUrl;
+        }
+        return url.toString();
+    } catch (_) {
+        return imageUrl;
+    }
+}
+function getUniversityImageSrcset(imageUrl) {
+    try {
+        const hostname = new URL(imageUrl).hostname;
+        if (hostname === 'commons.wikimedia.org') {
+            // Commons redirects some width=800 requests to a 960px thumbnail.
+            // A 400px source is sufficient for catalogue cards, including mobile high-density screens.
+            return escapeHTMLAttribute(getUniversityImageUrl(imageUrl, 400)) + ' 400w';
+        }
+        if (hostname !== 'images.unsplash.com') return '';
+        return [400, 800]
+            .map(width => escapeHTMLAttribute(getUniversityImageUrl(imageUrl, width)) + ' ' + width + 'w')
+            .join(', ');
+    } catch (_) {
+        return '';
+    }
+}
+
 function createUniCardHTML(uni) {
     const typeIcon = UNI_TYPE_ICONS[uni.type] || UNI_TYPE_ICONS.default;
     const isSelected = selectedForComparison.includes(uni.name);
     const safeName = sanitizeHTML(uni.name);
+    const safeNameAttribute = escapeHTMLAttribute(uni.name);
+    const imageSrc = uni.imageUrl ? escapeHTMLAttribute(getUniversityImageUrl(uni.imageUrl, 400)) : '';
+    const imageSrcset = uni.imageUrl ? getUniversityImageSrcset(uni.imageUrl) : '';
+    const hasCommonsAttribution = uni.imageAuthor && uni.imageLicense && uni.imageLicenseUrl && uni.imageSourcePage;
+    const imageCreditHTML = hasCommonsAttribution
+        ? '<div class="uni-image-credit" data-credit-type="commons" aria-label="Автор и лицензия фотографии">' +
+            '<span>Фото: <a href="' + escapeHTMLAttribute(uni.imageSourcePage) + '" target="_blank" rel="noopener noreferrer" data-credit-source title="Масштабировано и кадрировано для карточки">' + sanitizeHTML(uni.imageAuthor) + '</a></span>' +
+            '<a href="' + escapeHTMLAttribute(uni.imageLicenseUrl) + '" target="_blank" rel="noopener noreferrer" data-credit-license>' + sanitizeHTML(uni.imageLicense) + '</a>' +
+          '</div>'
+        : uni.imageSourcePage && uni.imageSourceLabel
+            ? '<div class="uni-image-credit" data-credit-type="official" aria-label="Источник фотографии">' +
+                '<span><a href="' + escapeHTMLAttribute(uni.imageSourcePage) + '" target="_blank" rel="noopener noreferrer" data-credit-source>Источник: ' + sanitizeHTML(uni.imageSourceLabel) + '</a></span>' +
+              '</div>'
+            : '';
     const imageHTML = uni.imageUrl
-        ? `<div class="uni-card-image"><img src="${uni.imageUrl}" alt="${safeName}" loading="lazy" decoding="async" width="400" height="220" onerror="this.closest('.uni-card-image').classList.add('img-fallback'); this.remove();"></div>`
+        ? '<div class="uni-card-image"><img src="' + imageSrc + '"' + (imageSrcset ? ' srcset="' + imageSrcset + '" sizes="(max-width: 600px) calc(100vw - 2rem), (max-width: 900px) 45vw, 400px"' : '') + ' alt="Изображение для ' + safeNameAttribute + '" loading="lazy" decoding="async" fetchpriority="low" width="400" height="225" onerror="this.closest(\'.uni-card-image\').classList.add(\'img-fallback\'); this.remove();">' + imageCreditHTML + '</div>'
+        : '<div class="uni-card-image img-fallback"><i class="icon icon-lg" data-lucide="building-2" aria-hidden="true"></i><span class="uni-image-missing">Фото уточняется</span></div>';
+    const reviewBadge = uni.catalogStatus === 'review'
+        ? '<span class="uni-review-badge" title="' + escapeHTMLAttribute(uni.statusNote || 'Запись требует проверки') + '">Проверить статус</span>'
         : '';
     const raexBadge = uni.raex2026
         ? `<span class="uni-raex-rank" title="Место в рейтинге RAEX-100, 2026"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.raex2026.rank}</strong> место в RAEX</span>`
-        : `<span class="uni-raex-rank uni-raex-none" title="Этот вуз не входит в топ-100 RAEX 2026 года"><i class="icon icon-sm" data-lucide="minus-circle"></i> вне топ-100 RAEX</span>`;
+        : `<span class="uni-raex-rank uni-raex-none" title="Нет подтверждённого места в RAEX-100 за 2026 год"><i class="icon icon-sm" data-lucide="minus-circle"></i> нет данных RAEX</span>`;
     return `
-        <div class="uni-card" data-uni-name="${uni.name}">
+        <article class="uni-card" data-uni-name="${safeNameAttribute}">
             ${imageHTML}
             <label class="compare-checkbox-label" title="Выбрать для сравнения">
-                <input type="checkbox" class="compare-checkbox" value="${uni.name}" ${isSelected ? 'checked' : ''}>
+                <input type="checkbox" class="compare-checkbox" value="${safeNameAttribute}" aria-label="Сравнить: ${safeName}" ${isSelected ? 'checked' : ''}>
             </label>
-            <div class="uni-type-icon" title="Тип: ${uni.type}">
+            <div class="uni-type-icon" title="Тип: ${escapeHTMLAttribute(uni.type)}">
                 <i class="icon icon-only icon-sm" data-lucide="${typeIcon}"></i>
             </div>
-            <div class="uni-content" data-action="open-modal">
-                <h4>${safeName}</h4>
+            <div class="uni-content" data-action="open-modal" role="button" tabindex="0">
+                <div class="uni-name-line"><h3>${safeName}</h3>${reviewBadge}</div>
                 <p class="preview-info">${sanitizeHTML(uni.info)}</p>
                 <div class="uni-meta">
                     ${raexBadge}
                     <span class="uni-avg-score" title="Средний балл ЕГЭ"><i class="icon icon-sm" data-lucide="award"></i> <strong>${uni.avgScore || 'н/д'}</strong></span>
                 </div>
             </div>
-        </div>
+        </article>
     `;
 }
-function populateUniFilterOptions() { const uniqueTypes = [...new Set(universities.map(uni => uni.type))].sort((a,b) => a.localeCompare(b, 'ru')); uniFilterSelect.innerHTML = '<option value="all">Все направления</option>'; const typeNames = { tech: 'Технические', science: 'Научные', engineering: 'Инженерные', international: 'Международные', economics: 'Экономика', medical: 'Медицина', management: 'Управление', art: 'Искусство', law: 'Юриспруденция', humanities: 'Гуманитарные', education: 'Образование', social: 'Социальные', agriculture: 'Аграрные', architecture: 'Архитектура', finance: 'Финансы', transport: 'Транспортные', communications: 'Связь и IT', pedagogy: 'Педагогические', psychology: 'Психологические', food: 'Пищевые', chemical: 'Химические', geodesy: 'Геодезия и картография', music: 'Музыкальные', cinema: 'Кино и ТВ', literature: 'Литературные', aviation: 'Авиация и космос', civil_engineering: 'Строительство' }; uniqueTypes.forEach(type => { const option = document.createElement('option'); option.value = type; option.textContent = typeNames[type] || (type.charAt(0).toUpperCase() + type.slice(1)); uniFilterSelect.appendChild(option); }); }
-function renderUniversities(unisToRender = processedUniversities) { const sortBy = uniSortSelect.value; let sortedUnis = [...unisToRender].sort((a, b) => { switch (sortBy) { case 'avgScore': return (b.avgScore || 0) - (a.avgScore || 0); case 'budgetPlaces': return (b.budgetPlaces || 0) - (a.budgetPlaces || 0); case 'name': return a.name.localeCompare(b.name, 'ru'); default: { const rankA = a.raex2026 ? a.raex2026.rank : Infinity; const rankB = b.raex2026 ? b.raex2026.rank : Infinity; return rankA - rankB; } } }); allUnisListDiv.innerHTML = sortedUnis.length > 0 ? sortedUnis.map(createUniCardHTML).join('') : '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted-color);">ВУЗы не найдены по вашему запросу.</p>'; updateCompareButtonState(); initLucideIcons(); }
-function applyUniversityFiltersAndSort() { const filterValue = uniFilterSelect.value; let filteredUnis = (filterValue === 'all') ? [...processedUniversities] : processedUniversities.filter(uni => uni.type === filterValue); renderUniversities(filteredUnis); resetUniFilterBtn.classList.toggle('hidden', filterValue === 'all'); }
-function resetUniversityFilters() { uniFilterSelect.value = 'all'; uniSortSelect.value = 'raex2026'; selectedForComparison = []; renderUniversities(processedUniversities); showToast("Фильтры и сортировка вузов сброшены."); resetUniFilterBtn.classList.add('hidden'); }
+function populateUniFilterOptions() { const uniqueTypes = [...new Set(processedUniversities.map(uni => uni.type))].sort((a,b) => a.localeCompare(b, 'ru')); uniFilterSelect.innerHTML = '<option value="all">Все направления</option>'; const typeNames = { tech: 'Технические', science: 'Научные', engineering: 'Инженерные', international: 'Международные', economics: 'Экономика', medical: 'Медицина', management: 'Управление', art: 'Искусство', law: 'Юриспруденция', humanities: 'Гуманитарные', education: 'Образование', social: 'Социальные', agriculture: 'Аграрные', architecture: 'Архитектура', finance: 'Финансы', transport: 'Транспортные', communications: 'Связь и IT', pedagogy: 'Педагогические', psychology: 'Психологические', food: 'Пищевые', chemical: 'Химические', geodesy: 'Геодезия и картография', music: 'Музыкальные', cinema: 'Кино и ТВ', literature: 'Литературные', aviation: 'Авиация и космос', civil_engineering: 'Строительство' }; uniqueTypes.forEach(type => { const option = document.createElement('option'); option.value = type; option.textContent = typeNames[type] || (type.charAt(0).toUpperCase() + type.slice(1)); uniFilterSelect.appendChild(option); }); }
+function renderUniversities(unisToRender = processedUniversities) {
+    currentFilteredUniversities = [...unisToRender];
+    const sortBy = uniSortSelect.value;
+    const sortedUnis = [...currentFilteredUniversities].sort((a, b) => {
+        switch (sortBy) {
+            case 'avgScore': return (b.avgScore || 0) - (a.avgScore || 0);
+            case 'budgetPlaces': return (b.budgetPlaces || 0) - (a.budgetPlaces || 0);
+            case 'name': return a.name.localeCompare(b.name, 'ru');
+            default: {
+                const rankA = a.raex2026 ? a.raex2026.rank : Infinity;
+                const rankB = b.raex2026 ? b.raex2026.rank : Infinity;
+                return rankA - rankB;
+            }
+        }
+    });
+    const visibleUniversities = sortedUnis.slice(0, universitiesVisibleCount);
+    allUnisListDiv.innerHTML = visibleUniversities.length
+        ? visibleUniversities.map(createUniCardHTML).join('')
+        : '<p class="catalog-empty-state">Учебные заведения не найдены.</p>';
+    if (universitiesCounter) universitiesCounter.textContent = `Показано ${visibleUniversities.length} из ${sortedUnis.length}`;
+    if (showMoreUniversitiesContainer) showMoreUniversitiesContainer.classList.toggle('hidden', sortedUnis.length <= universitiesVisibleCount);
+    updateCompareButtonState();
+    initLucideIcons();
+}
+
+function showMoreUniversities() {
+    universitiesVisibleCount += UNIVERSITY_PAGE_SIZE;
+    renderUniversities(currentFilteredUniversities);
+}
+function applyUniversityFiltersAndSort() {
+    const filterValue = uniFilterSelect.value;
+    const filteredUnis = filterValue === 'all'
+        ? [...processedUniversities]
+        : processedUniversities.filter(uni => uni.type === filterValue);
+    universitiesVisibleCount = UNIVERSITY_PAGE_SIZE;
+    renderUniversities(filteredUnis);
+    resetUniFilterBtn.classList.toggle('hidden', filterValue === 'all');
+}
+function resetUniversityFilters() {
+    uniFilterSelect.value = 'all';
+    uniSortSelect.value = 'raex2026';
+    selectedForComparison = [];
+    universitiesVisibleCount = UNIVERSITY_PAGE_SIZE;
+    renderUniversities(processedUniversities);
+    showToast("Фильтры и сортировка вузов сброшены.");
+    resetUniFilterBtn.classList.add('hidden');
+}
 function updateCompareButtonState() { const count = selectedForComparison.length; compareCountSpan.textContent = count; compareUnisBtn.disabled = !(count >= 2 && count <= 3); compareUnisBtn.classList.toggle('hidden', count === 0); }
 function handleCompareSelection(event) { const checkbox = event.target; const uniName = checkbox.value; if (checkbox.checked) { if (selectedForComparison.length < 3) { selectedForComparison.push(uniName); } else { checkbox.checked = false; showToast("Можно выбрать не более 3 вузов для сравнения."); } } else { selectedForComparison = selectedForComparison.filter(name => name !== uniName); } updateCompareButtonState(); }
 function showCompareModal() { if (selectedForComparison.length < 2 || selectedForComparison.length > 3) { showToast("Выберите 2 или 3 вуза для сравнения."); return; } const unisToCompare = processedUniversities.filter(uni => selectedForComparison.includes(uni.name)); let tableHTML = '<table><thead><tr><th>Параметр</th>'; unisToCompare.forEach(uni => { tableHTML += `<th>${sanitizeHTML(uni.name)}</th>`; }); tableHTML += '</tr></thead><tbody>'; const raexRow = (label, getter) => `<tr><td><strong>${label}</strong></td>${unisToCompare.map(uni => `<td>${uni.raex2026 ? getter(uni.raex2026) : 'не входит в топ-100'}</td>`).join('')}</tr>`; tableHTML += raexRow('Место в RAEX-100 (2026)', r => r.rank); tableHTML += raexRow('— условия обучения, ранг', r => r.conditionsRank); tableHTML += raexRow('— востребованность у работодателей, ранг', r => r.employmentRank); tableHTML += raexRow('— научная деятельность, ранг', r => r.scienceRank); const params = [ { key: 'avgScore', name: 'Ср. балл ЕГЭ' }, { key: 'budgetPlaces', name: 'Бюдж. места' }, { key: 'employmentRate', name: 'Трудоустр. (%)' }, { key: 'programs', name: 'Направления' } ]; params.forEach(param => { tableHTML += `<tr><td><strong>${param.name}</strong></td>`; unisToCompare.forEach(uni => { let value = uni[param.key] ?? 'н/д'; if (param.key === 'programs') value = `<ul>${(uni.programs || []).map(p => `<li>${sanitizeHTML(p)}</li>`).join('')}</ul>`; else value = sanitizeHTML(String(value)); tableHTML += `<td>${value}</td>`; }); tableHTML += '</tr>'; }); tableHTML += '</tbody></table>'; compareTableContainer.innerHTML = tableHTML; openModal('compare-modal'); }
 async function openUniModal(uniName) {
     const foundUni = processedUniversities.find(u => u.name === uniName);
-    currentUniForModal = foundUni; 
-    if (currentUniForModal) {
-        uniModalTitle.textContent = currentUniForModal.name;
-        uniModalPrograms.textContent = currentUniForModal.programs.join(', '); 
-        // Show extended info if available, otherwise fallback to basic info
-        if (currentUniForModal.extendedInfo) {
-            uniModalInfo.innerHTML = `<p class="extended-info">${sanitizeHTML(currentUniForModal.extendedInfo)}</p>`;
-        } else {
-            uniModalInfo.textContent = currentUniForModal.info;
-        }
-        uniModalBudget.textContent = currentUniForModal.budgetPlaces || 'н/д'; 
-        uniModalAvgScore.textContent = currentUniForModal.avgScore || 'н/д'; 
-        uniModalEmployment.textContent = `${currentUniForModal.employmentRate || 'н/д'}%`; 
-        if (currentUniForModal.raex2026) {
-            uniModalRaexRank.textContent = `${currentUniForModal.raex2026.rank} место`;
-            uniModalRaexConditions.textContent = currentUniForModal.raex2026.conditionsRank;
-            uniModalRaexEmploymentRank.textContent = currentUniForModal.raex2026.employmentRank;
-            uniModalRaexScience.textContent = currentUniForModal.raex2026.scienceRank;
-        } else {
-            uniRaexBlock.innerHTML = '<p>Этот вуз не входит в топ-100 рейтинга RAEX 2026 года.</p>';
-        }
-        await updateFavoriteButtonText(); 
-        displayMatchingProfessionsInModal(currentUniForModal); 
-        openModal('uni-modal'); 
-    } 
+    currentUniForModal = foundUni;
+    if (!currentUniForModal) return;
+
+    uniModalTitle.textContent = currentUniForModal.name;
+    uniModalPrograms.textContent = (currentUniForModal.programs || []).join(', ');
+    const baseInfo = currentUniForModal.extendedInfo
+        ? `<p class="extended-info">${sanitizeHTML(currentUniForModal.extendedInfo)}</p>`
+        : `<p>${sanitizeHTML(currentUniForModal.info || '')}</p>`;
+    const statusInfo = currentUniForModal.catalogStatus === 'review' && currentUniForModal.statusNote
+        ? `<div class="uni-status-note"><strong>Запись требует проверки.</strong> ${sanitizeHTML(currentUniForModal.statusNote)}${currentUniForModal.statusSourceUrl ? ` <a href="${escapeHTMLAttribute(currentUniForModal.statusSourceUrl)}" target="_blank" rel="noopener noreferrer">Источник сведений</a>` : ''}</div>`
+        : '';
+    uniModalInfo.innerHTML = baseInfo + statusInfo;
+
+    uniModalBudget.textContent = currentUniForModal.budgetPlaces ?? 'н/д';
+    uniModalAvgScore.textContent = currentUniForModal.avgScore ?? 'н/д';
+    uniModalEmployment.textContent = currentUniForModal.employmentRate != null
+        ? `${currentUniForModal.employmentRate}%`
+        : 'н/д';
+
+    const hasRaex = Boolean(currentUniForModal.raex2026);
+    uniRaexBlock.classList.toggle('hidden', !hasRaex);
+    uniRaexUnavailable.classList.toggle('hidden', hasRaex);
+    if (hasRaex) {
+        uniModalRaexRank.textContent = `${currentUniForModal.raex2026.rank} место`;
+        uniModalRaexConditions.textContent = currentUniForModal.raex2026.conditionsRank ?? 'н/д';
+        uniModalRaexEmploymentRank.textContent = currentUniForModal.raex2026.employmentRank ?? 'н/д';
+        uniModalRaexScience.textContent = currentUniForModal.raex2026.scienceRank ?? 'н/д';
+    }
+
+    await updateFavoriteButtonText();
+    displayMatchingProfessionsInModal(currentUniForModal);
+    openModal('uni-modal');
 }
 function displayMatchingProfessionsInModal(uni) { const keywords = uni.programKeywords || []; modalProfessionsList.innerHTML = '<li class="no-professions">Загрузка...</li>'; setTimeout(() => { const matchingProfessions = professions.filter(prof => (prof.keywords || []).some(pk => keywords.some(uk => uk.toLowerCase().includes(pk.toLowerCase()) || pk.toLowerCase().includes(uk.toLowerCase())))); modalProfessionsList.innerHTML = matchingProfessions.length > 0 ? matchingProfessions.map(prof => `<li class="${lastTestResultTypes.some(t => prof.types.includes(t)) ? 'highlighted' : ''}">${sanitizeHTML(prof.name)}</li>`).join('') : '<li class="no-professions">Подходящих профессий не найдено.</li>'; }, 10); }
-function openModal(id) { const modal = document.getElementById(id); if (modal) { modal.style.display = 'block'; document.body.style.overflow = 'hidden'; initLucideIcons(); } }
-function closeModals() { document.querySelectorAll('.modal').forEach(modal => { modal.style.display = 'none'; }); document.body.style.overflow = 'auto'; }
+function openModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    initLucideIcons();
+}
+function closeModal(modal) {
+    if (!modal) return;
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    const hasOpenModal = [...document.querySelectorAll('.modal')]
+        .some(openModal => openModal.style.display === 'block');
+    if (!hasOpenModal) document.body.style.overflow = '';
+}
+function closeModals() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    });
+    document.body.style.overflow = '';
+}
 function renderTestQuestions() { questionsContainer.innerHTML = testQuestions.map((q, i) => `<div class="question"><p>${q.question}</p><div class="options"><fieldset><legend>Ответы ${i+1}</legend>${q.options.map((opt, oi) => `<label><input type="radio" name="q${i+1}" value="${oi}" required> ${opt.text}</label>`).join('')}</fieldset></div></div>`).join(''); }
 function handleTestSubmit(e) { e.preventDefault(); const formData = new FormData(e.target); const scores = Object.fromEntries(Object.values(HOLLAND_TYPES).map(type => [type, 0])); let answeredCount = 0; for (let i = 0; i < testQuestions.length; i++) { const answer = formData.get(`q${i+1}`); if (answer !== null) { answeredCount++; testQuestions[i].options[parseInt(answer)].types.forEach(type => scores[type]++); } } if (answeredCount < testQuestions.length) { showToast("Пожалуйста, ответьте на все вопросы теста."); return; } const sortedScores = Object.entries(scores).sort(([,a],[,b])=>b-a); lastTestResultTypes = sortedScores.slice(0, 3).map(s => s[0]); showResults(lastTestResultTypes); resultsSection.scrollIntoView({ behavior: 'smooth' }); }
 function showResults(resultTypes) { 
@@ -451,7 +622,7 @@ function createProfessionCardHTML(prof, searchTerm = '') {
     const salaryInfo = prof.salary ? `<div class="salary-info"><i class="icon icon-sm" data-lucide="dollar-sign"></i> ${prof.salary}</div>` : '';
     return `
         <div class="profession-card" data-profession-name-raw="${sanitizeHTML(prof.name)}" data-profession-desc-raw="${sanitizeHTML(prof.description)}">
-            <h4>${highlightText(sanitizeHTML(prof.name), searchTerm)}</h4>
+            <h3>${highlightText(sanitizeHTML(prof.name), searchTerm)}</h3>
             <p>${highlightText(sanitizeHTML(prof.description), searchTerm)}</p>
             ${salaryInfo}
             <div class="profession-types">${prof.types.map(createTypeTagHTML).join('')}</div>
@@ -466,7 +637,13 @@ function renderProfessions(profsToRender = professions, filterTypes = []) { curr
 function showMoreProfessions() { professionsVisibleCount += PROFESSIONS_PAGE_SIZE; renderProfessions(professions, currentProfessionFilterTypes); }
 function showAllProfessions() { professionsVisibleCount = currentFilteredProfessions.length; renderProfessions(professions, currentProfessionFilterTypes); }
 function filterProfessions() { professionsVisibleCount = PROFESSIONS_PAGE_SIZE; renderProfessions(professions, currentProfessionFilterTypes); }
-function resetProfessionFilter() { currentProfessionFilterTypes = []; professionSearchInput.value = ''; professionsVisibleCount = PROFESSIONS_PAGE_SIZE; renderProfessions(); }
+function resetProfessionFilter() {
+    currentProfessionFilterTypes = [];
+    professionSearchInput.value = '';
+    document.getElementById('profession-type-filter').value = 'all';
+    professionsVisibleCount = PROFESSIONS_PAGE_SIZE;
+    renderProfessions();
+}
 
 function getRelatedProfessions(profession, limit = 5) {
     const relatedProfs = professions.filter(p => {
@@ -557,22 +734,75 @@ function showRecommendations(profession) {
     recommendationsModal.style.display = 'block';
 }
 
-function filterUniversitiesByProfession(professionName) { const profession = professions.find(p => p.name === professionName); if (!profession) { renderUniversities(processedUniversities); return; } showToast(`Поиск ВУЗов для: ${professionName}`); const profKeywords = new Set((profession.keywords || [profession.name]).map(k => k.toLowerCase())); const matchingUnis = processedUniversities.filter(uni => (uni.programKeywords || []).some(uk => profKeywords.has(uk.toLowerCase()) || [...profKeywords].some(pk => uk.toLowerCase().includes(pk) || pk.includes(uk.toLowerCase())))); uniFilterSelect.value = 'all'; uniSortSelect.value = 'raex2026'; renderUniversities(matchingUnis); resetUniFilterBtn.classList.remove('hidden'); document.getElementById('universities').scrollIntoView({ behavior: 'smooth' }); }
-function sanitizeHTML(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
+function filterUniversitiesByProfession(professionName) {
+    const profession = professions.find(p => p.name === professionName);
+    if (!profession) { renderUniversities(processedUniversities); return; }
+    showToast(`Поиск вузов для: ${professionName}`);
+    const profKeywords = new Set((profession.keywords || [profession.name]).map(k => k.toLowerCase()));
+    const matchingUnis = processedUniversities.filter(uni =>
+        (uni.programKeywords || []).some(uk =>
+            profKeywords.has(uk.toLowerCase()) ||
+            [...profKeywords].some(pk => uk.toLowerCase().includes(pk) || pk.includes(uk.toLowerCase()))
+        )
+    );
+    uniFilterSelect.value = 'all';
+    uniSortSelect.value = 'raex2026';
+    universitiesVisibleCount = UNIVERSITY_PAGE_SIZE;
+    renderUniversities(matchingUnis);
+    resetUniFilterBtn.classList.remove('hidden');
+    document.getElementById('universities').scrollIntoView({ behavior: 'smooth' });
+}
+function sanitizeHTML(str) { const temp = document.createElement('div'); temp.textContent = String(str ?? ''); return temp.innerHTML; }
+function escapeHTMLAttribute(value) { return sanitizeHTML(value).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+function updateHeroStats() {
+    if (heroProfessionCount && professions.length) heroProfessionCount.textContent = String(professions.length);
+    if (heroUniversityCount && processedUniversities.length) heroUniversityCount.textContent = String(processedUniversities.length);
+}
 function simpleMarkdownToHtml(text) { if (!text) return ''; let html = sanitizeHTML(text); html = html.replace(/^## (.*?)$/gm, '<h5>$1</h5>').replace(/^# (.*?)$/gm, '<h4>$1</h4>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/^[\*\-\+] +(.*?)$/gm, '<li>$1</li>').replace(/^\d+\. +(.*?)$/gm, '<li>$1</li>').replace(/((<li>.*<\/li>\s*)+)/gm, '<ul>$1</ul>').replace(/\n/g, '<br>'); return html; }
+function setMobileMenuOpen(isOpen) {
+    primaryNav.classList.toggle('is-open', isOpen);
+    mobileMenuToggleBtn.setAttribute('aria-expanded', String(isOpen));
+    mobileMenuToggleBtn.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    mobileMenuToggleBtn.title = isOpen ? 'Закрыть меню' : 'Открыть меню';
+    mobileMenuToggleBtn.innerHTML = '<i class="icon icon-only" data-lucide="' + (isOpen ? 'x' : 'menu') + '"></i>';
+    initLucideIcons();
+}
+
+function setupMobileNavigation() {
+    mobileMenuToggleBtn.addEventListener('click', () => {
+        setMobileMenuOpen(mobileMenuToggleBtn.getAttribute('aria-expanded') !== 'true');
+    });
+    primaryNav.addEventListener('click', event => {
+        if (event.target instanceof Element && event.target.closest('a, button') && window.innerWidth <= 820) {
+            setMobileMenuOpen(false);
+        }
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && mobileMenuToggleBtn.getAttribute('aria-expanded') === 'true') {
+            setMobileMenuOpen(false);
+            mobileMenuToggleBtn.focus();
+        }
+    });
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 820 && mobileMenuToggleBtn.getAttribute('aria-expanded') === 'true') {
+            setMobileMenuOpen(false);
+        }
+    });
+}
+
 function setupEventListeners() {
     // АУТЕНТИФИКАЦИЯ
     loginBtn.addEventListener('click', () => { isRegisterMode = false; authModalTitle.textContent = 'Вход'; authSubmitBtn.textContent = 'Войти'; authSwitchLink.textContent = 'Нет аккаунта? Зарегистрироваться'; authErrorP.classList.add('hidden'); openModal('auth-modal'); });
-    logoutBtn.addEventListener('click', () => auth.signOut().then(() => showToast("Вы успешно вышли.")).catch(handleAuthError));
+    logoutBtn.addEventListener('click', () => ensureAuth().signOut().then(() => showToast("Вы успешно вышли.")).catch(handleAuthError));
     authSwitchLink.addEventListener('click', e => { e.preventDefault(); isRegisterMode = !isRegisterMode; authModalTitle.textContent = isRegisterMode ? 'Регистрация' : 'Вход'; authSubmitBtn.textContent = isRegisterMode ? 'Зарегистрироваться' : 'Войти'; authSwitchLink.textContent = isRegisterMode ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться'; });
-    authForm.addEventListener('submit', e => { e.preventDefault(); const email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value; if(isRegisterMode) auth.createUserWithEmailAndPassword(email, password).then(() => { showToast("Регистрация успешна!"); closeModals(); }).catch(handleAuthError); else auth.signInWithEmailAndPassword(email, password).then(() => { showToast("Вы успешно вошли!"); closeModals(); }).catch(handleAuthError); });
-    googleSigninBtn.addEventListener('click', () => { const provider = new firebase.auth.GoogleAuthProvider(); auth.signInWithPopup(provider).then(res => { showToast(`Добро пожаловать, ${res.user.displayName}!`); closeModals(); }).catch(handleAuthError); });
+    authForm.addEventListener('submit', e => { e.preventDefault(); const email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value; if(isRegisterMode) ensureAuth().createUserWithEmailAndPassword(email, password).then(() => { showToast("Регистрация успешна!"); closeModals(); }).catch(handleAuthError); else ensureAuth().signInWithEmailAndPassword(email, password).then(() => { showToast("Вы успешно вошли!"); closeModals(); }).catch(handleAuthError); });
+    googleSigninBtn.addEventListener('click', () => { const provider = new firebase.auth.GoogleAuthProvider(); ensureAuth().signInWithPopup(provider).then(res => { showToast(`Добро пожаловать, ${res.user.displayName}!`); closeModals(); }).catch(handleAuthError); });
 
     // ОБЩИЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
     themeSwitchBtn.addEventListener('click', toggleTheme);
     profileBtn.addEventListener('click', () => openModal('profile-modal'));
-    closeModalBtns.forEach(btn => btn.addEventListener('click', closeModals));
-    window.addEventListener('click', e => { if (e.target.classList.contains('modal')) { if (e.target.id === 'edu-level-modal' && !getEduLevel()) return; closeModals(); } });
+    closeModalBtns.forEach(btn => btn.addEventListener('click', () => closeModal(btn.closest('.modal'))));
+    window.addEventListener('click', e => { if (e.target.classList.contains('modal')) { if (e.target.id === 'edu-level-modal' && !getEduLevel()) return; closeModal(e.target); } });
     document.querySelectorAll('header nav a, .logo-container').forEach(a => a.addEventListener('click', function(e) { e.preventDefault(); const targetId = this.getAttribute('href')?.substring(1); if(targetId) { const el = document.getElementById(targetId); if(el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' }); } else window.scrollTo({ top: 0, behavior: 'smooth' }); }));
 
     // ТЕСТ И РЕЗУЛЬТАТЫ
@@ -603,13 +833,20 @@ function setupEventListeners() {
     uniFilterSelect.addEventListener('change', applyUniversityFiltersAndSort);
     uniSortSelect.addEventListener('change', applyUniversityFiltersAndSort);
     resetUniFilterBtn.addEventListener('click', resetUniversityFilters);
+    showMoreUniversitiesBtn.addEventListener('click', showMoreUniversities);
     compareUnisBtn.addEventListener('click', showCompareModal);
     allUnisListDiv.addEventListener('click', e => { // <-- ВОССТАНОВЛЕН И УЛУЧШЕН ОБРАБОТЧИК
         const card = e.target.closest('.uni-card');
         if (!card) return;
-        // Если кликнули не по чекбоксу, а по другой части карточки - открываем модальное окно
-        if (!e.target.classList.contains('compare-checkbox')) {
-            openUniModal(card.dataset.uniName);
+        // Выбор для сравнения не должен открывать модальное окно.
+        if (e.target.closest('.compare-checkbox-label, .uni-image-credit')) return;
+        openUniModal(card.dataset.uniName);
+    });
+    allUnisListDiv.addEventListener('keydown', e => {
+        if (e.target.matches('.uni-content[role="button"]') && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            const card = e.target.closest('.uni-card');
+            if (card) openUniModal(card.dataset.uniName);
         }
     });
     allUnisListDiv.addEventListener('change', e => { if (e.target.classList.contains('compare-checkbox')) handleCompareSelection(e); });
@@ -632,6 +869,15 @@ function setupEventListeners() {
     // КНОПКИ В МОДАЛЬНЫХ ОКНАХ
     addToFavoritesBtn.addEventListener('click', toggleFavorite);
     clearProfileBtn.addEventListener('click', clearProfileData);
+    profileModal.addEventListener('click', async e => {
+        const actionButton = e.target.closest('[data-profile-action]');
+        if (!actionButton) return;
+        if (actionButton.dataset.profileAction === 'remove-result') {
+            await window.removeTestResult(actionButton.dataset.resultId);
+        } else if (actionButton.dataset.profileAction === 'remove-favorite') {
+            await window.removeFavorite(actionButton.dataset.universityName);
+        }
+    });
     document.getElementById('related-professions').addEventListener('click', e => {
         const item = e.target.closest('.related-profession-item');
         if (!item) return;
@@ -647,13 +893,21 @@ const EDU_LEVELS_INFO = {
     bachelor: { label: 'Бакалавриат / Специалитет', short: 'Бакалавриат' },
     master: { label: 'Магистратура', short: 'Магистратура' }
 };
-function getEduLevel() { return localStorage.getItem(EDU_LEVEL_KEY); }
-function setEduLevel(level) { localStorage.setItem(EDU_LEVEL_KEY, level); applyEduLevelUI(); }
+function getEduLevel() {
+    const savedLevel = localStorage.getItem(EDU_LEVEL_KEY);
+    return Object.prototype.hasOwnProperty.call(EDU_LEVELS_INFO, savedLevel) ? savedLevel : null;
+}
+function setEduLevel(level) {
+    if (!Object.prototype.hasOwnProperty.call(EDU_LEVELS_INFO, level)) return;
+    localStorage.setItem(EDU_LEVEL_KEY, level);
+    applyEduLevelUI();
+}
 function openEduLevelModal() {
     const modal = document.getElementById('edu-level-modal');
     const hasLevel = !!getEduLevel();
     modal.querySelector('.close').style.display = hasLevel ? '' : 'none';
     modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     initLucideIcons();
 }
@@ -664,8 +918,7 @@ function applyEduLevelUI() {
     const banner = document.getElementById('edu-level-banner');
     const indicatorText = document.getElementById('edu-level-indicator-text');
 
-    if (!level) { return; }
-
+    if (!level || !EDU_LEVELS_INFO[level]) return;
     indicatorText.textContent = EDU_LEVELS_INFO[level].short;
 
     if (level === 'college') {
@@ -679,12 +932,11 @@ function applyEduLevelUI() {
     stubEl.classList.add('hidden');
     banner.classList.remove('hidden');
 
-    if (level === 'master') {
-        banner.innerHTML = `Вы выбрали уровень: <strong>${EDU_LEVELS_INFO[level].label}</strong>. Список вузов пока общий — подбор по конкретным программам магистратуры добавим отдельно. <button type="button" id="edu-level-banner-switch">Изменить уровень</button>`;
-    } else {
-        banner.innerHTML = `Вы выбрали уровень: <strong>${EDU_LEVELS_INFO[level].label}</strong>. <button type="button" id="edu-level-banner-switch">Изменить уровень</button>`;
-    }
-    document.getElementById('edu-level-banner-switch').addEventListener('click', openEduLevelModal);
+    const extraNote = level === 'master'
+        ? ' Список вузов пока общий — подбор по конкретным программам магистратуры добавим отдельно.'
+        : '';
+    banner.innerHTML = `<div class="edu-level-banner-copy">Вы выбрали уровень: <strong>${EDU_LEVELS_INFO[level].label}</strong>.${extraNote}</div><button type="button" id="edu-level-banner-switch">Изменить уровень</button>`;
+    banner.querySelector('#edu-level-banner-switch')?.addEventListener('click', openEduLevelModal);
 }
 function setupEduLevelListeners() {
     document.querySelectorAll('.edu-level-card').forEach(card => {
@@ -696,10 +948,18 @@ function setupEduLevelListeners() {
 
 document.addEventListener('DOMContentLoaded', async () => {
     initTheme();
+    const lucideSdk = document.getElementById('lucide-sdk');
+    if (window.lucide) {
+        initLucideIcons();
+    } else if (lucideSdk) {
+        lucideSdk.addEventListener('load', initLucideIcons, { once: true });
+    }
+    setupMobileNavigation();
     setupEduLevelListeners();
     if (getEduLevel()) { applyEduLevelUI(); } else { openEduLevelModal(); }
     await Promise.all([loadUniversities(), loadProfessions()]);
     renderTestQuestions();
     setupEventListeners();
+    scheduleAuthStateListener();
     if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
 });
