@@ -329,7 +329,7 @@ function showToast(message, duration = 3000) {
 }
 function highlightText(text, term) { if (!term || !text) return text; const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); const regex = new RegExp(`(${escapedTerm})`, 'gi'); return text.replace(regex, '<mark>$1</mark>'); }
 function createTypeTagHTML(type) { const typeInfo = TYPE_DESCRIPTIONS[type] || { name: type }; return `<span class="type-tag" style="background-color: var(--${type}-color);" title="${typeInfo.description}">${typeInfo.name}</span>`; }
-function processUniversityData() { processedUniversities = universities.map(uni => ({ ...uni })); }
+function processUniversityData() { processedUniversities = universities.filter(uni => uni.catalogStatus !== 'closed').map(uni => ({ ...uni })); }
 function getUniversityImageUrl(imageUrl, width) {
     try {
         const url = new URL(imageUrl);
@@ -374,7 +374,10 @@ function createUniCardHTML(uni) {
         : '';
     const imageHTML = uni.imageUrl
         ? '<div class="uni-card-image"><img src="' + imageSrc + '"' + (imageSrcset ? ' srcset="' + imageSrcset + '" sizes="(max-width: 600px) calc(100vw - 2rem), (max-width: 900px) 45vw, 400px"' : '') + ' alt="Изображение для ' + safeNameAttribute + '" loading="lazy" decoding="async" fetchpriority="low" width="400" height="225" onerror="this.closest(\'.uni-card-image\').classList.add(\'img-fallback\'); this.remove();">' + imageCreditHTML + '</div>'
-        : '<div class="uni-card-image img-fallback" aria-hidden="true"><i class="icon icon-lg" data-lucide="building-2"></i></div>';
+        : '<div class="uni-card-image img-fallback"><i class="icon icon-lg" data-lucide="building-2" aria-hidden="true"></i><span class="uni-image-missing">Фото уточняется</span></div>';
+    const reviewBadge = uni.catalogStatus === 'review'
+        ? '<span class="uni-review-badge" title="' + escapeHTMLAttribute(uni.statusNote || 'Запись требует проверки') + '">Проверить статус</span>'
+        : '';
     const raexBadge = uni.raex2026
         ? `<span class="uni-raex-rank" title="Место в рейтинге RAEX-100, 2026"><i class="icon icon-sm" data-lucide="trending-up"></i> <strong>${uni.raex2026.rank}</strong> место в RAEX</span>`
         : `<span class="uni-raex-rank uni-raex-none" title="Нет подтверждённого места в RAEX-100 за 2026 год"><i class="icon icon-sm" data-lucide="minus-circle"></i> нет данных RAEX</span>`;
@@ -388,7 +391,7 @@ function createUniCardHTML(uni) {
                 <i class="icon icon-only icon-sm" data-lucide="${typeIcon}"></i>
             </div>
             <div class="uni-content" data-action="open-modal" role="button" tabindex="0" aria-label="Подробнее об организации: ${safeName}">
-                <h4>${safeName}</h4>
+                <div class="uni-name-line"><h4>${safeName}</h4>${reviewBadge}</div>
                 <p class="preview-info">${sanitizeHTML(uni.info)}</p>
                 <div class="uni-meta">
                     ${raexBadge}
@@ -398,7 +401,7 @@ function createUniCardHTML(uni) {
         </article>
     `;
 }
-function populateUniFilterOptions() { const uniqueTypes = [...new Set(universities.map(uni => uni.type))].sort((a,b) => a.localeCompare(b, 'ru')); uniFilterSelect.innerHTML = '<option value="all">Все направления</option>'; const typeNames = { tech: 'Технические', science: 'Научные', engineering: 'Инженерные', international: 'Международные', economics: 'Экономика', medical: 'Медицина', management: 'Управление', art: 'Искусство', law: 'Юриспруденция', humanities: 'Гуманитарные', education: 'Образование', social: 'Социальные', agriculture: 'Аграрные', architecture: 'Архитектура', finance: 'Финансы', transport: 'Транспортные', communications: 'Связь и IT', pedagogy: 'Педагогические', psychology: 'Психологические', food: 'Пищевые', chemical: 'Химические', geodesy: 'Геодезия и картография', music: 'Музыкальные', cinema: 'Кино и ТВ', literature: 'Литературные', aviation: 'Авиация и космос', civil_engineering: 'Строительство' }; uniqueTypes.forEach(type => { const option = document.createElement('option'); option.value = type; option.textContent = typeNames[type] || (type.charAt(0).toUpperCase() + type.slice(1)); uniFilterSelect.appendChild(option); }); }
+function populateUniFilterOptions() { const uniqueTypes = [...new Set(processedUniversities.map(uni => uni.type))].sort((a,b) => a.localeCompare(b, 'ru')); uniFilterSelect.innerHTML = '<option value="all">Все направления</option>'; const typeNames = { tech: 'Технические', science: 'Научные', engineering: 'Инженерные', international: 'Международные', economics: 'Экономика', medical: 'Медицина', management: 'Управление', art: 'Искусство', law: 'Юриспруденция', humanities: 'Гуманитарные', education: 'Образование', social: 'Социальные', agriculture: 'Аграрные', architecture: 'Архитектура', finance: 'Финансы', transport: 'Транспортные', communications: 'Связь и IT', pedagogy: 'Педагогические', psychology: 'Психологические', food: 'Пищевые', chemical: 'Химические', geodesy: 'Геодезия и картография', music: 'Музыкальные', cinema: 'Кино и ТВ', literature: 'Литературные', aviation: 'Авиация и космос', civil_engineering: 'Строительство' }; uniqueTypes.forEach(type => { const option = document.createElement('option'); option.value = type; option.textContent = typeNames[type] || (type.charAt(0).toUpperCase() + type.slice(1)); uniFilterSelect.appendChild(option); }); }
 function renderUniversities(unisToRender = processedUniversities) {
     currentFilteredUniversities = [...unisToRender];
     const sortBy = uniSortSelect.value;
@@ -456,9 +459,13 @@ async function openUniModal(uniName) {
 
     uniModalTitle.textContent = currentUniForModal.name;
     uniModalPrograms.textContent = (currentUniForModal.programs || []).join(', ');
-    uniModalInfo.innerHTML = currentUniForModal.extendedInfo
+    const baseInfo = currentUniForModal.extendedInfo
         ? `<p class="extended-info">${sanitizeHTML(currentUniForModal.extendedInfo)}</p>`
-        : sanitizeHTML(currentUniForModal.info || '');
+        : `<p>${sanitizeHTML(currentUniForModal.info || '')}</p>`;
+    const statusInfo = currentUniForModal.catalogStatus === 'review' && currentUniForModal.statusNote
+        ? `<div class="uni-status-note"><strong>Запись требует проверки.</strong> ${sanitizeHTML(currentUniForModal.statusNote)}${currentUniForModal.statusSourceUrl ? ` <a href="${escapeHTMLAttribute(currentUniForModal.statusSourceUrl)}" target="_blank" rel="noopener noreferrer">Источник сведений</a>` : ''}</div>`
+        : '';
+    uniModalInfo.innerHTML = baseInfo + statusInfo;
 
     uniModalBudget.textContent = currentUniForModal.budgetPlaces ?? 'н/д';
     uniModalAvgScore.textContent = currentUniForModal.avgScore ?? 'н/д';
