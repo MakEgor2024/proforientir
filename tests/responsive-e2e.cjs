@@ -245,8 +245,13 @@ async function run() {
         const screenshotDir = path.join(root, 'artifacts');
         fs.mkdirSync(screenshotDir, { recursive: true });
         await page.setViewportSize({ width: 390, height: 844 });
-        await page.evaluate(() => window.scrollTo(0, 0));
-        await page.waitForTimeout(100);
+        await page.evaluate(() => {
+            document.documentElement.style.scrollBehavior = 'auto';
+            document.body.style.scrollBehavior = 'auto';
+            window.scrollTo(0, 0);
+            document.getElementById('toast')?.classList.remove('show');
+        });
+        await page.waitForFunction(() => window.scrollY === 0);
         const mobileHeader = await page.evaluate(() => {
             const header = document.querySelector('header').getBoundingClientRect();
             const logo = document.querySelector('.logo-svg').getBoundingClientRect();
@@ -261,10 +266,17 @@ async function run() {
             };
         });
         assert.ok(mobileHeader.top === 0 && mobileHeader.height >= 48 && mobileHeader.logoVisible, 'Шапка и логотип должны быть видны в начале мобильной страницы: ' + JSON.stringify(mobileHeader));
+        assert.equal(mobileHeader.visibility, 'visible', 'Шапка не должна быть скрыта на мобильном устройстве');
+        assert.notEqual(mobileHeader.opacity, '0', 'Шапка не должна быть прозрачной на мобильном устройстве');
         await page.screenshot({ path: path.join(screenshotDir, 'mobile-390.png'), fullPage: false });
         await page.setViewportSize({ width: 1440, height: 1000 });
-        await page.evaluate(() => window.scrollTo(0, 0));
-        await page.waitForTimeout(100);
+        await page.evaluate(() => {
+            document.documentElement.style.scrollBehavior = 'auto';
+            document.body.style.scrollBehavior = 'auto';
+            window.scrollTo(0, 0);
+            document.getElementById('toast')?.classList.remove('show');
+        });
+        await page.waitForFunction(() => window.scrollY === 0);
         const desktopLogoVisible = await page.locator('.logo-svg').isVisible();
         assert.ok(desktopLogoVisible, 'Логотип должен быть виден в начале десктопной страницы');
         await page.screenshot({ path: path.join(screenshotDir, 'desktop-1440.png'), fullPage: false });
