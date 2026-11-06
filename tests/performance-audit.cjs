@@ -402,6 +402,9 @@ async function main() {
         console.log(JSON.stringify(report, null, 2));
 
         assert.equal(brokenImages.length, 0, 'Не все URL изображений доступны: ' + brokenImages.map(item => item.url + ' (' + item.error + ')').join('; '));
+        const completeCommonsMetadata = commonsAttribution.filter(item => item.ok).length;
+        assert.equal(completeCommonsMetadata, commonsUrls.length,
+            'Для всех фото Commons должны быть получены автор, точная лицензия и ссылка на оригинал: ' + completeCommonsMetadata + '/' + commonsUrls.length);
         assert.equal(pageErrors.length, 0, 'Ошибки JavaScript: ' + pageErrors.join('; '));
         assert.equal(renderedImageStats.pendingImages, 0, 'Остались незавершённые запросы изображений после ожидания');
         assert.equal(renderedImageStats.responsiveSrcsetCount, renderedImageStats.rendered,
