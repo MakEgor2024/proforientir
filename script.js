@@ -232,12 +232,8 @@ async function initializeAuthStateListener() {
 }
 
 function scheduleAuthStateListener() {
-    // Restore saved sessions only after the first screen is rendered and the browser is idle.
-    if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(initializeAuthStateListener, { timeout: 3500 });
-    } else {
-        window.setTimeout(initializeAuthStateListener, 3000);
-    }
+    // Restore saved sessions only after the first screen is rendered.
+    window.setTimeout(initializeAuthStateListener, 3500);
     // User intent takes priority: start loading Auth immediately on first interaction.
     document.addEventListener('pointerdown', initializeAuthStateListener, { once: true, passive: true });
     document.addEventListener('keydown', initializeAuthStateListener, { once: true });
