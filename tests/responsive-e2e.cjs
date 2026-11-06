@@ -205,6 +205,23 @@ async function run() {
         await page.locator('#show-more-professions-btn').click();
         assert.ok(await page.locator('.profession-card').count() > initialProfessionCount, 'Кнопка показа дополнительных профессий не сработала');
 
+        await page.locator('.recommendations-btn').first().click();
+        assert.equal(await page.locator('#recommendations-modal').evaluate(el => el.style.display), 'block', 'Кнопка рекомендаций не открывает окно');
+        assert.ok(await page.locator('#skills-list .skill-tag').count() > 0, 'Окно рекомендаций не заполнено');
+        await page.locator('#recommendations-modal .close').click();
+
+        await page.locator('.show-unis-for-profession-btn').first().click();
+        assert.ok(await page.locator('#reset-uni-filter-btn').isVisible(), 'Кнопка «Показать вузы» не применила подбор');
+        await page.locator('#reset-uni-filter-btn').click();
+        assert.ok(await page.locator('.uni-card').count() > 0, 'Сброс фильтра вузов не восстановил каталог');
+
+        const uniFilterOptions = await page.locator('#uni-filter option').evaluateAll(options => options.map(option => option.value));
+        if (uniFilterOptions.length > 1) {
+            await page.locator('#uni-filter').selectOption(uniFilterOptions[1]);
+            assert.ok(await page.locator('#reset-uni-filter-btn').isVisible(), 'Фильтр направлений вузов не активировал сброс');
+            await page.locator('#reset-uni-filter-btn').click();
+        }
+
         await page.locator('#show-more-universities-btn').click();
         assert.ok(await page.locator('.uni-card').count() > 12, 'Кнопка показа дополнительных вузов не сработала');
         await page.locator('.compare-checkbox').nth(0).check();
@@ -216,9 +233,13 @@ async function run() {
         await page.locator('#compare-modal .close').click();
         await page.locator('.uni-content[role="button"]').first().click();
         assert.equal(await page.locator('#uni-modal').evaluate(el => el.style.display), 'block', 'Карточка вуза не открывает подробности');
+        await page.locator('#add-to-favorites-btn').click();
+        assert.equal(await page.locator('#auth-modal').evaluate(el => el.style.display), 'block', 'Кнопка избранного не предлагает авторизацию');
+        await page.locator('#auth-modal .close').click();
         await page.locator('#uni-modal .close').click();
 
-        await page.locator('#login-btn').click();
+        await page.locator('#mobile-menu-toggle').click();
+        await page.locator('#primary-navigation #login-btn').click();
         assert.equal(await page.locator('#auth-modal').evaluate(el => el.style.display), 'block', 'Кнопка входа не открывает форму авторизации');
         await page.locator('#auth-modal .close').click();
 
