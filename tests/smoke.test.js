@@ -81,3 +81,13 @@ test('Firestore SDK is loaded only when profile data is needed', () => {
   assert.ok(script.includes('FIRESTORE_SDK_URL'),
     'lazy loader must define the Firestore SDK URL');
 });
+
+
+test('the education selector can render before app JavaScript initializes', () => {
+  const html = read('index.html');
+  const css = read('style.css');
+  assert.ok(html.indexOf("localStorage.getItem('proforientirEduLevel')") < html.indexOf('rel="stylesheet"'),
+    'saved education level must be detected before loading styles');
+  assert.ok(css.includes('html:not(.edu-level-selected) #edu-level-modal'),
+    'the initial education selector must not depend on JavaScript');
+});
