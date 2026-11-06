@@ -713,3 +713,57 @@ header { box-sizing: border-box; }
 @media (max-width: 420px) {
     .uni-image-credit { font-size: 0.6rem; padding: 0.25rem 0.4rem; }
 }
+
+
+/* Catalog data-quality indicators */
+.uni-name-line {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+.uni-name-line h4 { min-width: 0; flex: 1 1 auto; }
+.uni-review-badge {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.4rem;
+    border: 1px solid #d97706;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.12);
+    color: #b45309;
+    font-size: 0.62rem;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+body.dark .uni-review-badge { color: #fbbf24; border-color: #d97706; }
+.uni-image-missing {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    padding: 0.28rem 0.55rem;
+    background: rgba(15, 23, 42, 0.78);
+    color: #fff;
+    font-size: 0.68rem;
+    text-align: center;
+}
+.uni-status-note {
+    margin-top: 0.8rem;
+    padding: 0.75rem 0.85rem;
+    border-left: 3px solid #d97706;
+    border-radius: 0.4rem;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--text-color);
+    font-size: 0.86rem;
+    line-height: 1.55;
+}
+.uni-status-note strong { display: block; margin-bottom: 0.25rem; }
+.uni-status-note a { display: inline-block; margin-top: 0.3rem; color: var(--primary-color-light); text-decoration: underline; }
+body.dark .uni-status-note a { color: var(--primary-color); }
+@media (max-width: 420px) {
+    .uni-name-line { flex-direction: column; gap: 0.3rem; }
+    .uni-review-badge { white-space: normal; }
+}
