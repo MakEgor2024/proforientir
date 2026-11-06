@@ -109,6 +109,68 @@ async function main() {
     }
     await api.dispose();
 
+    async function fetchCommonsAttribution(imageUrl) {
+        const url = new URL(imageUrl);
+        const fileName = decodeURIComponent(url.pathname.split('/Special:FilePath/')[1] || '').replace(/^\/+/, '');
+        if (!fileName) return { imageUrl, error: 'Не удалось извлечь имя файла Commons' };
+        const params = new URLSearchParams({
+            action: 'query',
+            format: 'json',
+            prop: 'imageinfo',
+            iiprop: 'extmetadata',
+            iiextmetadatafilter: 'Artist|Credit|ImageDescription|LicenseShortName|LicenseUrl|ObjectName|UsageTerms|Attribution|DateTimeOriginal|Source',
+            titles: 'File:' + fileName
+        });
+        try {
+            const response = await api.get('https://commons.wikimedia.org/w/api.php?' + params.toString(), {
+                timeout: 20000,
+                headers: { 'Api-User-Agent': 'Proforientir/1.0 (education catalogue image attribution audit)' }
+            });
+            if (response.status() !== 200) {
+                return { imageUrl, fileName, error: 'Commons API HTTP ' + response.status() };
+            }
+            const payload = await response.json();
+            const page = Object.values(payload.query?.pages || {})[0];
+            const imageInfo = page?.imageinfo?.[0];
+            const metadata = imageInfo?.extmetadata || {};
+            const plainText = value => String(value?.value || '')
+                .replace(/<br\s*\/?\s*>/gi, ' ')
+                .replace(/<[^>]+>/g, '')
+                .replace(/&amp;/g, '&')
+                .replace(/&quot;/g, '"')
+                .replace(/&#039;|&#39;/g, "'")
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/\s+/g, ' ')
+                .trim();
+            return {
+                imageUrl,
+                fileName,
+                filePageUrl: imageInfo?.descriptionurl || ('https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(fileName)),
+                artist: plainText(metadata.Artist),
+                credit: plainText(metadata.Credit),
+                description: plainText(metadata.ImageDescription),
+                licenseShortName: plainText(metadata.LicenseShortName),
+                licenseUrl: plainText(metadata.LicenseUrl),
+                usageTerms: plainText(metadata.UsageTerms),
+                attribution: plainText(metadata.Attribution),
+                source: plainText(metadata.Source),
+                date: plainText(metadata.DateTimeOriginal),
+                ok: Boolean(imageInfo && metadata.LicenseShortName && metadata.LicenseUrl && metadata.Artist)
+            };
+        } catch (error) {
+            return { imageUrl, fileName, error: error.message };
+        }
+    }
+    const commonsUrls = uniqueImageUrls.filter(url => {
+        try { return new URL(url).hostname === 'commons.wikimedia.org'; }
+        catch (_) { return false; }
+    });
+    const commonsAttribution = [];
+    for (let i = 0; i < commonsUrls.length; i += 4) {
+        commonsAttribution.push(...await Promise.all(commonsUrls.slice(i, i + 4).map(fetchCommonsAttribution)));
+    }
+
     const brokenImages = imageChecks.filter(item => !item.ok);
     const duplicateImages = [...imageMap.entries()]
         .filter(([, names]) => names.length > 1)
@@ -301,6 +363,12 @@ async function main() {
                 duplicateImageUrls: duplicateImages.length,
                 duplicateImageGroups: duplicateImages
             },
+            commonsAttribution: {
+                checked: commonsAttribution.length,
+                complete: commonsAttribution.filter(item => item.ok).length,
+                incomplete: commonsAttribution.filter(item => !item.ok),
+                results: commonsAttribution
+            },
             imageUrlChecks: {
                 checked: imageChecks.length,
                 passed: imageChecks.length - brokenImages.length,
@@ -330,6 +398,7 @@ async function main() {
 
         fs.mkdirSync(path.join(root, 'artifacts'), { recursive: true });
         fs.writeFileSync(path.join(root, 'artifacts', 'performance-report.json'), JSON.stringify(report, null, 2));
+        fs.writeFileSync(path.join(root, 'artifacts', 'commons-attribution-report.json'), JSON.stringify(commonsAttribution, null, 2));
         console.log(JSON.stringify(report, null, 2));
 
         assert.equal(brokenImages.length, 0, 'Не все URL изображений доступны: ' + brokenImages.map(item => item.url + ' (' + item.error + ')').join('; '));
