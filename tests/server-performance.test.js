@@ -9,6 +9,8 @@ const zlib = require('node:zlib');
 
 const root = path.resolve(__dirname, '..');
 let serverProcess;
+let serverStderr = '';
+let serverExit = null;
 let baseUrl;
 
 function reservePort() {
@@ -59,9 +61,17 @@ test.before(async () => {
   serverProcess = spawn(process.execPath, [path.join(root, 'server.js')], {
     cwd: root,
     env: { ...process.env, PORT: String(port) },
-    stdio: 'ignore'
+    stdio: ['ignore', 'ignore', 'pipe']
   });
-  await waitForServer();
+  serverProcess.stderr.setEncoding('utf8');
+  serverProcess.stderr.on('data', chunk => { serverStderr += chunk; });
+  serverProcess.once('exit', (code, signal) => { serverExit = { code, signal }; });
+  try {
+    await waitForServer();
+  } catch (error) {
+    throw new Error('Express-сервер не запустился. Exit: ' + JSON.stringify(serverExit) +
+      '. stderr: ' + serverStderr + '. Причина: ' + error.message);
+  }
 });
 
 test.after(() => {
