@@ -131,7 +131,12 @@ async function run() {
                     body: document.body.scrollWidth,
                     headerRight: Math.round(header.right),
                     logoRight: Math.round(logo.right),
+                    controlsLeft: Math.round(controls.left),
                     controlsRight: Math.round(controls.right),
+                    mobileButtons: [...document.querySelectorAll('.theme-switch, .edu-level-indicator, .mobile-menu-toggle')].map(button => {
+                        const r = button.getBoundingClientRect();
+                        return { width: Math.round(r.width), height: Math.round(r.height) };
+                    }),
                     navDisplay: getComputedStyle(nav).display,
                     menuVisible: getComputedStyle(menuButton).display !== 'none'
                 };
@@ -140,6 +145,11 @@ async function run() {
             assert.ok(metrics.document <= width + 1, 'Горизонтальная прокрутка документа при ширине ' + width + 'px: ' + metrics.document + 'px');
             assert.ok(metrics.body <= width + 1, 'Горизонтальная прокрутка body при ширине ' + width + 'px: ' + metrics.body + 'px');
             assert.ok(metrics.headerRight <= width + 1, 'Шапка выходит за экран при ширине ' + width + 'px');
+            assert.ok(metrics.logoRight <= metrics.controlsLeft, 'Логотип пересекается с кнопками шапки при ширине ' + width + 'px');
+            if (width <= 820) {
+                assert.ok(metrics.mobileButtons.every(button => button.width >= 44 && button.height >= 44),
+                    'Кнопки в шапке меньше 44px при ширине ' + width + 'px');
+            }
             if (width <= 820) {
                 assert.equal(metrics.navDisplay, 'none', 'Мобильное меню должно быть закрыто при ' + width + 'px');
                 assert.equal(metrics.menuVisible, true, 'Кнопка меню должна быть видна при ' + width + 'px');
