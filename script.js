@@ -175,16 +175,30 @@ const authErrorP = document.getElementById('auth-error'); const authModalTitle =
 let isRegisterMode = false;
 
 // --- FIREBASE AUTHENTICATION LOGIC ---
-auth.onAuthStateChanged(user => {
-    if (user) {
-        updateUIAfterAuthStateChange(true);
-        loadProfileData();
-    } else {
-        updateUIAfterAuthStateChange(false);
-        savedResultsDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть сохраненные результаты.</p>';
-        favoritesDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть избранное.</p>';
-    }
-});
+let authStateListenerInitialized = false;
+
+function initializeAuthStateListener() {
+    if (authStateListenerInitialized) return;
+    authStateListenerInitialized = true;
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            updateUIAfterAuthStateChange(true);
+            loadProfileData();
+        } else {
+            updateUIAfterAuthStateChange(false);
+            savedResultsDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть сохраненные результаты.</p>';
+            favoritesDiv.innerHTML = '<p>Войдите в профиль, чтобы увидеть избранное.</p>';
+        }
+    });
+}
+
+function scheduleAuthStateListener() {
+    // Restore an existing session after the first screen has had time to render.
+    window.setTimeout(initializeAuthStateListener, 1500);
+    // User intent takes priority: restore the session immediately on first interaction.
+    document.addEventListener('pointerdown', initializeAuthStateListener, { once: true, passive: true });
+    document.addEventListener('keydown', initializeAuthStateListener, { once: true });
+}
 
 function updateUIAfterAuthStateChange(isLoggedIn) {
     profileItem.classList.toggle('hidden', !isLoggedIn);
@@ -925,11 +939,18 @@ function setupEduLevelListeners() {
 
 document.addEventListener('DOMContentLoaded', async () => {
     initTheme();
+    const lucideSdk = document.getElementById('lucide-sdk');
+    if (window.lucide) {
+        initLucideIcons();
+    } else if (lucideSdk) {
+        lucideSdk.addEventListener('load', initLucideIcons, { once: true });
+    }
     setupMobileNavigation();
     setupEduLevelListeners();
     if (getEduLevel()) { applyEduLevelUI(); } else { openEduLevelModal(); }
     await Promise.all([loadUniversities(), loadProfessions()]);
     renderTestQuestions();
     setupEventListeners();
+    scheduleAuthStateListener();
     if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
 });
