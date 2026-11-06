@@ -7,8 +7,21 @@ app.use(express.json());
 
 // Compress text-based static responses before they leave the app server.
 // Brotli is preferred; gzip is used for older clients. Images are already compressed.
+const compressibleExtensions = new Set(['.html', '.css', '.js', '.json', '.svg']);
+
 app.use((req, res, next) => {
   if (req.method !== 'GET') return next();
+
+  let requestPath = '/';
+  try {
+    requestPath = new URL(req.url, 'http://localhost').pathname.toLowerCase();
+  } catch (_) {
+    return next();
+  }
+  const extension = path.extname(requestPath);
+  // Keep photos, fonts, archives, and other binary assets streaming normally.
+  // Extensionless routes resolve to the HTML application shell.
+  if (extension && !compressibleExtensions.has(extension)) return next();
 
   const currentVary = String(res.getHeader('Vary') || '');
   if (!currentVary.split(',').some(value => value.trim().toLowerCase() === 'accept-encoding')) {
