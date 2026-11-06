@@ -161,8 +161,14 @@ async function run() {
 
         await page.setViewportSize({ width: 390, height: 844 });
         const menuButton = page.locator('#mobile-menu-toggle');
+        const menuButtonDebug = await menuButton.evaluate(button => ({
+            html: button.outerHTML,
+            display: getComputedStyle(button).display,
+            rect: (() => { const r = button.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; })()
+        }));
         await menuButton.click();
-        assert.equal(await menuButton.getAttribute('aria-expanded'), 'true');
+        assert.equal(await menuButton.getAttribute('aria-expanded'), 'true',
+            'Мобильное меню не открылось. Кнопка: ' + JSON.stringify(menuButtonDebug) + '; ошибки: ' + pageErrors.join('; '));
         assert.equal(await page.locator('#primary-navigation').evaluate(el => getComputedStyle(el).display), 'block');
         const menuRect = await page.locator('#primary-navigation').evaluate(el => {
             const r = el.getBoundingClientRect();
