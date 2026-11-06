@@ -91,3 +91,19 @@ test('the education selector can render before app JavaScript initializes', () =
   assert.ok(css.includes('html:not(.edu-level-selected) #edu-level-modal'),
     'the initial education selector must not depend on JavaScript');
 });
+
+
+test('profession filter and interactive university cards have accessible names', () => {
+  const html = read('index.html');
+  const script = read('script.js');
+  assert.match(html, /id="profession-type-filter"[^>]*aria-label=/);
+  assert.ok(script.includes('role="button" tabindex="0"'));
+  assert.ok(!script.includes('aria-label="Подробнее об организации:'));
+  assert.ok(script.includes('<h3>${safeName}</h3>'));
+  assert.ok(script.includes('<h3>${highlightText(sanitizeHTML(prof.name), searchTerm)}</h3>'));
+});
+
+test('image licence links have a minimum touch target size', () => {
+  const css = read('style.css');
+  assert.match(css, /\.uni-image-credit a[\s\S]*?min-width:\s*24px[\s\S]*?min-height:\s*24px/);
+});
