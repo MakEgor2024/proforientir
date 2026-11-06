@@ -1372,7 +1372,7 @@
   {
     "name": "МГЭУ",
     "type": "humanities",
-    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Rggu_main.JPG?width=800",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82_%D0%B4%D0%BE%D0%BC_8_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_16.jpg?width=800",
     "programs": [
       "Журналистика",
       "Психология",
@@ -1390,10 +1390,10 @@
       "дизайнер"
     ],
     "raex2026": null,
-    "imageAuthor": "Alton",
-    "imageLicense": "CC BY-SA 3.0",
-    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Rggu_main.JPG"
+    "imageAuthor": "Katia Sparks",
+    "imageLicense": "CC BY-SA 4.0",
+    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82_%D0%B4%D0%BE%D0%BC_8_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_16.jpg"
   },
   {
     "name": "МАП",
@@ -1440,7 +1440,7 @@
   {
     "name": "МФЭИ",
     "type": "finance",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": null,
     "programs": [
       "Финансы",
       "Банковское дело"
@@ -1456,12 +1456,16 @@
       "банкир",
       "бухгалтер"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "closed",
+    "statusNote": "Не предлагать как действующий вуз. ОЧУ ВО «Московский финансово-экономический институт» (ОГРН 1027739437142) ликвидировано 26 июля 2019 года; в реестровой карточке указан правопреемник — Московская международная академия.",
+    "statusSourceUrl": "https://reabiz.ru/organization/1027739437142-ochu-vo-mfei",
+    "imageStatusNote": "Фотография не показывается: организация ликвидирована."
   },
   {
     "name": "МГТА",
     "type": "management",
-    "imageUrl": "https://www.topclimat.ru/images/firms/works/pvh/181211_1.jpg",
+    "imageUrl": null,
     "programs": [
       "Менеджмент",
       "Экономика",
@@ -1478,7 +1482,11 @@
       "дизайнер",
       "экономист"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "review",
+    "statusNote": "Запись требует проверки. В источниках есть сообщение МФЮА от 23.07.2019 об отказе МГТА в государственной аккредитации и соглашении о переводе студентов; сведения о текущем статусе организации в открытых каталогах расходятся. Перед рекомендацией необходимо сверить актуальную выписку ЕГРЮЛ и реестр лицензий/аккредитации.",
+    "statusSourceUrl": "https://www.mfua.ru/news/soglashenie_o_sotrudnichestve_/",
+    "imageStatusNote": "Подтверждённая фотография действующего корпуса не найдена."
   },
   {
     "name": "МГЭИ",
@@ -1505,7 +1513,7 @@
   {
     "name": "МАБИВ",
     "type": "management",
-    "imageUrl": "https://www.topclimat.ru/images/firms/works/pvh/181211_1.jpg",
+    "imageUrl": null,
     "programs": [
       "Бизнес",
       "Администрирование"
@@ -1521,7 +1529,11 @@
       "бизнесмен",
       "инноватор"
     ],
-    "raex2026": null
+    "raex2026": null,
+    "catalogStatus": "review",
+    "statusNote": "Название и юридическое лицо требуют проверки. Найдена действующая АНО ДПО «Академия бизнеса и инновационных технологий» (АБИТ), Зеленоград, но это организация дополнительного профессионального образования, а не подтверждённый вуз под названием «МАБИВ». Не подменять одну организацию другой без сверки исходных данных.",
+    "statusSourceUrl": "https://abit.msk.ru/sveden/common",
+    "imageStatusNote": "Подтверждённая фотография организации под названием «МАБИВ» не найдена."
   },
   {
     "name": "МСИ",
