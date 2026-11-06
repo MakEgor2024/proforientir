@@ -58,7 +58,13 @@ body.dark nav a:hover, body.dark #profile-btn:hover, body.dark #login-btn:hover,
 .edu-level-card span { font-size: 0.8rem; color: var(--text-muted-color); }
 
 .edu-level-banner { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 0.75rem 1rem; margin: 0 auto 1.5rem; max-width: var(--container-width, 1200px); font-size: 0.85rem; color: var(--text-muted-color); flex-wrap: wrap; }
+.edu-level-banner-copy { flex: 1 1 auto; min-width: 0; line-height: 1.55; }
 .edu-level-banner strong { color: var(--text-color); }
+@media (max-width: 600px) {
+    .edu-level-banner { flex-direction: column; align-items: flex-start; gap: 0.65rem; }
+    .edu-level-banner-copy { width: 100%; }
+    .edu-level-banner button { align-self: flex-start; }
+}
 .edu-level-banner button { background: none; border: 1px solid var(--border-color); border-radius: var(--border-radius-full); padding: 0.3rem 0.7rem; font-size: 0.78rem; cursor: pointer; color: var(--text-muted-color); white-space: nowrap; }
 .edu-level-banner button:hover { color: var(--primary-color-light); border-color: var(--primary-color-light); }
 
