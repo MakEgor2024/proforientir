@@ -199,7 +199,7 @@ async function run() {
             { timeout: 15000 }
         );
         const initialFirestoreState = await page.evaluate(() => ({
-            sdkAvailable: typeof window.firebase.firestore === 'function',
+            sdkAvailable: typeof window.firebase?.firestore === 'function',
             loadCount: window.__firestoreLoadCount
         }));
         assert.deepEqual(initialFirestoreState, { sdkAvailable: false, loadCount: 0 },
