@@ -366,12 +366,17 @@ function createUniCardHTML(uni) {
     const safeNameAttribute = escapeHTMLAttribute(uni.name);
     const imageSrc = uni.imageUrl ? escapeHTMLAttribute(getUniversityImageUrl(uni.imageUrl, 400)) : '';
     const imageSrcset = uni.imageUrl ? getUniversityImageSrcset(uni.imageUrl) : '';
-    const imageCreditHTML = uni.imageAuthor && uni.imageLicense && uni.imageLicenseUrl && uni.imageSourcePage
-        ? '<div class="uni-image-credit" aria-label="Автор и лицензия фотографии">' +
+    const hasCommonsAttribution = uni.imageAuthor && uni.imageLicense && uni.imageLicenseUrl && uni.imageSourcePage;
+    const imageCreditHTML = hasCommonsAttribution
+        ? '<div class="uni-image-credit" data-credit-type="commons" aria-label="Автор и лицензия фотографии">' +
             '<span>Фото: <a href="' + escapeHTMLAttribute(uni.imageSourcePage) + '" target="_blank" rel="noopener noreferrer" data-credit-source title="Масштабировано и кадрировано для карточки">' + sanitizeHTML(uni.imageAuthor) + '</a></span>' +
             '<a href="' + escapeHTMLAttribute(uni.imageLicenseUrl) + '" target="_blank" rel="noopener noreferrer" data-credit-license>' + sanitizeHTML(uni.imageLicense) + '</a>' +
           '</div>'
-        : '';
+        : uni.imageSourcePage && uni.imageSourceLabel
+            ? '<div class="uni-image-credit" data-credit-type="official" aria-label="Источник фотографии">' +
+                '<span><a href="' + escapeHTMLAttribute(uni.imageSourcePage) + '" target="_blank" rel="noopener noreferrer" data-credit-source>Источник: ' + sanitizeHTML(uni.imageSourceLabel) + '</a></span>' +
+              '</div>'
+            : '';
     const imageHTML = uni.imageUrl
         ? '<div class="uni-card-image"><img src="' + imageSrc + '"' + (imageSrcset ? ' srcset="' + imageSrcset + '" sizes="(max-width: 600px) calc(100vw - 2rem), (max-width: 900px) 45vw, 400px"' : '') + ' alt="Изображение для ' + safeNameAttribute + '" loading="lazy" decoding="async" fetchpriority="low" width="400" height="225" onerror="this.closest(\'.uni-card-image\').classList.add(\'img-fallback\'); this.remove();">' + imageCreditHTML + '</div>'
         : '<div class="uni-card-image img-fallback"><i class="icon icon-lg" data-lucide="building-2" aria-hidden="true"></i><span class="uni-image-missing">Фото уточняется</span></div>';
