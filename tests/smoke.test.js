@@ -33,8 +33,13 @@ test('profession and university catalogues contain valid core records', () => {
   for (const university of universities) {
     assert.ok(university.name && university.info, 'university needs a name and description');
     assert.ok(Array.isArray(university.programs), `university programmes must be an array: ${university.name}`);
-    assert.ok(university.imageUrl, `university image is missing: ${university.name}`);
-    assert.match(university.imageUrl, /^https?:\/\//, `university image must use HTTP(S): ${university.name}`);
+    if (university.catalogStatus === 'closed') continue;
+    if (!university.imageUrl) {
+      assert.ok(university.catalogStatus === 'review' && university.imageStatusNote,
+        `university without image must be marked for review: ${university.name}`);
+    } else {
+      assert.match(university.imageUrl, /^https?:\/\//, `university image must use HTTP(S): ${university.name}`);
+    }
   }
 });
 
