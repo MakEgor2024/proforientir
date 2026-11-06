@@ -1564,7 +1564,7 @@
   {
     "name": "МГИ им. Дашковой",
     "type": "humanities",
-    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Rggu_main.JPG?width=800",
+    "imageUrl": null,
     "programs": [
       "Журналистика",
       "Реклама",
@@ -1582,9 +1582,9 @@
       "психолог"
     ],
     "raex2026": null,
-    "imageAuthor": "Alton",
-    "imageLicense": "CC BY-SA 3.0",
-    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:Rggu_main.JPG"
+    "catalogStatus": "closed",
+    "statusNote": "Не предлагать как действующий вуз. АНО ВО «Московский гуманитарный институт имени Е.Р. Дашковой» (ОГРН 1057715059050) ликвидирована 27 апреля 2017 года. Более поздние справочники могут сохранять старую карточку организации.",
+    "statusSourceUrl": "https://companies.rbc.ru/id/1057715059050-ano-ano-vyisshego-obrazovaniya-moskovskij-gumanitarnyij-institut-imeni-er-dashkovoj/",
+    "imageStatusNote": "Фотография не показывается: организация ликвидирована."
   }
 ]
