@@ -256,7 +256,7 @@ async function run() {
             children: [...el.children].map(child => child.className || child.tagName.toLowerCase()),
             text: el.querySelector('.edu-level-banner-copy')?.innerText || ''
         }));
-        assert.deepEqual(eduBannerLayout.children, ['edu-level-banner-copy', 'BUTTON'],
+        assert.deepEqual(eduBannerLayout.children, ['edu-level-banner-copy', 'button'],
             'Подпись уровня и кнопка изменения должны быть двумя ровными блоками');
         assert.ok(eduBannerLayout.text.includes('Вы выбрали уровень'), 'В плашке уровня должен отображаться выбранный уровень');
 
