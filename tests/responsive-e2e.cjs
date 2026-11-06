@@ -164,7 +164,9 @@ async function run() {
         const menuButtonDebug = await menuButton.evaluate(button => ({
             html: button.outerHTML,
             display: getComputedStyle(button).display,
-            rect: (() => { const r = button.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; })()
+            rect: (() => { const r = button.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; })(),
+            inHeader: Boolean(button.closest('header')),
+            listenerAttached: button.dataset.menuListenerAttached || 'no'
         }));
         await menuButton.click();
         assert.equal(await menuButton.getAttribute('aria-expanded'), 'true',
