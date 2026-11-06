@@ -466,8 +466,8 @@ function createUniCardHTML(uni) {
             <div class="uni-type-icon" title="Тип: ${escapeHTMLAttribute(uni.type)}">
                 <i class="icon icon-only icon-sm" data-lucide="${typeIcon}"></i>
             </div>
-            <div class="uni-content" data-action="open-modal" role="button" tabindex="0" aria-label="Подробнее об организации: ${safeName}">
-                <div class="uni-name-line"><h4>${safeName}</h4>${reviewBadge}</div>
+            <div class="uni-content" data-action="open-modal" role="button" tabindex="0">
+                <div class="uni-name-line"><h3>${safeName}</h3>${reviewBadge}</div>
                 <p class="preview-info">${sanitizeHTML(uni.info)}</p>
                 <div class="uni-meta">
                     ${raexBadge}
@@ -622,7 +622,7 @@ function createProfessionCardHTML(prof, searchTerm = '') {
     const salaryInfo = prof.salary ? `<div class="salary-info"><i class="icon icon-sm" data-lucide="dollar-sign"></i> ${prof.salary}</div>` : '';
     return `
         <div class="profession-card" data-profession-name-raw="${sanitizeHTML(prof.name)}" data-profession-desc-raw="${sanitizeHTML(prof.description)}">
-            <h4>${highlightText(sanitizeHTML(prof.name), searchTerm)}</h4>
+            <h3>${highlightText(sanitizeHTML(prof.name), searchTerm)}</h3>
             <p>${highlightText(sanitizeHTML(prof.description), searchTerm)}</p>
             ${salaryInfo}
             <div class="profession-types">${prof.types.map(createTypeTagHTML).join('')}</div>
