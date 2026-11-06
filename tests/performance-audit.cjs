@@ -348,6 +348,30 @@ async function main() {
                     if (!img || !img.currentSrc) return null;
                     const url = new URL(img.currentSrc);
                     return Number(url.searchParams.get('w') || url.searchParams.get('width') || 0) || null;
+                }).filter(Boolean),
+                firstPageImages: [...document.querySelectorAll('.uni-card')].map(card => {
+                    const img = card.querySelector('.uni-card-image img');
+                    return {
+                        name: card.dataset.uniName || null,
+                        src: img?.getAttribute('src') || null,
+                        currentSrc: img?.currentSrc || null,
+                        complete: Boolean(img?.complete),
+                        naturalWidth: img?.naturalWidth || 0,
+                        loading: img?.loading || null,
+                        hasResponsiveSrcset: Boolean(img?.getAttribute('srcset')),
+                        selectedWidth: img?.currentSrc
+                            ? Number(new URL(img.currentSrc).searchParams.get('w') || new URL(img.currentSrc).searchParams.get('width') || 0) || null
+                            : null
+                    };
+                }),
+                pendingImageDetails: containers.map(container => {
+                    const img = container.querySelector('img');
+                    if (!img || img.complete) return null;
+                    return {
+                        name: container.closest('.uni-card')?.dataset.uniName || null,
+                        src: img.getAttribute('src'),
+                        currentSrc: img.currentSrc || null
+                    };
                 }).filter(Boolean)
             };
         });
