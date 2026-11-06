@@ -165,6 +165,15 @@ async function run() {
         assert.ok(creditStats.allHaveSource, 'У каждой подписи должна быть ссылка на оригинал');
         assert.ok(creditStats.allHaveLicense, 'У каждой подписи должна быть ссылка на лицензию');
         assert.ok(creditStats.allOpenSafely, 'Ссылки атрибуции должны безопасно открываться в новой вкладке');
+        const firstCreditLink = page.locator('.uni-image-credit [data-credit-source]').first();
+        if (await firstCreditLink.count()) {
+            await firstCreditLink.evaluate(link => {
+                link.addEventListener('click', event => event.preventDefault(), { once: true });
+                link.click();
+            });
+            assert.equal(await page.locator('#uni-modal').evaluate(el => el.style.display || 'none'), 'none',
+                'Клик по источнику изображения не должен открывать карточку вуза');
+        }
 
         const widths = [320, 360, 390, 430, 600, 768, 820, 821, 1024, 1440];
         const layoutReport = [];
