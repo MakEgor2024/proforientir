@@ -641,6 +641,7 @@ function setMobileMenuOpen(isOpen) {
 }
 
 function setupMobileNavigation() {
+    mobileMenuToggleBtn.dataset.menuListenerAttached = 'true';
     mobileMenuToggleBtn.addEventListener('click', () => {
         setMobileMenuOpen(mobileMenuToggleBtn.getAttribute('aria-expanded') !== 'true');
     });
