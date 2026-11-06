@@ -252,6 +252,14 @@ async function run() {
             document.getElementById('toast')?.classList.remove('show');
         });
         await page.waitForFunction(() => window.scrollY === 0);
+        const eduBannerLayout = await page.locator('#edu-level-banner').evaluate(el => ({
+            children: [...el.children].map(child => child.className || child.tagName.toLowerCase()),
+            text: el.querySelector('.edu-level-banner-copy')?.innerText || ''
+        }));
+        assert.deepEqual(eduBannerLayout.children, ['edu-level-banner-copy', 'BUTTON'],
+            'Подпись уровня и кнопка изменения должны быть двумя ровными блоками');
+        assert.ok(eduBannerLayout.text.includes('Вы выбрали уровень'), 'В плашке уровня должен отображаться выбранный уровень');
+
         const mobileHeader = await page.evaluate(() => {
             const header = document.querySelector('header').getBoundingClientRect();
             const logo = document.querySelector('.logo-svg').getBoundingClientRect();
