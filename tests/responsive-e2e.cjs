@@ -146,13 +146,20 @@ async function run() {
         );
         const creditStats = await page.evaluate(() => {
             const credits = [...document.querySelectorAll('.uni-image-credit')];
+            const commons = credits.filter(el => el.dataset.creditType === 'commons');
+            const official = credits.filter(el => el.dataset.creditType === 'official');
             return {
                 count: credits.length,
+                commonsCount: commons.length,
+                officialCount: official.length,
                 allHaveSource: credits.every(el => {
                     const link = el.querySelector('[data-credit-source]');
-                    return link && link.href.startsWith('https://commons.wikimedia.org/wiki/File:');
+                    if (!link) return false;
+                    if (el.dataset.creditType === 'commons') return link.href.startsWith('https://commons.wikimedia.org/wiki/File:');
+                    if (el.dataset.creditType === 'official') return link.href.startsWith('https://inpsycho.ru/');
+                    return false;
                 }),
-                allHaveLicense: credits.every(el => {
+                allCommonsHaveLicense: commons.every(el => {
                     const link = el.querySelector('[data-credit-license]');
                     return link && /creativecommons.org|artlibre.org/.test(link.href);
                 }),
@@ -161,9 +168,9 @@ async function run() {
                 ))
             };
         });
-        assert.ok(creditStats.count > 0, 'В карточках Commons должны отображаться подписи фото');
-        assert.ok(creditStats.allHaveSource, 'У каждой подписи должна быть ссылка на оригинал');
-        assert.ok(creditStats.allHaveLicense, 'У каждой подписи должна быть ссылка на лицензию');
+        assert.ok(creditStats.count > 0, 'В карточках должны отображаться подписи источников фото');
+        assert.ok(creditStats.allHaveSource, 'У каждой подписи должна быть ссылка на источник');
+        assert.ok(creditStats.allCommonsHaveLicense, 'У каждого фото Commons должна быть ссылка на точную лицензию');
         assert.ok(creditStats.allOpenSafely, 'Ссылки атрибуции должны безопасно открываться в новой вкладке');
         const firstCreditLink = page.locator('.uni-image-credit [data-credit-source]').first();
         if (await firstCreditLink.count()) {
@@ -307,8 +314,10 @@ async function run() {
         while (await page.locator('#show-more-universities-btn').isVisible()) {
             await page.locator('#show-more-universities-btn').click();
         }
-        assert.equal(await page.locator('.uni-card[data-uni-name="МФЭИ"]').count(), 0,
-            'Ликвидированный МФЭИ не должен попадать в активный каталог');
+        for (const name of ['МФЭИ', 'МГИ им. Дашковой', 'МГЭИ', 'МГАХ им. Сурикова (филиал)']) {
+            assert.equal(await page.locator('.uni-card[data-uni-name="' + name + '"]').count(), 0,
+                'Архивная или дублирующая запись не должна попадать в активный каталог: ' + name);
+        }
         for (const name of ['МГТА', 'МАБИВ']) {
             const card = page.locator('.uni-card[data-uni-name="' + name + '"]');
             assert.equal(await card.count(), 1, 'Запись на проверке должна сохраняться: ' + name);
@@ -317,6 +326,13 @@ async function run() {
             assert.ok(await card.locator('.uni-image-missing').count() > 0,
                 'Для неподтверждённой фотографии должен показываться placeholder: ' + name);
         }
+        const inekbiCard = page.locator('.uni-card[data-uni-name="ИНЭКБИ"]');
+        assert.equal(await inekbiCard.count(), 1, 'Действующая организация ИНЭКБИ должна оставаться в каталоге');
+        assert.ok(await inekbiCard.locator('.uni-image-missing').count() > 0,
+            'При отсутствии точного фото нельзя показывать постороннюю стоковую фотографию');
+        const mipCard = page.locator('.uni-card[data-uni-name="МИП"]');
+        assert.ok(await mipCard.locator('.uni-image-credit[data-credit-type="official"]').count() > 0,
+            'Для фото МИП должна отображаться ссылка на официальный источник');
         await page.locator('.uni-card[data-uni-name="МГТА"] .uni-content').click();
         assert.ok(await page.locator('#uni-info .uni-status-note').isVisible(),
             'Подробности организации должны содержать пояснение о статусе');
