@@ -35,7 +35,7 @@ function makeServer() {
                 content = content
                     .replace(/<script src="https:\/\/www\.gstatic\.com\/[^"]+" defer><\/script>/g, '')
                     .replace(/<script src="https:\/\/unpkg\.com\/lucide[^"]+" defer><\/script>/g, '')
-                    .replace("    <script>\\n        (function () {", '    <script>localStorage.setItem("proforientirEduLevel", "bachelor");</script>\\n    <script>\\n        (function () {');
+                    .replace(/<script>\s*\(function \(\) \{/, '<script>localStorage.setItem("proforientirEduLevel", "bachelor");</script>\\n    <script>(function () {');
             }
             res.writeHead(200, { 'Content-Type': mimeTypes[path.extname(filePath)] || 'text/plain; charset=utf-8' });
             res.end(content);
