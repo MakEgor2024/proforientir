@@ -7,6 +7,8 @@ const path = require('node:path');
 const { spawn } = require('node:child_process');
 const zlib = require('node:zlib');
 
+const compressionResults = [];
+
 const root = path.resolve(__dirname, '..');
 let serverProcess;
 let serverStderr = '';
@@ -74,8 +76,33 @@ test.before(async () => {
   }
 });
 
+test('binary image assets stay uncompressed and stream with their original bytes', async () => {
+  const imagePath = '/attached_assets/targeted_element_1768496560932.png';
+  const response = await request(imagePath, 'br, gzip');
+  assert.equal(response.status, 200);
+  assert.equal(response.headers['content-type'], 'image/png');
+  assert.equal(response.headers['content-encoding'], undefined,
+    'already-compressed images must not be buffered or recompressed');
+  assert.deepEqual(response.body, fs.readFileSync(path.join(root, imagePath)));
+});
+
 test.after(() => {
   if (serverProcess && !serverProcess.killed) serverProcess.kill();
+  fs.mkdirSync(path.join(root, 'artifacts'), { recursive: true });
+  fs.writeFileSync(
+    path.join(root, 'artifacts', 'compression-report.json'),
+    JSON.stringify({
+      result: 'PASS',
+      resources: compressionResults,
+      totalOriginalBytes: compressionResults.reduce((sum, item) => sum + item.originalBytes, 0),
+      totalCompressedBytes: compressionResults.reduce((sum, item) => sum + item.compressedBytes, 0),
+      totalSavedBytes: compressionResults.reduce((sum, item) => sum + item.savedBytes, 0),
+      totalSavedPercent: compressionResults.length
+        ? Math.round((1 - compressionResults.reduce((sum, item) => sum + item.compressedBytes, 0) /
+          compressionResults.reduce((sum, item) => sum + item.originalBytes, 0)) * 1000) / 10
+        : 0
+    }, null, 2)
+  );
 });
 
 test('static JavaScript is Brotli-compressed and keeps cache validators', async () => {
@@ -86,8 +113,18 @@ test('static JavaScript is Brotli-compressed and keeps cache validators', async 
   assert.match(response.headers.vary || '', /accept-encoding/i);
   assert.ok(response.headers.etag, 'static assets should retain an ETag');
 
+  const source = fs.readFileSync(path.join(root, 'script.js'));
   const decoded = zlib.brotliDecompressSync(response.body);
-  assert.deepEqual(decoded, fs.readFileSync(path.join(root, 'script.js')));
+  assert.deepEqual(decoded, source);
+  assert.ok(response.body.length < source.length * 0.9, 'Brotli должно уменьшать размер JS хотя бы на 10%');
+  compressionResults.push({
+    resource: 'script.js',
+    encoding: 'br',
+    originalBytes: source.length,
+    compressedBytes: response.body.length,
+    savedBytes: source.length - response.body.length,
+    savedPercent: Math.round((1 - response.body.length / source.length) * 1000) / 10
+  });
 });
 
 test('static CSS falls back to gzip when Brotli is unavailable', async () => {
@@ -95,14 +132,34 @@ test('static CSS falls back to gzip when Brotli is unavailable', async () => {
   assert.equal(response.status, 200);
   assert.equal(response.headers['content-encoding'], 'gzip');
   assert.match(response.headers['cache-control'] || '', /max-age=3600/);
+  const source = fs.readFileSync(path.join(root, 'style.css'));
   const decoded = zlib.gunzipSync(response.body);
-  assert.deepEqual(decoded, fs.readFileSync(path.join(root, 'style.css')));
+  assert.deepEqual(decoded, source);
+  assert.ok(response.body.length < source.length * 0.9, 'Gzip должно уменьшать размер CSS хотя бы на 10%');
+  compressionResults.push({
+    resource: 'style.css',
+    encoding: 'gzip',
+    originalBytes: source.length,
+    compressedBytes: response.body.length,
+    savedBytes: source.length - response.body.length,
+    savedPercent: Math.round((1 - response.body.length / source.length) * 1000) / 10
+  });
 });
 
 test('static JSON is served compressed without changing its content', async () => {
   const response = await request('/universities.json', 'br');
   assert.equal(response.status, 200);
   assert.equal(response.headers['content-encoding'], 'br');
-  const decoded = zlib.brotliDecompressSync(response.body).toString('utf8');
-  assert.doesNotThrow(() => JSON.parse(decoded));
+  const source = fs.readFileSync(path.join(root, 'universities.json'));
+  const decoded = zlib.brotliDecompressSync(response.body);
+  assert.deepEqual(decoded, source);
+  assert.ok(response.body.length < source.length * 0.9, 'Brotli должно уменьшать размер JSON хотя бы на 10%');
+  compressionResults.push({
+    resource: 'universities.json',
+    encoding: 'br',
+    originalBytes: source.length,
+    compressedBytes: response.body.length,
+    savedBytes: source.length - response.body.length,
+    savedPercent: Math.round((1 - response.body.length / source.length) * 1000) / 10
+  });
 });
