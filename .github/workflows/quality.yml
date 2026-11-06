@@ -35,10 +35,14 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Run responsive and interaction checks
         run: node tests/responsive-e2e.cjs
-      - name: Upload responsive screenshots
+      - name: Run image and mobile performance audit
+        run: node tests/performance-audit.cjs
+      - name: Upload responsive and performance reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: proforientir-responsive-screenshots
-          path: artifacts/*.png
+          name: proforientir-quality-reports
+          path: |
+            artifacts/*.png
+            artifacts/performance-report.json
           if-no-files-found: ignore
