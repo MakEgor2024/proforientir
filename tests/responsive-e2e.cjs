@@ -91,10 +91,14 @@ async function run() {
             arrayUnion: value => value,
             arrayRemove: value => value
         };
+        window.__authInstanceCount = 0;
         const firebase = {
             apps: [],
             initializeApp(config) { this.apps.push({ config }); },
-            auth: () => authApi
+            auth: () => {
+                window.__authInstanceCount += 1;
+                return authApi;
+            }
         };
         firebase.auth.GoogleAuthProvider = function GoogleAuthProvider() {};
         window.firebase = firebase;
@@ -175,6 +179,8 @@ async function run() {
             'Firestore не должен загружаться для неавторизованного посетителя');
         assert.equal(await page.evaluate(() => window.__authObserverRegistered), false,
             'Проверка сессии не должна запускаться до отрисовки первого экрана');
+        assert.equal(await page.evaluate(() => window.__authInstanceCount), 0,
+            'Firebase Auth не должен создаваться во время начальной загрузки');
         const creditStats = await page.evaluate(() => {
             const credits = [...document.querySelectorAll('.uni-image-credit')];
             const commons = credits.filter(el => el.dataset.creditType === 'commons');
@@ -431,6 +437,8 @@ async function run() {
         }));
         assert.deepEqual(lazyFirestoreState, { sdkAvailable: true, loadCount: 1 },
             'Firestore должен загружаться один раз при первом обращении к данным профиля');
+        assert.equal(await page.evaluate(() => window.__authInstanceCount), 1,
+            'Firebase Auth должен создаваться ровно один раз при первом действии пользователя');
         assert.deepEqual(pageErrors, [], 'Ошибки JavaScript после загрузки Firestore: ' + pageErrors.join('; '));
 
         console.log(JSON.stringify({
