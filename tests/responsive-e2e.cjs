@@ -93,7 +93,38 @@ async function run() {
         };
         firebase.auth.GoogleAuthProvider = function GoogleAuthProvider() {};
         window.firebase = firebase;
-        window.lucide = { createIcons() {} };
+        window.lucide = {
+            createIcons() {
+                const icons = {
+                    menu: '<path d="M3 6h18M3 12h18M3 18h18"/>',
+                    x: '<path d="m18 6-12 12M6 6l12 12"/>',
+                    moon: '<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>',
+                    'graduation-cap': '<path d="m2 9 10-5 10 5-10 5L2 9Z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/>',
+                    compass: '<circle cx="12" cy="12" r="9"/><path d="m16 8-2 6-6 2 2-6 6-2Z"/>',
+                    briefcase: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5h8v2M3 12h18"/>',
+                    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+                    'log-in': '<path d="M10 17l5-5-5-5M15 12H3M21 3v18"/>',
+                    'log-out': '<path d="M14 17l5-5-5-5M19 12H8M3 3v18"/>',
+                    heart: '<path d="M20.8 8.8c0 5.4-8.8 11-8.8 11S3.2 14.2 3.2 8.8A4.8 4.8 0 0 1 12 6a4.8 4.8 0 0 1 8.8 2.8Z"/>'
+                };
+                document.querySelectorAll('[data-lucide]').forEach(node => {
+                    const name = node.getAttribute('data-lucide');
+                    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    svg.setAttribute('viewBox', '0 0 24 24');
+                    svg.setAttribute('width', '18');
+                    svg.setAttribute('height', '18');
+                    svg.setAttribute('fill', 'none');
+                    svg.setAttribute('stroke', 'currentColor');
+                    svg.setAttribute('stroke-width', '1.8');
+                    svg.setAttribute('stroke-linecap', 'round');
+                    svg.setAttribute('stroke-linejoin', 'round');
+                    svg.setAttribute('aria-hidden', 'true');
+                    svg.setAttribute('class', node.getAttribute('class') || 'icon');
+                    svg.innerHTML = icons[name] || '<circle cx="12" cy="12" r="8"/>';
+                    node.replaceWith(svg);
+                });
+            }
+        };
         window.confirm = () => true;
     });
     const page = await context.newPage();
