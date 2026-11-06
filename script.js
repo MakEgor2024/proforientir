@@ -640,16 +640,7 @@ function setMobileMenuOpen(isOpen) {
     initLucideIcons();
 }
 
-function setupEventListeners() {
-    // АУТЕНТИФИКАЦИЯ
-    loginBtn.addEventListener('click', () => { isRegisterMode = false; authModalTitle.textContent = 'Вход'; authSubmitBtn.textContent = 'Войти'; authSwitchLink.textContent = 'Нет аккаунта? Зарегистрироваться'; authErrorP.classList.add('hidden'); openModal('auth-modal'); });
-    logoutBtn.addEventListener('click', () => auth.signOut().then(() => showToast("Вы успешно вышли.")).catch(handleAuthError));
-    authSwitchLink.addEventListener('click', e => { e.preventDefault(); isRegisterMode = !isRegisterMode; authModalTitle.textContent = isRegisterMode ? 'Регистрация' : 'Вход'; authSubmitBtn.textContent = isRegisterMode ? 'Зарегистрироваться' : 'Войти'; authSwitchLink.textContent = isRegisterMode ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться'; });
-    authForm.addEventListener('submit', e => { e.preventDefault(); const email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value; if(isRegisterMode) auth.createUserWithEmailAndPassword(email, password).then(() => { showToast("Регистрация успешна!"); closeModals(); }).catch(handleAuthError); else auth.signInWithEmailAndPassword(email, password).then(() => { showToast("Вы успешно вошли!"); closeModals(); }).catch(handleAuthError); });
-    googleSigninBtn.addEventListener('click', () => { const provider = new firebase.auth.GoogleAuthProvider(); auth.signInWithPopup(provider).then(res => { showToast(`Добро пожаловать, ${res.user.displayName}!`); closeModals(); }).catch(handleAuthError); });
-
-    // ОБЩИЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
-    themeSwitchBtn.addEventListener('click', toggleTheme);
+function setupMobileNavigation() {
     mobileMenuToggleBtn.addEventListener('click', () => {
         setMobileMenuOpen(mobileMenuToggleBtn.getAttribute('aria-expanded') !== 'true');
     });
@@ -676,6 +667,18 @@ function setupEventListeners() {
             setMobileMenuOpen(false);
         }
     });
+}
+
+function setupEventListeners() {
+    // АУТЕНТИФИКАЦИЯ
+    loginBtn.addEventListener('click', () => { isRegisterMode = false; authModalTitle.textContent = 'Вход'; authSubmitBtn.textContent = 'Войти'; authSwitchLink.textContent = 'Нет аккаунта? Зарегистрироваться'; authErrorP.classList.add('hidden'); openModal('auth-modal'); });
+    logoutBtn.addEventListener('click', () => auth.signOut().then(() => showToast("Вы успешно вышли.")).catch(handleAuthError));
+    authSwitchLink.addEventListener('click', e => { e.preventDefault(); isRegisterMode = !isRegisterMode; authModalTitle.textContent = isRegisterMode ? 'Регистрация' : 'Вход'; authSubmitBtn.textContent = isRegisterMode ? 'Зарегистрироваться' : 'Войти'; authSwitchLink.textContent = isRegisterMode ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться'; });
+    authForm.addEventListener('submit', e => { e.preventDefault(); const email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value; if(isRegisterMode) auth.createUserWithEmailAndPassword(email, password).then(() => { showToast("Регистрация успешна!"); closeModals(); }).catch(handleAuthError); else auth.signInWithEmailAndPassword(email, password).then(() => { showToast("Вы успешно вошли!"); closeModals(); }).catch(handleAuthError); });
+    googleSigninBtn.addEventListener('click', () => { const provider = new firebase.auth.GoogleAuthProvider(); auth.signInWithPopup(provider).then(res => { showToast(`Добро пожаловать, ${res.user.displayName}!`); closeModals(); }).catch(handleAuthError); });
+
+    // ОБЩИЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
+    themeSwitchBtn.addEventListener('click', toggleTheme);
     profileBtn.addEventListener('click', () => openModal('profile-modal'));
     closeModalBtns.forEach(btn => btn.addEventListener('click', closeModals));
     window.addEventListener('click', e => { if (e.target.classList.contains('modal')) { if (e.target.id === 'edu-level-modal' && !getEduLevel()) return; closeModals(); } });
@@ -824,6 +827,7 @@ function setupEduLevelListeners() {
 
 document.addEventListener('DOMContentLoaded', async () => {
     initTheme();
+    setupMobileNavigation();
     setupEduLevelListeners();
     if (getEduLevel()) { applyEduLevelUI(); } else { openEduLevelModal(); }
     await Promise.all([loadUniversities(), loadProfessions()]);
