@@ -88,7 +88,11 @@ try {
     console.error("Firebase initialization error:", e);
 }
 
-const auth = firebase.auth();
+let auth = null;
+function ensureAuth() {
+    if (!auth) auth = firebase.auth();
+    return auth;
+}
 let db = null;
 let firestoreLoadingPromise = null;
 const FIRESTORE_SDK_URL = 'https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js';
@@ -180,7 +184,7 @@ let authStateListenerInitialized = false;
 function initializeAuthStateListener() {
     if (authStateListenerInitialized) return;
     authStateListenerInitialized = true;
-    auth.onAuthStateChanged(user => {
+    ensureAuth().onAuthStateChanged(user => {
         if (user) {
             updateUIAfterAuthStateChange(true);
             loadProfileData();
@@ -194,7 +198,7 @@ function initializeAuthStateListener() {
 
 function scheduleAuthStateListener() {
     // Restore an existing session after the first screen has had time to render.
-    window.setTimeout(initializeAuthStateListener, 1500);
+    window.setTimeout(initializeAuthStateListener, 1800);
     // User intent takes priority: restore the session immediately on first interaction.
     document.addEventListener('pointerdown', initializeAuthStateListener, { once: true, passive: true });
     document.addEventListener('keydown', initializeAuthStateListener, { once: true });
@@ -220,7 +224,7 @@ function handleAuthError(error) {
 
 // --- PROFILE DATA LOGIC (FIRESTORE) ---
 async function getUserData() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) return null;
     await ensureFirestore();
     const userDocRef = db.collection('profiles').doc(user.uid);
@@ -258,7 +262,7 @@ async function loadProfileData() {
 }
 
 async function saveResult() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) { showToast("Пожалуйста, войдите в профиль, чтобы сохранить результат."); loginBtn.click(); return; }
     if (lastTestResultTypes.length === 0) { showToast("Сначала пройдите тест."); return; }
     const resultToSave = { id: `res_${Date.now()}`, types: lastTestResultTypes, date: new Date().toLocaleDateString('ru-RU') };
@@ -275,7 +279,7 @@ async function saveResult() {
 }
 
 window.removeTestResult = async function(resultId) {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) return;
     const userData = await getUserData();
     if (!userData || !userData.savedResults) return;
@@ -288,7 +292,7 @@ window.removeTestResult = async function(resultId) {
 }
 
 async function toggleFavorite() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) { showToast("Пожалуйста, войдите в профиль, чтобы добавить в избранное."); loginBtn.click(); return; }
     if (!currentUniForModal) return;
     const uniName = currentUniForModal.name;
@@ -311,7 +315,7 @@ async function toggleFavorite() {
 }
 
 async function updateFavoriteButtonText() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user || !currentUniForModal) {
         addToFavoritesBtn.innerHTML = `<i class="icon" data-lucide="heart"></i> В избранное`;
         addToFavoritesBtn.style.backgroundColor = 'var(--accent-color)';
@@ -326,7 +330,7 @@ async function updateFavoriteButtonText() {
 }
 
 window.removeFavorite = async function(uniName) {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) return;
     try {
         await ensureFirestore();
@@ -341,7 +345,7 @@ window.removeFavorite = async function(uniName) {
 }
 
 async function clearProfileData() {
-    const user = auth.currentUser;
+    const user = ensureAuth().currentUser;
     if (!user) { showToast("Вы не вошли в профиль."); return; }
     if (!confirm("Вы уверены, что хотите очистить все сохраненные результаты и избранное? Это действие необратимо.")) return;
     try {
@@ -412,7 +416,12 @@ function getUniversityImageUrl(imageUrl, width) {
 function getUniversityImageSrcset(imageUrl) {
     try {
         const hostname = new URL(imageUrl).hostname;
-        if (hostname !== 'images.unsplash.com' && hostname !== 'commons.wikimedia.org') return '';
+        if (hostname === 'commons.wikimedia.org') {
+            // Commons redirects some width=800 requests to a 960px thumbnail.
+            // A 400px source is sufficient for catalogue cards, including mobile high-density screens.
+            return escapeHTMLAttribute(getUniversityImageUrl(imageUrl, 400)) + ' 400w';
+        }
+        if (hostname !== 'images.unsplash.com') return '';
         return [400, 800]
             .map(width => escapeHTMLAttribute(getUniversityImageUrl(imageUrl, width)) + ' ' + width + 'w')
             .join(', ');
@@ -784,10 +793,10 @@ function setupMobileNavigation() {
 function setupEventListeners() {
     // АУТЕНТИФИКАЦИЯ
     loginBtn.addEventListener('click', () => { isRegisterMode = false; authModalTitle.textContent = 'Вход'; authSubmitBtn.textContent = 'Войти'; authSwitchLink.textContent = 'Нет аккаунта? Зарегистрироваться'; authErrorP.classList.add('hidden'); openModal('auth-modal'); });
-    logoutBtn.addEventListener('click', () => auth.signOut().then(() => showToast("Вы успешно вышли.")).catch(handleAuthError));
+    logoutBtn.addEventListener('click', () => ensureAuth().signOut().then(() => showToast("Вы успешно вышли.")).catch(handleAuthError));
     authSwitchLink.addEventListener('click', e => { e.preventDefault(); isRegisterMode = !isRegisterMode; authModalTitle.textContent = isRegisterMode ? 'Регистрация' : 'Вход'; authSubmitBtn.textContent = isRegisterMode ? 'Зарегистрироваться' : 'Войти'; authSwitchLink.textContent = isRegisterMode ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться'; });
-    authForm.addEventListener('submit', e => { e.preventDefault(); const email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value; if(isRegisterMode) auth.createUserWithEmailAndPassword(email, password).then(() => { showToast("Регистрация успешна!"); closeModals(); }).catch(handleAuthError); else auth.signInWithEmailAndPassword(email, password).then(() => { showToast("Вы успешно вошли!"); closeModals(); }).catch(handleAuthError); });
-    googleSigninBtn.addEventListener('click', () => { const provider = new firebase.auth.GoogleAuthProvider(); auth.signInWithPopup(provider).then(res => { showToast(`Добро пожаловать, ${res.user.displayName}!`); closeModals(); }).catch(handleAuthError); });
+    authForm.addEventListener('submit', e => { e.preventDefault(); const email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value; if(isRegisterMode) ensureAuth().createUserWithEmailAndPassword(email, password).then(() => { showToast("Регистрация успешна!"); closeModals(); }).catch(handleAuthError); else ensureAuth().signInWithEmailAndPassword(email, password).then(() => { showToast("Вы успешно вошли!"); closeModals(); }).catch(handleAuthError); });
+    googleSigninBtn.addEventListener('click', () => { const provider = new firebase.auth.GoogleAuthProvider(); ensureAuth().signInWithPopup(provider).then(res => { showToast(`Добро пожаловать, ${res.user.displayName}!`); closeModals(); }).catch(handleAuthError); });
 
     // ОБЩИЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
     themeSwitchBtn.addEventListener('click', toggleTheme);
