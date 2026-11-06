@@ -667,3 +667,49 @@ header { box-sizing: border-box; }
     #results .results-buttons-container { flex-direction: column; align-items: stretch; }
     #results .results-buttons-container button { width: 100%; margin: 0; }
 }
+/* Wikimedia image attribution */
+.uni-image-credit {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.45rem;
+    min-width: 0;
+    padding: 0.3rem 0.55rem;
+    background: rgba(15, 23, 42, 0.86);
+    color: #fff;
+    font-size: 0.64rem;
+    line-height: 1.35;
+}
+.uni-image-credit span {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.uni-image-credit a {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: rgba(255,255,255,0.7);
+    text-underline-offset: 2px;
+}
+.uni-image-credit > a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+.uni-image-credit a:hover,
+.uni-image-credit a:focus-visible {
+    color: #facc15;
+}
+.uni-image-credit a:focus-visible {
+    outline: 2px solid #facc15;
+    outline-offset: 2px;
+}
+@media (max-width: 420px) {
+    .uni-image-credit { font-size: 0.6rem; padding: 0.25rem 0.4rem; }
+}
