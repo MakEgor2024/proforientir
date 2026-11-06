@@ -342,7 +342,7 @@
   {
     "name": "Финансовый университет",
     "type": "finance",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": "https://static.tildacdn.com/tild3062-6365-4237-a430-356330356431/514.jpg",
     "programs": [
       "Финансы",
       "Аудит",
@@ -535,7 +535,7 @@
   {
     "name": "НИУ МЭИ",
     "type": "engineering",
-    "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
+    "imageUrl": "https://galaktika-it.ru/wp-content/uploads/2020/10/compressed_file-scaled.jpeg",
     "programs": [
       "Электроэнергетика",
       "Теплоэнергетика",
@@ -626,7 +626,7 @@
   {
     "name": "МГЮА им. О.Е. Кутафина",
     "type": "law",
-    "imageUrl": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1080",
+    "imageUrl": "https://smapse.ru/storage/2021/11/converted/825_585_fv.jpg",
     "programs": [
       "Юриспруденция",
       "Судебная экспертиза"
@@ -655,7 +655,7 @@
   {
     "name": "МИСиС",
     "type": "tech",
-    "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
+    "imageUrl": "https://static.themoscowtimes.com/image_archive/1360/41/i315598_misis-science-institute-russia-top.jpg",
     "programs": [
       "Материаловедение",
       "IT",
@@ -902,7 +902,7 @@
   {
     "name": "МГУПП (Росбиотех)",
     "type": "food",
-    "imageUrl": "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=1080",
+    "imageUrl": "https://1foodexpo.com/storage/events/locations/bgs/778/778/700x525/778.webp",
     "programs": [
       "Пищевые технологии",
       "Биотехнология",
@@ -924,7 +924,7 @@
   {
     "name": "МГУТУ им. Разумовского (ПКУ)",
     "type": "food",
-    "imageUrl": "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=1080",
+    "imageUrl": "https://static.ucheba.ru/pix/uz_photo/thumbnail_690c64e8bfbcd.thumbnail.webp",
     "programs": [
       "Технологический менеджмент",
       "Дизайн",
@@ -986,7 +986,7 @@
   {
     "name": "МГТУ СТАНКИН",
     "type": "tech",
-    "imageUrl": "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1080",
+    "imageUrl": "https://cdn.greensoft.mn/uploads/site/948/photos/block/20211013211506_04040ea04405cdd84600ebf07c122614.jpg",
     "programs": [
       "Робототехника",
       "Автоматизация",
@@ -1040,7 +1040,7 @@
   {
     "name": "МХПИ",
     "type": "art",
-    "imageUrl": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1080",
+    "imageUrl": "https://static.ucheba.ru/pix/uz_photo/22406.full.webp",
     "programs": [
       "Дизайн",
       "Графический дизайн",
@@ -1087,7 +1087,7 @@
   {
     "name": "МГИК",
     "type": "art",
-    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B8%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82%D0%B0_%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D1%8B.jpg?width=800",
+    "imageUrl": "https://festivalnauki.ru/upload/iblock/864/2xrihhoxs2zv8gi0wwvwhuwq84hzns9i/mgik.jpg",
     "programs": [
       "Режиссура",
       "Музыкальное искусство",
@@ -1104,11 +1104,7 @@
       "музыкант",
       "хореограф"
     ],
-    "raex2026": null,
-    "imageAuthor": "Горицкий Денис",
-    "imageLicense": "CC BY-SA 4.0",
-    "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "imageSourcePage": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B8%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82%D0%B0_%D0%BA%D1%83%D0%BB%D1%82%D1%83%D1%80%D1%8B.jpg"
+    "raex2026": null
   },
   {
     "name": "ВГИК",
@@ -1246,7 +1242,7 @@
   {
     "name": "МПСУ",
     "type": "psychology",
-    "imageUrl": "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?q=80&w=1080",
+    "imageUrl": "https://smapse.ru/storage/2022/07/converted/825_585_cpcvpi.png",
     "programs": [
       "Психология",
       "Логопедия",
@@ -1289,7 +1285,7 @@
   {
     "name": "МИП",
     "type": "psychology",
-    "imageUrl": "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?q=80&w=1080",
+    "imageUrl": "https://existedu.ru/images/mip2.jpg",
     "programs": [
       "Психоанализ",
       "Клиническая психология",
@@ -1332,7 +1328,7 @@
   {
     "name": "МФЮА",
     "type": "law",
-    "imageUrl": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1080",
+    "imageUrl": "https://vmrucdn.servicecdn.ru/2022.08/original/63073dfc82682c39bbe59e0f.jpg",
     "programs": [
       "Право",
       "Экономика",
@@ -1354,7 +1350,7 @@
   {
     "name": "МУ им. Витте",
     "type": "economics",
-    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1080",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Muiv_building.jpg?width=800",
     "programs": [
       "Экономика",
       "Управление",
