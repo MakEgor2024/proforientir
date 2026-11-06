@@ -57,9 +57,13 @@ async function run() {
         hasTouch: true
     });
     await context.addInitScript(() => {
+        let authStateListener = null;
         const authApi = {
             currentUser: null,
-            onAuthStateChanged(callback) { callback(null); },
+            onAuthStateChanged(callback) {
+                authStateListener = callback;
+                callback(null);
+            },
             signOut: async () => ({}),
             createUserWithEmailAndPassword: async () => ({ user: null }),
             signInWithEmailAndPassword: async () => ({ user: null }),
@@ -88,11 +92,21 @@ async function run() {
         const firebase = {
             apps: [],
             initializeApp(config) { this.apps.push({ config }); },
-            auth: () => authApi,
-            firestore
+            auth: () => authApi
         };
         firebase.auth.GoogleAuthProvider = function GoogleAuthProvider() {};
         window.firebase = firebase;
+        window.__firestoreLoadCount = 0;
+        window.__installTestFirestore = () => {
+            if (typeof firebase.firestore !== 'function') {
+                firebase.firestore = firestore;
+                window.__firestoreLoadCount += 1;
+            }
+        };
+        window.__setTestAuthUser = user => {
+            authApi.currentUser = user;
+            if (authStateListener) authStateListener(user);
+        };
         window.lucide = {
             createIcons() {
                 const icons = {
@@ -130,8 +144,15 @@ async function run() {
     const page = await context.newPage();
     const pageErrors = [];
     page.on('pageerror', error => pageErrors.push(error.message));
-    await page.route('**/*', route => {
+    await page.route('**/*', async route => {
         const requestUrl = route.request().url();
+        if (requestUrl === 'https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js') {
+            return route.fulfill({
+                status: 200,
+                contentType: 'application/javascript',
+                body: 'window.__installTestFirestore();'
+            });
+        }
         if (requestUrl.startsWith(baseUrl) || requestUrl.startsWith('data:')) return route.continue();
         return route.abort();
     });
@@ -144,6 +165,12 @@ async function run() {
             null,
             { timeout: 15000 }
         );
+        const initialFirestoreState = await page.evaluate(() => ({
+            sdkAvailable: typeof window.firebase.firestore === 'function',
+            loadCount: window.__firestoreLoadCount
+        }));
+        assert.deepEqual(initialFirestoreState, { sdkAvailable: false, loadCount: 0 },
+            'Firestore не должен загружаться для неавторизованного посетителя');
         const creditStats = await page.evaluate(() => {
             const credits = [...document.querySelectorAll('.uni-image-credit')];
             const commons = credits.filter(el => el.dataset.creditType === 'commons');
@@ -386,6 +413,21 @@ async function run() {
         await page.screenshot({ path: path.join(screenshotDir, 'desktop-1440.png'), fullPage: false });
 
         assert.deepEqual(pageErrors, [], 'Ошибки JavaScript в браузере: ' + pageErrors.join('; '));
+
+        await page.evaluate(() => window.__setTestAuthUser({ uid: 'test-profile-user' }));
+        await page.waitForFunction(() => window.__firestoreLoadCount === 1, null, { timeout: 5000 });
+        await page.waitForFunction(() =>
+            document.querySelector('#saved-results')?.textContent.includes('Вы еще не сохраняли результаты теста.')
+            && document.querySelector('#favorites')?.textContent.includes('Вы еще не добавляли учебные заведения в избранное.')
+        );
+        const lazyFirestoreState = await page.evaluate(() => ({
+            sdkAvailable: typeof window.firebase.firestore === 'function',
+            loadCount: window.__firestoreLoadCount
+        }));
+        assert.deepEqual(lazyFirestoreState, { sdkAvailable: true, loadCount: 1 },
+            'Firestore должен загружаться один раз при первом обращении к данным профиля');
+        assert.deepEqual(pageErrors, [], 'Ошибки JavaScript после загрузки Firestore: ' + pageErrors.join('; '));
+
         console.log(JSON.stringify({
             result: 'PASS',
             testedViewports: layoutReport,
@@ -397,7 +439,8 @@ async function run() {
                 'profession-to-university selection and filter reset',
                 'university filter, pagination, compare selection, comparison modal and details modal',
                 'favorite action prompts authentication and preserves the university modal',
-                'login modal open/close'
+                'login modal open/close',
+                'Firestore remains unloaded for guests and loads once after authentication'
             ],
             pageErrors
         }, null, 2));
