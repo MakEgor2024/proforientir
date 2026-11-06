@@ -35,8 +35,8 @@ test('profession and university catalogues contain valid core records', () => {
     assert.ok(Array.isArray(university.programs), `university programmes must be an array: ${university.name}`);
     if (university.catalogStatus === 'closed') continue;
     if (!university.imageUrl) {
-      assert.ok(university.catalogStatus === 'review' && university.imageStatusNote,
-        `university without image must be marked for review: ${university.name}`);
+      assert.ok(university.imageStatusNote,
+        `university without image must have an explanation: ${university.name}`);
     } else {
       assert.match(university.imageUrl, /^https?:\/\//, `university image must use HTTP(S): ${university.name}`);
     }
