@@ -452,6 +452,14 @@ function openModal(id) {
     document.body.style.overflow = 'hidden';
     initLucideIcons();
 }
+function closeModal(modal) {
+    if (!modal) return;
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    const hasOpenModal = [...document.querySelectorAll('.modal')]
+        .some(openModal => openModal.style.display === 'block');
+    if (!hasOpenModal) document.body.style.overflow = '';
+}
 function closeModals() {
     document.querySelectorAll('.modal').forEach(modal => {
         modal.style.display = 'none';
@@ -674,8 +682,8 @@ function setupEventListeners() {
     // ОБЩИЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
     themeSwitchBtn.addEventListener('click', toggleTheme);
     profileBtn.addEventListener('click', () => openModal('profile-modal'));
-    closeModalBtns.forEach(btn => btn.addEventListener('click', closeModals));
-    window.addEventListener('click', e => { if (e.target.classList.contains('modal')) { if (e.target.id === 'edu-level-modal' && !getEduLevel()) return; closeModals(); } });
+    closeModalBtns.forEach(btn => btn.addEventListener('click', () => closeModal(btn.closest('.modal'))));
+    window.addEventListener('click', e => { if (e.target.classList.contains('modal')) { if (e.target.id === 'edu-level-modal' && !getEduLevel()) return; closeModal(e.target); } });
     document.querySelectorAll('header nav a, .logo-container').forEach(a => a.addEventListener('click', function(e) { e.preventDefault(); const targetId = this.getAttribute('href')?.substring(1); if(targetId) { const el = document.getElementById(targetId); if(el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' }); } else window.scrollTo({ top: 0, behavior: 'smooth' }); }));
 
     // ТЕСТ И РЕЗУЛЬТАТЫ
