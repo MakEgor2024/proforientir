@@ -105,6 +105,26 @@ test.after(() => {
   );
 });
 
+test('HTML entry point is Brotli-compressed for the initial page load', async () => {
+  const response = await request('/', 'br, gzip');
+  assert.equal(response.status, 200);
+  assert.equal(response.headers['content-encoding'], 'br');
+  assert.match(response.headers['cache-control'] || '', /max-age=3600/);
+  assert.match(response.headers.vary || '', /accept-encoding/i);
+  const source = fs.readFileSync(path.join(root, 'index.html'));
+  const decoded = zlib.brotliDecompressSync(response.body);
+  assert.deepEqual(decoded, source);
+  assert.ok(response.body.length < source.length * 0.9, 'Brotli должно уменьшать HTML хотя бы на 10%');
+  compressionResults.push({
+    resource: 'index.html',
+    encoding: 'br',
+    originalBytes: source.length,
+    compressedBytes: response.body.length,
+    savedBytes: source.length - response.body.length,
+    savedPercent: Math.round((1 - response.body.length / source.length) * 1000) / 10
+  });
+});
+
 test('static JavaScript is Brotli-compressed and keeps cache validators', async () => {
   const response = await request('/script.js', 'br, gzip');
   assert.equal(response.status, 200);
