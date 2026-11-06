@@ -14,6 +14,16 @@
     <meta name="twitter:title" content="Proforientir - Гид по профессиям">
     <meta name="twitter:description" content="Профессиональная ориентация для школьников с тестом Голланда">
     <title>Proforientir - Тест Голланда и выбор профессии | Гид по вузам</title>
+    <script>
+        (function () {
+            try {
+                const level = localStorage.getItem('proforientirEduLevel');
+                if (level === 'college' || level === 'bachelor' || level === 'master') {
+                    document.documentElement.classList.add('edu-level-selected');
+                }
+            } catch (_) {}
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
@@ -45,6 +55,11 @@
             </div>
         </div>
     </div>
+    <script>
+        if (!document.documentElement.classList.contains('edu-level-selected')) {
+            document.getElementById('edu-level-modal')?.setAttribute('aria-hidden', 'false');
+        }
+    </script>
 
     <div id="college-stub" class="hidden">
         <div class="college-stub-content">
