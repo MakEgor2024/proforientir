@@ -50,6 +50,7 @@ jobs:
             artifacts/*.png
             artifacts/performance-report.json
             artifacts/commons-attribution-report.json
+            artifacts/compression-report.json
             artifacts/lighthouse-mobile.json
             artifacts/lighthouse-mobile.html
           if-no-files-found: ignore
