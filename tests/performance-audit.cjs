@@ -83,15 +83,29 @@ async function main() {
     }
 
     const uniqueImageUrls = [...imageMap.keys()];
+    const imageCheckTargets = uniqueImageUrls.map(originalUrl => {
+        const url = new URL(originalUrl);
+        if (url.hostname === 'images.unsplash.com') {
+            url.searchParams.set('w', '400');
+            url.searchParams.set('q', '75');
+            url.searchParams.set('auto', 'format');
+        } else if (url.hostname === 'commons.wikimedia.org' && url.pathname.includes('/Special:FilePath/')) {
+            url.searchParams.set('width', '400');
+        }
+        return { originalUrl, optimizedUrl: url.toString() };
+    });
     const api = await playwrightRequest.newContext({
         timeout: 20000,
         ignoreHTTPSErrors: true,
         extraHTTPHeaders: { 'User-Agent': 'Proforientir-Image-Audit/1.0' }
     });
     const imageChecks = [];
-    for (let i = 0; i < uniqueImageUrls.length; i += 6) {
-        const batch = uniqueImageUrls.slice(i, i + 6);
-        imageChecks.push(...await Promise.all(batch.map(url => checkImageUrl(api, url))));
+    for (let i = 0; i < imageCheckTargets.length; i += 6) {
+        const batch = imageCheckTargets.slice(i, i + 6);
+        imageChecks.push(...await Promise.all(batch.map(async target => ({
+            ...(await checkImageUrl(api, target.optimizedUrl)),
+            originalUrl: target.originalUrl
+        }))));
     }
     await api.dispose();
 
@@ -292,6 +306,11 @@ async function main() {
                 passed: imageChecks.length - brokenImages.length,
                 failed: brokenImages.length,
                 failures: brokenImages,
+                checkedWidth: '400px mobile candidate',
+                totalImageBytes: imageChecks.reduce((sum, item) => sum + (item.contentLength || 0), 0),
+                averageImageBytes: imageChecks.length
+                    ? Math.round(imageChecks.reduce((sum, item) => sum + (item.contentLength || 0), 0) / imageChecks.length)
+                    : 0,
                 results: imageChecks
             },
             renderedImages: {
